@@ -1,0 +1,16 @@
+{
+  "id": "loot-slot-machine",
+  "title": "Loot slot machine",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12"
+  },
+  "esmodules": [
+    "main.js"
+  ],
+  "styles": [
+    "lsm-style.css",
+    "./lsm-style.css"
+  ]
+}

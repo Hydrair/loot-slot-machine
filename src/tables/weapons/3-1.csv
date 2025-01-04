@@ -1,0 +1,6 @@
+DiceRange,Outcome,LinkToTable
+01-50,+1 Weapon
+51-73,+1 Striking weapon
+74-78,+2 Striking weapon
+79-87,Specific Weapon
+88-100,Precious Material and roll again
