@@ -1,14 +1,15 @@
 import { TableManager } from "./table-manager";
 
-export interface LsmItem {
-  roll(): Promise<void>;
+export class LsmItem {
   rollableStats: string[];
   name: string;
   item: string;
-}
 
-export class Grimoire implements LsmItem {
-  rollableStats: string[];
+  constructor(name: string, item: string, rollableStats: string[]) {
+    this.name = name;
+    this.item = item;
+    this.rollableStats = rollableStats;
+  }
 
   async roll() {
     const quality = (document.getElementById('quality-select') as HTMLSelectElement).value;
@@ -20,31 +21,42 @@ export class Grimoire implements LsmItem {
     console.log(`Rolling a ${this.name}`);
   }
 
-  constructor() {
-    this.name = 'grimoire';
-    this.material = '';
-    this.type = '';
-    this.item = '';
-    this.rollableStats = ['material', 'item', 'type'];
+  toItemData(): any {
+    throw new Error("Method 'toItemData()' must be implemented.");
   }
-
-  name: string;
-  item: string;
-  material: string;
-  type: string;
 }
 
-export class Potion implements LsmItem {
-  rollableStats: string[];
+export class Grimoire extends LsmItem {
+  material: string;
+  type: string;
 
-  async roll(): Promise<void> {
-    console.log('Rolling a Grimoire');
-  }
   constructor() {
-    this.rollableStats = ['name'];
-    this.name = 'potion';
-    this.item = '';
+    super('grimoire', '', ['material', 'item']);
+    this.material = '';
+    this.type = 'equipment';
   }
-  item: string;
-  name: string;
+
+
+}
+
+export class Potion extends LsmItem {
+  constructor() {
+    super('potion', '', ['name']);
+  }
+
+
+}
+
+export class Staff extends LsmItem {
+  material: string;
+  element: string;
+  type: string;
+
+  constructor() {
+    super('staff', '', ['material', 'item', 'element', 'type']);
+    this.material = '';
+    this.element = '';
+    this.type = '';
+  }
+
 }

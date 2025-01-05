@@ -1,5 +1,5 @@
 import { TableManager } from "./table-manager";
-import { createLsmItem } from "./items";
+import { createAndDisplayItem, createLsmItem } from "./items";
 
 Hooks.once("init", async function () {
   console.log("Loot Slot Machine | Initialized");
@@ -38,7 +38,8 @@ class SlotMachineApp extends Application {
           const item = createLsmItem(outcome);
 
           if (item) {
-            item.roll();
+            await item.roll();
+            createAndDisplayItem(item, "lsm-item-container");
           } else {
             console.warn("Item is null.");
           }

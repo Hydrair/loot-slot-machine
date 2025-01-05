@@ -1,66 +1,49 @@
 import { Grimoire, LsmItem, Potion } from "./declarations";
 
-interface Pack {
-  metadata: {
-    label: string;
-  };
-  documentName: string;
-  index: Array<{ name: string; _id: string }>;
-  getDocument(id: string): Promise<Item>;
 
-}
-
-interface Item {
-  name: string;
-  id: string;
-  system: {
-    description: {
-      value: string;
-    };
-  };
-  type: string;
-}
-
-
-
-export async function searchEquipment(searchQuery: string): Promise<Item[]> {
+export async function searchEquipment(searchQuery: string): Promise<Item> {
   const results: Item[] = [];
-  const regex = new RegExp(searchQuery, "i"); // Case-insensitive search
+  const regex = new RegExp(`^${searchQuery}$`, "i"); // Case-insensitive exact match
 
   // Filter compendiums with "Equipment" in their label
   if (!game.packs) {
     console.error("game.packs is undefined");
-    return results;
+    return results[0];
   }
-  const targetPacks: Pack[] = game.packs
+  const targetPacks = game.packs
     .filter((pack: any) =>
       pack.metadata.label.includes("Equipment") && pack.documentName === "Item"
-    )
-    .map((pack: any) => ({
-      ...pack,
-      index: pack.index.map((entry: any) => ({ name: entry.name, _id: entry._id }))
-    }));
+    );
 
   for (const pack of targetPacks) {
     console.log(`Searching in ${pack.metadata.label}...`);
 
     // Use index for lightweight searching
+    //@ts-ignore
     const matchingIndexes = pack.index.filter(entry => regex.test(entry.name));
 
     // Fetch full documents for matching indexes
     const matchingDocuments = await Promise.all(matchingIndexes.map(entry => pack.getDocument(entry._id)));
 
+    //@ts-ignore
     results.push(...matchingDocuments);
   }
 
   console.log(`Found ${results.length} matching items in "Equipment" compendiums:`, results);
-  return results;
+  return results[0];
 }
 
 // Function to create an item
-export async function createAndDisplayItem(itemData: any, containerId: string) {
+export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string) {
   // Create the item in the world
-  const item = await Item.create(itemData, { renderSheet: false }) as unknown as Item;
+  console.log("Creating item...");
+  searchEquipment("Silver (Low)")
+  const template = await searchEquipment(lsmItem.item);
+  console.log(template, lsmItem);
+  const itemData = lsmItem.toItemData();
+
+  const item = await Item.create(template, { renderSheet: true }) as unknown as Item;
+
   if (!item) {
     console.error("Failed to create the item.");
     return;
@@ -100,3 +83,4 @@ export function createLsmItem(itemType: string): LsmItem | null {
   }
   return new ItemClass();
 }
+
