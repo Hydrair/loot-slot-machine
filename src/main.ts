@@ -34,6 +34,8 @@ class SlotMachineApp extends Application {
     html.find("#roll-button").on("click", async () => {
       const itemContainer = document.getElementById("lsm-item-container")
       itemContainer ? itemContainer.innerHTML = "" : console.warn("Item container not found.");
+      const slotContainer = document.getElementById("lsm-slot-container")
+      slotContainer ? slotContainer.innerHTML = "" : console.warn("Slot container not found.");
       try {
         const outcome = await TableManager.rollOnTable("loot-table.csv");
         if (ui.notifications) {
@@ -65,7 +67,7 @@ class SlotMachineApp extends Application {
 
 function renderActors() {
   // @ts-ignore
-  const actors = game.actors?.filter((actor: Actor) => actor.name !== "The Party");
+  const actors = game.actors?.filter((actor: Actor) => actor.type === "character");
   const characterSelect = document.getElementById("lsm-character-select") as HTMLSelectElement;
   if (!characterSelect) {
     console.error("Character select element not found.");

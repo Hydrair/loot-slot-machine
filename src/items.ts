@@ -53,14 +53,14 @@ export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string
     return;
   }
 
-
   // @ts-ignore
+  const description = await TextEditor.enrichHTML(item.system.description.value, {})
   const itemDetails = `
-  <div class="item-display">
-  <h2>${item.name}</h2>
-          <p>${item.system.description.value || "No description available."}</p>
-          <p><strong>Type:</strong> ${item.type}</p>
-      </div>
+    <div class="lsm-item-display">
+      <img class="lsm-item-img" src="${item.img}" alt="${item.name}" />
+      <h2>${item.name}</h2>
+      <p>${description || "No description available."}</p>
+    </div>
   `;
 
   // Display in the specified container
