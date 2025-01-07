@@ -3,7 +3,7 @@ import { createAndDisplayItem, createLsmItem } from "./items";
 
 Hooks.once("init", async function () {
   console.log("Loot Slot Machine | Initialized");
-  new SlotMachineApp().render(true);
+  // new SlotMachineApp().render(true);
 
   // Register chat command
   Hooks.on("chatMessage", (_, message) => {
@@ -28,10 +28,13 @@ class SlotMachineApp extends Application {
   override activateListeners(html: any) {
     super.activateListeners(html);
 
+    renderActors();
+
     // Attach event listener to the roll button
     html.find("#roll-button").on("click", async () => {
+      const itemContainer = document.getElementById("lsm-item-container")
+      itemContainer ? itemContainer.innerHTML = "" : console.warn("Item container not found.");
       try {
-
         const outcome = await TableManager.rollOnTable("loot-table.csv");
         if (ui.notifications) {
           ui.notifications.info(`Rolled: ${outcome}`);
@@ -58,3 +61,22 @@ class SlotMachineApp extends Application {
   }
 }
 
+
+
+function renderActors() {
+  // @ts-ignore
+  const actors = game.actors?.filter((actor: Actor) => actor.name !== "The Party");
+  const characterSelect = document.getElementById("lsm-character-select") as HTMLSelectElement;
+  if (!characterSelect) {
+    console.error("Character select element not found.");
+    return;
+  }
+  // @ts-ignore
+  for (const actor of actors) {
+    const option = document.createElement("option");
+    option.value = actor.id;
+    // @ts-ignore
+    option.text = actor.name;
+    characterSelect.appendChild(option);
+  }
+}

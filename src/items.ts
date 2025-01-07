@@ -1,4 +1,4 @@
-import { Grimoire, LsmItem, Potion } from "./declarations";
+import { Grimoire, LsmItem, Staff, Potion } from "./declarations";
 
 
 export async function searchEquipment(searchQuery: string): Promise<Item> {
@@ -35,25 +35,30 @@ export async function searchEquipment(searchQuery: string): Promise<Item> {
 
 // Function to create an item
 export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string) {
-  // Create the item in the world
-  console.log("Creating item...");
-  searchEquipment("Silver (Low)")
   const template = await searchEquipment(lsmItem.item);
-  console.log(template, lsmItem);
   const itemData = lsmItem.toItemData();
+  const combinedSystemData = {
+    ...template.system,
+    ...itemData
+  };
 
-  const item = await Item.create(template, { renderSheet: true }) as unknown as Item;
+  // @ts-ignore
+  const item = await Item.create({
+    ...template, system: combinedSystemData
+  }, { renderSheet: true, parent: game.actors?.get((document.getElementById('lsm-character-select') as HTMLSelectElement).value) }) as Item;
 
+  console.log("Item created:", item);
   if (!item) {
     console.error("Failed to create the item.");
     return;
   }
 
-  // Get the item's details
+
+  // @ts-ignore
   const itemDetails = `
-      <div class="item-display">
-          <h2>${item.name}</h2>
-          <p>${item.system?.description?.value || "No description available."}</p>
+  <div class="item-display">
+  <h2>${item.name}</h2>
+          <p>${item.system.description.value || "No description available."}</p>
           <p><strong>Type:</strong> ${item.type}</p>
       </div>
   `;
@@ -72,6 +77,7 @@ export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string
 const itemClassMap: { [key: string]: any } = {
   grimoire: Grimoire,
   potions: Potion,
+  staff: Staff,
   // Add other item types here
 };
 

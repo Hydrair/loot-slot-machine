@@ -4,6 +4,9 @@ export class LsmItem {
   rollableStats: string[];
   name: string;
   item: string;
+  material!: string;
+  element!: string;
+  rune!: string;
 
   constructor(name: string, item: string, rollableStats: string[]) {
     this.name = name;
@@ -22,12 +25,29 @@ export class LsmItem {
   }
 
   toItemData(): any {
-    throw new Error("Method 'toItemData()' must be implemented.");
+    const itemData: any = {};
+    if (this.material) {
+      const [material, grade] = this.material.toLowerCase().split(' (');
+      itemData.material = {
+        type: material,
+        grade: grade ? grade.slice(0, -1) : ''
+      };
+    }
+    if (this.element) {
+      itemData.damage = {
+        damageType: this.element.toLowerCase()
+      };
+    }
+    if (this.rune) {
+      itemData.runes = {
+        potency: parseInt(this.rune, 10)
+      };
+    }
+    return itemData;
   }
 }
 
 export class Grimoire extends LsmItem {
-  material: string;
   type: string;
 
   constructor() {
@@ -48,15 +68,12 @@ export class Potion extends LsmItem {
 }
 
 export class Staff extends LsmItem {
-  material: string;
-  element: string;
-  type: string;
 
   constructor() {
-    super('staff', '', ['material', 'item', 'element', 'type']);
+    super('staff', '', ['material', 'item', 'element', 'rune']);
     this.material = '';
     this.element = '';
-    this.type = '';
+    this.rune = '';
   }
 
 }
