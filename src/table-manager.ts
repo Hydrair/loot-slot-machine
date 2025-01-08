@@ -44,7 +44,7 @@ export const TableManager = {
 
     const quality = containsQuality(table);
 
-    if (quality !== "%d") {
+    if (quality !== "d%") {
       filterTableByQuality(table, quality);
     }
 

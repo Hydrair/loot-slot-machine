@@ -1,10 +1,10 @@
-d%,Outcome,LinkToTable
-01-20,Armor and shields (Table 2-1),armor_and_shields
-21-40,Weapons (3-1),weapons
-41-45,Potions (4-1),potions
-46-55,Jewelry and gems (5-1),jewelry_and_gems
-56-65,Other worn items (6-1),other_worn_items
-66-75,Scrolls (7-1),scrolls
-76-80,Staves (8-1),staves
-81-90,Wands (9-1),wands
-91-100,Grimoires (10-1),grimoires
+d%	Item
+01-20	Armor
+21-40	Weapon
+41-45	Potion
+46-55	Jewelery
+56-65	Worn
+66-75	Scrolls
+76-80	Staff
+81-90	Wand
+91-100	Grimoire

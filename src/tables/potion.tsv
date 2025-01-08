@@ -1,4 +1,4 @@
-Minor	Lesser	Moderate	Greater	Major 	Item			Level
+Minor	Lesser	Moderate	Greater	Major	Item			Level
 01-05					Gecko Potion			1
 06-10					Potion of Emergency Escape			1
 11-15					Ration Tonic			1
@@ -23,7 +23,7 @@ Minor	Lesser	Moderate	Greater	Major 	Item			Level
 73-74	31-33				Wine of the Blood			5
 75-76	34-36				Potion of Resistance (Lesser)			5
 77-78	37-38				Tentacle Potion (Lesser)			6
-79-80	39-40				Bloodhammer Reserve (Select)			6
+79-80	39-40				Bloodhammer Reserve Select			6
 81-82	41-42				Eidetic Potion			6
 83-84	43-44				Truth Potion			6
 85-86	45-46				Healing Potion (Moderate)			6
@@ -42,7 +42,7 @@ Minor	Lesser	Moderate	Greater	Major 	Item			Level
 	71-72	25-26			Roaring Potion (Lesser)			8
 	73-74	27-28			Shrinking Potion (Greater)			8
 	75-76	29-30			Potion of Shared Life			8
-	77-78	31-32			Bloodhammer Reserve (Black Label)			8
+	77-78	31-32			Bloodhammer Reserve Black Label			8
 	79-80	33-34			Potion of Disguise (Moderate)			8
 	81-81	35-36			Potion of Flying			8
 	82-82	37-38			Potion of Minute Echoes			9

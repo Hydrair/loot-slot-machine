@@ -1,6 +1,6 @@
-import { searchEquipment } from "./items";
+import { searchItem } from "./items";
 import { TableManager } from "./table-manager";
-import { getActorLevel, getDmgType, getTraits, purifyRunes, splitString } from "./util";
+import { addElementToEnergyBreath, addElementToRetaliation, getActorLevel, getDmgType, getTraits, purifyRunes, splitString } from "./util";
 
 enum StrikingRune {
   "Weapon",
@@ -21,6 +21,7 @@ export class LsmItem {
   potency!: string;
   equipment!: boolean;
   runes!: string[];
+  itemType!: string;
 
   constructor(name: string, item: string, rollableStats: string[]) {
     this.name = name;
@@ -72,11 +73,26 @@ export class Grimoire extends LsmItem {
 }
 
 export class Potion extends LsmItem {
+
   constructor() {
-    super('potion', '', ['name']);
+    super('potion', '', ['item']);
+    this.itemType = 'Equipment';
   }
 
+  override async roll() {
+    const level = getActorLevel();
 
+    this.item = await TableManager.rollOnTable(`potion.tsv`, false, level);
+
+    if (this.item.includes('Retaliation')) {
+      this.element = await TableManager.rollOnTable(`potion-element.tsv`);
+      this.name = addElementToRetaliation(this.item, this.element);
+    }
+    if (this.item.includes('Energy Breath')) {
+      this.element = await TableManager.rollOnTable(`potion-element.tsv`);
+      this.name = addElementToEnergyBreath(this.item, this.element);
+    }
+  }
 }
 
 export class Staff extends LsmItem {
@@ -99,6 +115,7 @@ export class Weapon extends LsmItem {
     this.item = '';
     this.potency = '';
     this.equipment = true
+    this.itemType = 'Equipment';
   }
 
   override async roll(): Promise<void> {
@@ -118,7 +135,7 @@ export class Weapon extends LsmItem {
       this.item = await TableManager.rollOnTable(`${this.name}/${this.name}-${this.type.toLowerCase().split(' ')[0]}.tsv`);
     }
 
-    const item = await searchEquipment(this.item);
+    const item = await searchItem(this.item, 'Equipment');
     const conditions = [
       this.type === "ranged" ? "ranged" : "melee",
       getDmgType(item),
@@ -157,3 +174,4 @@ export class Weapon extends LsmItem {
   }
 
 }
+

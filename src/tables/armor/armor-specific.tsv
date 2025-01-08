@@ -1,4 +1,4 @@
-Minor	Lesser	Moderate	Greater	Major 	Item			Level
+Minor	Lesser	Moderate	Greater	Major	Item			Level
 01-10	01-06				Ghoul Hide			6
 11-20	07-12				Trollhound Vest			6
 21-30	13-18				Devil's Bargain			6
@@ -30,7 +30,7 @@ Minor	Lesser	Moderate	Greater	Major 	Item			Level
 	92-92	54-55	16-18		Scarab Cuirass			10
 	93-93	56-57	19-21		Tales in Timber			10
 	94-94	58-59	22-24		Tideplate			10
-		60-61	25-27		Plate of Yled (Major Graveknight Plate)			11
+		60-61	25-27		Plate of Yled (MajorGraveknight Plate)			11
 		62-63	28-29		Bastion of the Inheritor			12
 		64-65	30-31		Mantis Plate			12
 		66-67	32-33		Wisp Chain (Greater)			12

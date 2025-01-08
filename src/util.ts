@@ -24,7 +24,7 @@ export function getActorLevel() {
 
 export function filterTableByLevel(table: any[], maxLevel: number) {
   for (let i = table.length - 1; i >= 0; i--) {
-    if (table[i].level > maxLevel) {
+    if (table[i].Level > maxLevel) {
       table.splice(i, 1); // Remove elements that don't match the condition
     }
   }
@@ -94,4 +94,43 @@ export function purifyRunes(rune: string) {
   return rune.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match, index) =>
     index === 0 ? match.toLowerCase() : match.toUpperCase()
   ).replace(/\s+/g, '');
+}
+
+interface PotionMatch {
+  prefix: string;
+  coreName: string;
+  suffix: string;
+}
+
+export function addElementToRetaliation(potionName: string, descriptor: string): string {
+  const regex = /^(Potion of )(.+?)( \(.+\))?$/;
+  const match = potionName.match(regex);
+
+  if (match) {
+    const potionMatch: PotionMatch = {
+      prefix: match[1], // "Potion of "
+      coreName: match[2], // "Retaliation"
+      suffix: match[3] || "" // "(Lesser)" or empty string
+    };
+
+    return `${potionMatch.prefix}${descriptor} ${potionMatch.coreName}${potionMatch.suffix}`;
+  }
+
+  // If the name doesn't match the expected pattern, return it unchanged
+  return potionName;
+}
+
+export function addElementToEnergyBreath(potionName: string, descriptor: string): string {
+  const regex = /^(.*?Potion)(?: \((.*)\))?$/;
+  const match = potionName.match(regex);
+
+  if (match) {
+    const baseName = match[1]; // "Energy Breath Potion"
+    const suffix = match[2] ? `(${descriptor}, ${match[2]})` : `(${descriptor})`;
+
+    return `${baseName} ${suffix}`;
+  }
+
+  // If the name doesn't match the expected pattern, return it unchanged
+  return potionName;
 }
