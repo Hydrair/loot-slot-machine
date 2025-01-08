@@ -1,0 +1,160 @@
+Minor	Lesser	Moderate	Greater	Major 	Item			Level
+01-41					Staff of Air			3
+42-82					Staff of Earth			3
+83-123					Staff of Fire			3
+124-164					Staff of Water			3
+165-194	01-21				Composer Staff			4
+195-224	22-42				Animal Staff			4
+225-254	43-63				Bagpipes of Turmoil			4
+255-284	64-84				Drums of War			4
+285-314	85-105				Entertainer's Lute			4
+315-344	106-126				Mentalist's Staff			4
+345-374	127-147				Nyctessa's Staff			4
+375-404	148-168				Pipes of Compulsion			4
+405-434	169-189				Poisoner's Staff			4
+435-464	190-210				Seer's Flute			4
+465-494	211-231				Staff of Healing			4
+495-524	232-252				Trickster's Mandolin			4
+525-554	253-273				Atmospheric Staff (Lesser)			4
+555-584	274-294				Spore Shepherd's Staff			4
+585-614	295-315				Spore Shepherd's Staff (Major)			4
+615-630	316-329				Librarian Staff			6
+631-646	330-343				Lyrakien Staff			6
+647-662	344-357				Verdant Staff			6
+663-678	358-371				Fluid Form Staff			6
+679-694	372-385				Ringmaster's Staff			6
+695-710	386-399				Staff of Control			6
+711-726	400-413				Staff of Elemental Power			6
+727-742	414-427				Staff of Impossible Visions			6
+743-758	428-441				Staff of Phantasms			6
+759-774	442-455				Staff of Protection			6
+775-790	456-469				Staff of Providence			6
+791-806	470-483				Staff of Summoning			6
+807-822	484-497				Staff of the Dead			6
+823-838	498-511				Staff of the Desert Winds			6
+839-854	512-525				Staff of the Unblinking Eye			6
+855-870	526-539				Staff of Final Rest			6
+871-886	540-553				Accursed Staff			6
+887-902	554-567				Guardian Staff			6
+903-918	568-581				Staff of Metal			6
+919-934	582-595				Staff of the Dreamlands			6
+935-943	596-606	01-23			Staff of Nature's Cunning			7
+944-952	607-617	24-46			Zombie Staff			7
+953-961	618-628	47-69			Beast Staff			7
+962-970	629-639	70-92			Spy Staff			7
+971-979	640-650	93-115			Spellstriker Staff			7
+	651-659	116-131			Staff of Illumination			8
+	660-668	132-147			Poisoner's Staff (Greater)			8
+	669-677	148-163			Staff of Air (Greater)			8
+	678-686	164-179			Staff of Earth (Greater)			8
+	687-695	180-195			Staff of Fire (Greater)			8
+	696-704	196-211			Staff of Water (Greater)			8
+	705-713	212-227			Animal Staff (Greater)			8
+	714-722	228-243			Bagpipes of Turmoil (Greater)			8
+	723-731	244-259			Drums of War (Greater)			8
+	732-740	260-275			Entertainer's Lute (Greater)			8
+	741-749	276-291			Mentalist's Staff (Greater)			8
+	750-758	292-307			Pipes of Compulsion (Greater)			8
+	759-767	308-323			Seer's Flute (Greater)			8
+	768-776	324-339			Trickster's Mandolin (Greater)			8
+	777-785	340-355			Staff of Healing (Greater)			8
+	786-794	356-371			Spore Shepherd's Staff (Greater)			8
+	795-803	372-387			Atmospheric Staff			8
+	804-812	388-403			Composer Staff (Greater)			8
+	813-821	404-419			Boreal Staff			8
+	822-829	420-430	01-18		Drazmorg's Staff of All-Sight			10
+	830-837	431-441	19-36		Accursed Staff (Greater)			10
+	838-845	442-452	37-54		Fluid Form Staff (Greater)			10
+	846-853	453-463	55-72		Guardian Staff (Greater)			10
+	854-861	464-474	73-90		Staff of Control (Greater)			10
+	862-869	475-485	91-108		Staff of Elemental Power (Greater)			10
+	870-877	486-496	109-126		Staff of Final Rest (Greater)			10
+	878-885	497-507	127-144		Staff of Metal (Greater)			10
+	886-893	508-518	145-162		Staff of Nature's Vengeance			10
+	894-901	519-529	163-180		Staff of Phantasms (Greater)			10
+	902-909	530-540	181-198		Staff of Protection (Greater)			10
+	910-917	541-551	199-216		Staff of Providence (Greater)			10
+	918-925	552-562	217-234		Staff of Summoning (Greater)			10
+	926-933	563-573	235-252		Staff of the Dead (Greater)			10
+	934-941	574-584	253-270		Staff of the Unblinking Eye (Greater)			10
+	942-949	585-595	271-288		Lyrakien Staff (Greater)			10
+		596-605	289-303		Spy Staff (Greater)			11
+		606-615	304-318		Zombie Staff (Greater)			11
+		616-625	319-333		Beast Staff (Greater)			11
+		626-635	334-348		Spellstriker Staff (Greater)			11
+		636-645	349-363		Staff of Nature's Cunning (Greater)			11
+		646-653	364-373		Librarian Staff (Greater)			12
+		654-661	374-383		Staff of the Desert Winds (Greater)			12
+		662-669	384-393		Verdant Staff (Greater)			12
+		670-677	394-403		Composer Staff (Major)			12
+		678-685	404-413		Mentalist's Staff (Major)			12
+		686-693	414-423		Ringmaster's Staff (Greater)			12
+		694-701	424-433		Staff of Air (Major)			12
+		702-709	434-443		Staff of Earth (Major)			12
+		710-717	444-453		Staff of Fire (Major)			12
+		718-725	454-463		Staff of Healing (Major)			12
+		726-733	464-473		Staff of Impossible Visions (Greater)			12
+		734-741	474-483		Staff of Water (Major)			12
+		742-749	484-493		Purgatory Emissary's Staff			12
+		750-757	494-503		Staff of the Black Desert			12
+		758-765	504-513		Animal Staff (Major)			12
+		766-773	514-523		Atmospheric Staff (Greater)			12
+		774-781	524-533		Bagpipes of Turmoil (Major)			12
+		782-789	534-543		Drums of War (Major)			12
+		790-797	544-553		Entertainer's Lute (Major)			12
+		798-805	554-563		Pipes of Compulsion (Major)			12
+		806-813	564-573		Seer's Flute (Major)			12
+		814-821	574-583		Socialite Staff			12
+		822-829	584-593		Staff of Arcane Might			12
+		830-837	594-603		Trickster's Mandolin (Major)			12
+		838-845	604-613		Gambler's Staff			12
+		846-853	614-623		Pirate Staff			12
+		854-861	624-633		Staff of the Dreamlands (Greater)			12
+		862-869	634-643		Boreal Staff (Greater)			12
+			644-650	01-25	Accursed Staff (Major)			14
+			651-657	26-50	Fluid Form Staff (Major)			14
+			658-664	51-75	Guardian Staff (Major)			14
+			665-671	76-100	Poisoner's Staff (Major)			14
+			672-678	101-125	Staff of Control (Major)			14
+			679-685	126-150	Staff of Elemental Power (Major)			14
+			686-692	151-175	Staff of Metal (Major)			14
+			693-699	176-200	Staff of Nature's Vengeance (Greater)			14
+			700-706	201-225	Staff of Phantasms (Major)			14
+			707-713	226-250	Staff of Protection (Major)			14
+			714-720	251-275	Staff of Summoning (Major)			14
+			721-727	276-300	Staff of the Dead (Major)			14
+			728-734	301-325	Staff of the Unblinking Eye (Major)			14
+			735-741	326-350	Staff of Providence (Major)			14
+			742-748	351-375	Dragonprism Staff			14
+			749-755	376-395	Spy Staff (Major)			15
+			756-761	396-415	Zombie Staff (Major)			15
+			762-767	416-435	Beast Staff (Major)			15
+			768-773	436-455	Lini's Leafstick			15
+			774-779	456-475	Staff of Nature's Cunning (Major)			15
+			780-783	476-492	Spellstriker Staff (Major)			16
+			784-787	493-509	Lyrakien Staff (Major)			16
+			788-791	510-526	Atmospheric Staff (Major)			16
+			792-795	527-543	Staff of Final Rest (Major)			16
+			796-799	544-560	Staff of Healing (True)			16
+			800-803	561-577	Staff of the Black Desert (Greater)			16
+			804-807	578-594	Fiddle of the Maestro			16
+			808-811	595-611	Greater Staff of Arcane Might			16
+			812-815	612-628	Staff of Impossible Visions (Major)			16
+			816-819	629-645	Staff of the Desert Winds (Major)			16
+				646-655	Hell Staff			17
+				656-665	Wyrm Drinker			17
+				666-675	Zealot Staff			17
+				676-685	Boreal Staff (Major)			17
+				686-695	Celestial Staff			17
+				696-705	Chronomancer Staff			17
+				706-713	Staff of Nature's Vengeance (Major)			18
+				714-721	Staff of the Dreamlands (Major)			18
+				722-727	Staff of Providence (True)			20
+				728-733	Staff of Sieges			20
+				734-739	Dragonprism Staff (Greater)			20
+				740-745	Staff of Impossible Visions (True)			20
+				746-751	Staff of the Desert Winds (True)			20
+				752-757	Whispering Staff			20
+				758-763	Major Staff of Arcane Might			20
+				764-769	Staff of the Magi			20
+980-1000	950-1000	870-1000	820-1000	770-1000	Roll twice again			

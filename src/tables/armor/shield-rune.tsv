@@ -1,0 +1,7 @@
+Minor	Lesser	Moderate	Greater	Major 	Item			Level
+01-60	01-50				Reinforcing Rune (Minor)			4
+61-100	51-80	01-50			Reinforcing Rune (Lesser)			7
+	81-100	51-80	01-50		Reinforcing Rune (Moderate)			10
+		81-100	51-80	01-50	Reinforcing Rune (Greater)			13
+			81-100	51-80	Reinforcing Rune (Major)			16
+				81-100	Reinforcing Rune (Supreme)			19

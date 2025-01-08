@@ -1,0 +1,23 @@
+Minor	Lesser	Moderate	Greater	Major 	Item		Level
+01-43	01-29				Cold Iron (Low)		2
+44-87	30-58				Silver (Low)		2
+88-97	59-78	01-15			Throneglass (Standard)		9
+	79-82	16-27	01-10		Cold Iron (Standard)		10
+	83-86	28-39	11-20		Dragonbone (Standard)		10
+	87-90	40-51	21-30		Mithral (Standard)		10
+	91-94	52-63	31-40		Silver (Standard)		10
+		64-72	41-48		Adamantine (Standard)		11
+		73-81	49-56		Darkwood (Standard)		11
+		82-86	57-61		Sovereign Steel (Standard)		12
+			62-65	01-09	Cold Iron (High)		16
+			66-69	10-18	Dragonbone (High)		16
+			70-73	19-27	Mithral (High)		16
+			74-77	28-36	Silver (High)		16
+			78-81	37-45	Throneglass (High)		16
+				46-51	Adamantine (High)		17
+				52-57	Darkwood (High)		17
+				58-63	Djezet Infusion		17
+				64-69	Singing Steel (High)		17
+				70-73	Orichalcum (High)		18
+				74-76	Sovereign Steel (High)		19
+98-100	95-100	87-100	82-100	77-100	Roll twice again		
