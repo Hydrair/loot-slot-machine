@@ -1,80 +1,80 @@
-Minor	Lesser	Moderate	Greater	Major	Item		Level	Value	
-01-07					Fanged		2	30 gp	etched onto a melee weapon
-08-13					Authorized		3	50 gp	etched onto a weapon
-14-19					Crushing		3	50 gp	etched onto a bludgeoning weapon
-20-25					Underwater		3	50 gp	etched onto a weapon
-26-31					Kin-Warding		3	52 gp	etched onto a clan dagger
-32-37					Returning		3	55 gp	etched onto a thrown weapon
-38-41	01-04				Merciful		4	70 gp	etched onto a weapon
-42-45	05-08				Ghost Touch		4	75 gp	etched onto a weapon
-46-49	09-12				Bane		4	100 gp	etched onto a weapon
-50-53	13-15				Earthbinding		5	125 gp	etched onto a weapon
-54-57	16-18				Cunning		5	140 gp	etched on a slashing or piercing weapon
-58-61	19-21				Hooked		5	140 gp	etched onto a melee weapon
-62-65	22-24				Pacifying		5	150 gp	etched onto a weapon
-66-69	25-27				Vitalizing		5	150 gp	etched onto a weapon
-70-73	28-30				Fearsome		5	160 gp	etched onto a weapon
-74-76	31-33				Demolishing		6	225 gp	etched onto a weapon
-77-79	34-36				Hauling		6	225 gp	etched onto a weapon
-80-82	37-39				Shifting		6	225 gp	etched onto a melee weapon
-83-85	40-42				Energizing		6	250 gp	etched onto a weapon
-86-87	43-45	01-03			Conducting		7	300 gp	etched onto a weapon
-88-89	46-48	04-06			Wounding		7	340 gp	etched onto a piercing or slashing melee weapon
-90-91	49-51	07-09			Called (Weapon Rune)		7	350 gp	etched onto a weapon
-92-93	52-54	10-12			Deathdrinking		7	360 gp	etched onto a weapon without a disrupting rune
-94-95	55-57	13-15			Flurrying		7	360 gp	etched onto a melee weapon with the monk trait
-96-97	58-60	16-18			Rooting		7	360 gp	etched onto a melee weapon
-	61-62	19-21			Fanged (Greater)		8	425 gp	etched onto a melee weapon
-	63-64	22-24			Astral		8	450 gp	etched onto a weapon
-	65-66	25-27			Giant-Killing		8	450 gp	etched onto a weapon
-	67-68	28-30			Bloodbane		8	475 gp	etched onto a clan dagger
-	69-70	31-33			Corrosive		8	500 gp	etched onto a weapon
-	71-72	34-36			Decaying		8	500 gp	etched onto a weapon
-	73-74	37-39			Flaming		8	500 gp	etched onto a weapon
-	75-76	40-42			Frost		8	500 gp	etched onto a weapon
-	77-78	43-45			Shock		8	500 gp	etched onto a weapon
-	79-80	46-48			Thundering		8	500 gp	etched onto a weapon
-	81-82	49-50			Crushing (Greater)		9	650 gp	etched onto a bludgeoning weapon
-	83-84	51-52			Ashen		9	700 gp	etched onto a weapon
-	85-86	53-54			Coating		9	700 gp	etched onto a weapon
-	87-88	55-56			Extending		9	700 gp	etched onto a melee weapon
-	89-90	57-58			Grievous		9	700 gp	etched onto a weapon
-	91-91	59-60			Swarming		9	700 gp	etched onto a thrown weapon
-	92-92	61-62	01-04		Anchoring		10	900 gp	etched onto a weapon
-	93-93	63-64	05-08		Impactful		10	1,000 gp	etched onto a weapon
-	94-94	65-66	09-12		Serrating		10	1,000 gp	etched onto a slashing melee weapon
-		67-68	13-16		Hopeful		11	1,200 gp	etched onto a weapon
-		69-70	17-20		Hauling (Greater)		11	1,300 gp	etched onto a weapon
-		71-72	21-24		Holy		11	1,400 gp	etched onto a weapon that isn't unholy
-		73-74	25-28		Rooting (Greater)		11	1,400 gp	etched onto a melee weapon
-		75-76	29-32		Unholy		11	1,400 gp	etched inot a weapon that isn't holy
-		77-78	33-35		Brilliant		12	2,000 gp	etched onto a weapon
-		79-80	36-38		Fearsome (Greater)		12	2,000 gp	etched onto a weapon
-		81-81	39-41	01-04	Animated		13	2,700 gp	etched onto a melee weapon
-		82-82	42-44	05-08	Spell Reservoir		13	2,700 gp	etched onto a melee weapon
-		83-83	45-47	09-12	Bloodbane (Greater)		13	2,800 gp	etched onto a clan dagger
-		84-84	48-50	13-16	Extending (Greater)		13	3,000 gp	etched onto a melee weapon
-		85-85	51-53	17-20	Keen		13	3,000 gp	etched onto a piercing or slashing melee weapon
-		86-86	54-56	21-24	Shockwave		13	3,000 gp	etched onto a bludgeoning melee weapon
-			57-58	25-27	Vitalizing (Greater)		14	4,300 gp	etched onto a weapon
-			59-60	28-30	Astral (Greater)		15	6,000 gp	etched onto a weapon
-			61-62	31-33	Fanged (Major)		15	6,000 gp	etched onto a melee weapon
-			63-64	34-36	Giant-Killing (Greater)		15	6,000 gp	etched onto a weapon
-			65-66	37-39	Corrosive (Greater)		15	6,500 gp	etched onto a weapon
-			67-68	40-42	Decaying (Greater)		15	6,500 gp	etched onto a weapon
-			69-70	43-45	Flaming (Greater)		15	6,500 gp	etched onto a weapon
-			71-72	46-48	Frost (Greater)		15	6,500 gp	etched onto a weapon
-			73-74	49-51	Rooting (Major)		15	6,500 gp	etched onto a melee weapon
-			75-76	52-54	Shock (Greater)		15	6,500 gp	etched onto a weapon
-			77-77	55-57	Thundering (Greater)		15	6,500 gp	etched onto a weapon
-			78-78	58-60	Ancestral Echoing		15	9,500 gp	etched onto a weapon
-			79-79	61-62	Bloodthirsty		16	8,500 gp	etched onto a slashing or piercing melee weapon
-			80-80	63-64	Ashen (Greater)		16	9,000 gp	etched onto a weapon
-			81-81	65-66	Quickstrike		16	10,000 gp	etched onto a weapon
-				67-68	Impactful (Greater)		17	15,000 gp	etched onto a weapon
-				69-70	Vorpal		17	15,000 gp	etched onto a slashing melee weapon
-				71-72	Anchoring (Greater)		18	22,000 gp	etched onto a weapon
-				73-74	Brilliant (Greater)		18	24,000 gp	etched onto a weapon
-				75-75	Rooting (True)		19	40,000 gp	etched onto a melee weapon
-				76-76	Impossible		20	70,000 gp	etched onto a weapon
+Minor	Lesser	Moderate	Greater	Major	Item		Level	Value	Condition
+01-07					Fanged		2	30 gp	melee 
+08-13					Authorized		3	50 gp	
+14-19					Crushing		3	50 gp	bludgeoning 
+20-25					Underwater		3	50 gp	
+26-31					Kin-Warding		3	52 gp	clan dagger
+32-37					Returning		3	55 gp	thrown 
+38-41	01-04				Merciful		4	70 gp	
+42-45	05-08				Ghost Touch		4	75 gp	
+46-49	09-12				Bane		4	100 gp	
+50-53	13-15				Earthbinding		5	125 gp	
+54-57	16-18				Cunning		5	140 gp	slashing piercing 
+58-61	19-21				Hooked		5	140 gp	melee 
+62-65	22-24				Pacifying		5	150 gp	
+66-69	25-27				Vitalizing		5	150 gp	
+70-73	28-30				Fearsome		5	160 gp	
+74-76	31-33				Demolishing		6	225 gp	
+77-79	34-36				Hauling		6	225 gp	
+80-82	37-39				Shifting		6	225 gp	melee 
+83-85	40-42				Energizing		6	250 gp	
+86-87	43-45	01-03			Conducting		7	300 gp	
+88-89	46-48	04-06			Wounding		7	340 gp	piercing slashing melee 
+90-91	49-51	07-09			Called ( Rune)		7	350 gp	
+92-93	52-54	10-12			Deathdrinking		7	360 gp	 
+94-95	55-57	13-15			Flurrying		7	360 gp	monk
+96-97	58-60	16-18			Rooting		7	360 gp	melee 
+	61-62	19-21			Fanged (Greater)		8	425 gp	melee 
+	63-64	22-24			Astral		8	450 gp	
+	65-66	25-27			Giant-Killing		8	450 gp	
+	67-68	28-30			Bloodbane		8	475 gp	clan dagger
+	69-70	31-33			Corrosive		8	500 gp	
+	71-72	34-36			Decaying		8	500 gp	
+	73-74	37-39			Flaming		8	500 gp	
+	75-76	40-42			Frost		8	500 gp	
+	77-78	43-45			Shock		8	500 gp	
+	79-80	46-48			Thundering		8	500 gp	
+	81-82	49-50			Crushing (Greater)		9	650 gp	bludgeoning 
+	83-84	51-52			Ashen		9	700 gp	
+	85-86	53-54			Coating		9	700 gp	
+	87-88	55-56			Extending		9	700 gp	melee 
+	89-90	57-58			Grievous		9	700 gp	
+	91-91	59-60			Swarming		9	700 gp	thrown 
+	92-92	61-62	01-04		Anchoring		10	900 gp	
+	93-93	63-64	05-08		Impactful		10	1,000 gp	
+	94-94	65-66	09-12		Serrating		10	1,000 gp	slashing melee 
+		67-68	13-16		Hopeful		11	1,200 gp	
+		69-70	17-20		Hauling (Greater)		11	1,300 gp	
+		71-72	21-24		Holy		11	1,400 gp	 
+		73-74	25-28		Rooting (Greater)		11	1,400 gp	melee 
+		75-76	29-32		Unholy		11	1,400 gp	
+		77-78	33-35		Brilliant		12	2,000 gp	
+		79-80	36-38		Fearsome (Greater)		12	2,000 gp	
+		81-81	39-41	01-04	Animated		13	2,700 gp	melee 
+		82-82	42-44	05-08	Spell Reservoir		13	2,700 gp	melee 
+		83-83	45-47	09-12	Bloodbane (Greater)		13	2,800 gp	clan dagger
+		84-84	48-50	13-16	Extending (Greater)		13	3,000 gp	melee 
+		85-85	51-53	17-20	Keen		13	3,000 gp	piercing slashing melee 
+		86-86	54-56	21-24	Shockwave		13	3,000 gp	bludgeoning melee 
+			57-58	25-27	Vitalizing (Greater)		14	4,300 gp	
+			59-60	28-30	Astral (Greater)		15	6,000 gp	
+			61-62	31-33	Fanged (Major)		15	6,000 gp	melee 
+			63-64	34-36	Giant-Killing (Greater)		15	6,000 gp	
+			65-66	37-39	Corrosive (Greater)		15	6,500 gp	
+			67-68	40-42	Decaying (Greater)		15	6,500 gp	
+			69-70	43-45	Flaming (Greater)		15	6,500 gp	
+			71-72	46-48	Frost (Greater)		15	6,500 gp	
+			73-74	49-51	Rooting (Major)		15	6,500 gp	melee 
+			75-76	52-54	Shock (Greater)		15	6,500 gp	
+			77-77	55-57	Thundering (Greater)		15	6,500 gp	
+			78-78	58-60	Ancestral Echoing		15	9,500 gp	
+			79-79	61-62	Bloodthirsty		16	8,500 gp	slashing piercing melee 
+			80-80	63-64	Ashen (Greater)		16	9,000 gp	
+			81-81	65-66	Quickstrike		16	10,000 gp	
+				67-68	Impactful (Greater)		17	15,000 gp	
+				69-70	Vorpal		17	15,000 gp	slashing melee 
+				71-72	Anchoring (Greater)		18	22,000 gp	
+				73-74	Brilliant (Greater)		18	24,000 gp	
+				75-75	Rooting (True)		19	40,000 gp	melee 
+				76-76	Impossible		20	70,000 gp	
 98-100	95-100	87-100	82-100	77-100	Roll twice again				

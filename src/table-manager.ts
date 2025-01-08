@@ -39,7 +39,7 @@ export const TableManager = {
     return [min, max];
   },
 
-  rollOnTable: async function (csvFileName: string, reroll: boolean = false, level: number = 0, conditions: string[] = []) {
+  rollOnTable: async function (csvFileName: string, reroll: boolean = false, level: number = 0, conditions?: string[]) {
     const table = await this.loadTable(csvFileName);
 
     const quality = containsQuality(table);
@@ -52,7 +52,7 @@ export const TableManager = {
       filterTableByLevel(table, level);
     }
 
-    if (conditions.length > 0) {
+    if (conditions && conditions.length > 0) {
       filterTableByCondition(table, conditions);
     }
 
@@ -72,6 +72,15 @@ export const TableManager = {
     for (const row of table) {
       if (!row[quality]) continue;
       const [min, max] = this.parseDiceRange(row[quality]);
+      if (roll < min) {
+        const prevRow = table[table.indexOf(row) - 1];
+        if (prevRow && prevRow[quality]) {
+          const [, prevMax] = this.parseDiceRange(prevRow[quality]);
+          const diffToMin = min - roll;
+          const diffToPrevMax = roll - prevMax;
+          return diffToMin < diffToPrevMax ? diffToMin : diffToPrevMax;
+        }
+      }
       if (roll >= min && roll <= max) {
         setTimeout(() => stopSlots(slots, row.Item, timeouts), 2000);
         return row.Item;
@@ -79,7 +88,7 @@ export const TableManager = {
     }
 
     // in case of reroll
-    return (table.pop() as { DiceRange: string; Outcome: string; LinkToTable: string }).Outcome;
+    return (table.pop())?.Item;
 
   },
 

@@ -31,13 +31,11 @@ export function filterTableByLevel(table: any[], maxLevel: number) {
 }
 
 export function filterTableByCondition(table: any[], condition: string[]) {
-  const validConditions = ["slashing", "bludgeoning", "melee", "piercing", "throw"];
-  const filteredConditions = condition.filter(cond => validConditions.includes(cond));
-  if (filteredConditions.length > 0) {
-    for (let i = table.length - 1; i >= 0; i--) {
-      if (!filteredConditions.includes(table[i].condition)) {
-        table.splice(i, 1); // Remove elements that don't match the condition
-      }
+  for (let i = table.length - 1; i >= 0; i--) {
+    if (!table[i].Condition) continue;
+    if (table[i].Condition.includes('melee') && condition.includes('ranged')) table.splice(i, 1);
+    if (!condition.some(cond => table[i].Condition.includes(cond))) {
+      table.splice(i, 1); // Remove elements that don't match the condition
     }
   }
 }
@@ -73,4 +71,27 @@ export function containsQuality(table: any[]) {
     return (document.getElementById('quality-select') as HTMLSelectElement).value;
   }
   return 'd%';
+}
+
+export function splitString(input: string) {
+  const regex = /^(\+?\d+)\s+(.+)$/;
+  const match = input.match(regex);
+
+  if (match) {
+    return {
+      potency: match[1], // "+1"
+      striking: match[2],  // "Striking weapon"
+    };
+  } else {
+    throw new Error("Input does not match the expected format");
+  }
+}
+
+export function purifyRunes(rune: string) {
+  if (rune.includes("(Greater)")) {
+    rune = "Greater " + rune.replace(" (Greater)", "");
+  }
+  return rune.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match, index) =>
+    index === 0 ? match.toLowerCase() : match.toUpperCase()
+  ).replace(/\s+/g, '');
 }

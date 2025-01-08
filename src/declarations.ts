@@ -1,6 +1,15 @@
 import { searchEquipment } from "./items";
 import { TableManager } from "./table-manager";
-import { getActorLevel, getDmgType, getTraits } from "./util";
+import { getActorLevel, getDmgType, getTraits, purifyRunes, splitString } from "./util";
+
+enum StrikingRune {
+  "Weapon",
+  "Striking weapon",
+  "Greater striking weapon",
+  "Major striking weapon",
+  "Mythic striking weapon",
+}
+
 export class LsmItem {
   rollableStats: string[];
   name: string;
@@ -85,7 +94,6 @@ export class Weapon extends LsmItem {
   constructor() {
     super('weapon', '', ['material', 'rune', 'potency', 'type', 'item']);
     this.material = '';
-    this.element = '';
     this.runes = [];
     this.type = '';
     this.item = '';
@@ -114,17 +122,38 @@ export class Weapon extends LsmItem {
     const conditions = [
       this.type === "ranged" ? "ranged" : "melee",
       getDmgType(item),
-      getTraits(item)
+      ...getTraits(item)
     ]
 
+    // equal to potency level 
     const runechance = parseInt((await TableManager.rollOnTable(`${this.name}/${this.name}-runechance.tsv`)).split(' ')[0]);
 
     for (let i = 0; i < runechance; i++) {
       // @ts-ignore
-      this.runes.push(await TableManager.rollOnTable(`${this.name}/${this.name}-runes.tsv`), level, conditions);
+      let rune = await TableManager.rollOnTable(`${this.name}/${this.name}-runes.tsv`, false, level, conditions);
+      this.runes.push(purifyRunes(rune));
+    }
+  }
+
+  override toItemData(): any {
+    const itemData: any = { runes: {} };
+    if (this.material) {
+      const [material, grade] = this.material.toLowerCase().split(' (');
+      itemData.material = {
+        type: material,
+        grade: grade ? grade.slice(0, -1) : ''
+      };
+    }
+    if (this.potency && this.potency !== "Specific Weapon") {
+      const { potency, striking } = splitString(this.potency);
+      itemData.runes.potency = parseInt(potency, 10);
+      itemData.runes.striking = StrikingRune[striking as keyof typeof StrikingRune];
+    };
+    if (this.runes.length > 0) {
+      itemData.runes.property = this.runes;
     }
 
-
+    return itemData;
   }
 
 }
