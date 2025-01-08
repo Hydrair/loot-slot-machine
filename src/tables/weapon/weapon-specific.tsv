@@ -1,0 +1,196 @@
+Minor	Lesser	Moderate	Greater	Major	Item		Level
+01-23					Scrollstaff		1
+24-45					Fighter's Fork		3
+46-67					Wordreaper		3
+68-89					Ghast Stiletto		3
+90-111					Hunter's Bow		3
+112-133					Little Love		3
+134-155					Retribution Axe		3
+156-177					Smoking Sword		3
+178-199					Storm Hammer		3
+200-221					Sparkblade		3
+222-241	01-19				Ugly Cute's Gift		4
+242-261	20-38				Ankhrav Duster		4
+262-281	39-57				Blast Lance		4
+282-301	58-75				Fiend's Hunger		4
+302-319	76-91				Trollhound Pick		5
+320-337	92-107				Alicorn Lance		5
+338-355	108-123				Auspicious Scepter		5
+356-373	124-139				Cinderclaw Gauntlet		5
+374-391	140-155				Dog-Bone Knife		5
+392-409	156-171				Infiltrator's Accessory		5
+410-427	172-187				Poisonous Dagger		5
+428-445	188-203				Scizore of the Crab		5
+446-463	204-219				Serpent Dagger		5
+464-481	220-235				Caterwaul Sling		5
+482-499	236-251				Grasp of Droskar		5
+500-517	252-267				Thundercrasher		5
+518-535	268-283				Heartripper Blade		5
+536-553	284-299				Metronomic Hammer		5
+554-571	300-315				Solar Shellflower		5
+572-589	316-331				Reaper's Lancet		5
+590-605	332-345				Chatterer of Follies		6
+606-621	346-359				Lady's Knife		6
+622-637	360-373				Windlass Bolas		6
+638-653	374-387				Acrobat's Staff		6
+654-669	388-401				Bloodletting Kukri		6
+670-685	402-415				Dragonscale Staff		6
+686-701	416-429				Iris of the Sky		6
+702-717	430-443				Conflagration Club		6
+718-733	444-457				Cooperative Blade		6
+734-749	458-471				Gluttonous Spear		6
+750-765	472-485				Obsidian Edge		6
+766-781	486-499				Twining Staff		6
+782-797	500-513				Soul Chain		6
+798-811	514-525	01-14			Spellguard Blade		7
+812-825	526-537	15-28			Guiding Star		7
+826-839	538-549	29-42			Bloodgorger Scythe		7
+840-853	550-561	43-56			Alghollthu Lash		7
+854-867	562-573	57-70			Undead Scourge		7
+868-881	574-585	71-84			Fulminating Spear		7
+882-895	586-597	85-98			Lady's Spiral		7
+896-909	598-609	99-112			Liar's Gun		7
+910-923	610-621	113-126			Man-Feller		7
+924-937	622-633	127-140			Morphing Weapon		7
+938-951	634-645	141-154			Slime Whip		7
+952-965	646-657	155-168			Splithead Bow		7
+966-979	658-669	169-182			Azarim		7
+	670-679	183-195			Habu's Cudgel		8
+	680-689	196-208			Constricting Meteor		8
+	690-699	209-221			Eclipse		8
+	700-709	222-234			Spiritsight Crossbow		8
+	710-719	235-247			Hundred-Moth Caress		8
+	720-729	248-260			Flaying Knife		8
+	730-739	261-273			Blast Lance (Greater)		8
+	740-749	274-286			Gray Prince		8
+	750-759	287-299			Mindlance		8
+	760-769	300-312			Vampire-Fang Morningstar		8
+	770-779	313-325			Vine Whip		8
+	780-787	326-336			Devil's Trident		9
+	788-795	337-347			Reaper's Crescent		9
+	796-803	348-358			Spellender		9
+	804-811	359-369			Vine of Roses		9
+	812-819	370-380			Chaplain's Cudgel		9
+	820-827	381-391			Grisly Scythe		9
+	828-835	392-402			Chimera Flail		9
+	836-843	403-413			Crimson Brand		9
+	844-851	414-424			Erraticannon		9
+	852-859	425-435			Gloom Blade		9
+	860-867	436-446			Obsidian Edge (Greater)		9
+	868-875	447-457			Sonic Tuning Mace		9
+	876-883	458-468			Vashu's Ninth Knife		9
+	884-891	469-479			Nexian Sealing Blade		9
+	892-899	480-490			Skeletal Claw		9
+	900-907	491-501			Whip of Compliance		9
+	908-913	502-511	01-14		Giant Squid Lash		10
+	914-919	512-521	15-28		North Wind's Night Verse		10
+	920-925	522-531	29-42		Rustbringer		10
+	926-931	532-541	43-56		South Wind's Scorch Song		10
+	932-937	542-551	57-70		Grounding Spike		10
+	938-943	552-561	71-84		Polarizing Mace		10
+	944-949	562-571	85-98		Whip-Tounge Sling		10
+		572-579	99-110		Lumber Lord's Axe		11
+		580-587	111-122		Nightmare Cudgel		11
+		588-595	123-134		Rat-Catcher Trident		11
+		596-603	135-146		Stoneraiser Javelin		11
+		604-611	147-158		Gloaming Arc		11
+		612-619	159-170		Spore Sap		11
+		620-627	171-182		Dezullon Fountain		11
+		628-635	183-194		Hunter's Anthem		11
+		636-643	195-206		Scalding Gauntlets		11
+		644-651	207-218		Buzzsaw Axe		11
+		652-659	219-230		Carver-Cutter		11
+		660-667	231-242		Gloaming Shard		11
+		668-675	243-254		Hex Blaster		11
+		676-683	255-266		Redeemer's Pistol		11
+		684-691	267-278		Rime Foil		11
+		692-699	279-290		Sensei's Parasol		11
+		700-707	291-302		Shattered Plan		11
+		708-715	303-314		Tiger's Claw		11
+		716-723	315-326		Thundering Fury Dadao		11
+		724-731	327-338		Lionfish Spear		11
+		732-739	339-350		Reaper's Grasp		11
+		740-745	351-361		Four-Ways Dogslicer		12
+		746-751	362-372		Tidal Fishhook		12
+		752-757	373-383		Blink Blade		12
+		758-763	384-394		Catoblepas Maul		12
+		764-769	395-405		Dragonfire Halfbow		12
+		770-775	406-416		Obsidian Edge (Major)		12
+		776-781	417-427		Four-Tiger Blade		12
+		782-787	428-438		Mammoth Bow		12
+		788-793	439-449		Scarlet Queen		12
+		794-799	450-460		Storm Herald		12
+		800-805	461-471		Shuln Fang Katar		12
+		806-809	472-481	01-15	Splinter Spear		13
+		810-813	482-491	16-30	Dwarven Thrower		13
+		814-817	492-501	31-45	Anchor Spear		13
+		818-821	502-511	46-60	Ankylostar		13
+		822-825	512-521	61-75	Piston Gauntlets		13
+		826-829	522-531	76-90	Searing Blade		13
+		830-833	532-541	91-105	Tidal Crossbow		13
+		834-837	542-551	106-120	Spark Dancer		13
+		838-841	552-561	121-135	Blade of Four Energies		13
+		842-845	562-571	136-150	Carver-Cutter (Greater)		13
+		846-849	572-581	151-165	Dragontooth Club		13
+		850-853	582-591	166-180	Knight Captain's Lance		13
+		854-857	592-601	181-195	Pistol of Wonder		13
+		858-861	602-611	196-210	Scalding Gauntlets (Greater)		13
+		862-865	612-621	211-225	Sonic Tuning Mace (Greater)		13
+		866-869	622-631	226-240	Vampiric Scythe		13
+			632-639	241-253	Deepdread Claw		14
+			640-647	254-266	Glaive of the Artist		14
+			648-655	267-279	Lionfish Spear (Greater)		14
+			656-663	280-292	Nexian Sealing Blade (Greater)		14
+			664-671	293-305	Storm Flash		14
+			672-679	306-318	Hardened Harrow Deck		14
+			680-687	319-331	Ouroboros Flail		14
+			688-695	332-344	Blessed Reformer		14
+			696-703	345-357	Brilliant Rapier		14
+			704-711	358-370	Deflecting Branch		14
+			712-719	371-383	Holy Avenger		14
+			720-727	384-396	Singing Shortbow		14
+			728-735	397-409	Skyrider Sword		14
+			736-743	410-422	Stargazer		14
+			744-749	423-434	Carver-Cutter (Major)		15
+			750-755	435-446	Radiant Lance		15
+			756-761	447-458	Songbird's Brush		15
+			762-767	459-470	Black King		15
+			768-773	471-482	Black Scorpion Stingmace		15
+			774-779	483-494	Blade of the Rabbit Prince		15
+			780-785	495-506	Buzzsaw Axe (Greater)		15
+			786-791	507-518	Scalding Gauntlets (Major)		15
+			792-797	519-530	Blade of the Black Sovereign		15
+			798-803	531-542	Godsbreath Bow		15
+			804-809	543-554	Golden Blade of Mzali		15
+			810-815	555-566	Hyldarf's Fang		15
+			816-819	567-576	Icicle		16
+				577-585	Gearblade		17
+				586-594	Rustbringer (Greater)		17
+				595-603	Searing Blade (Greater)		17
+				604-612	Celestial Peachwood Sword		17
+				613-621	Luck Blade		17
+				622-630	Ouroboros Flail (Greater)		17
+				631-639	Spellcutter		17
+				640-648	Splinter Spear (Greater)		17
+				649-655	Blade of Four Energies (Greater)		18
+				656-662	Scalding Gauntlets (True)		18
+				663-669	Storm Flash (Greater)		18
+				670-676	Obsidian Edge (True)		18
+				677-683	Singing Shortbow (Greater)		18
+				684-690	Shadow's Heart		18
+				691-697	Life's Last Breath		18
+				698-704	Carver-Cutter (True)		18
+				705-711	Final Rest		18
+				712-718	Torag's Silver Anvil		18
+				719-724	Luck Blade (Wishing)		19
+				725-730	Skyrider Sword (Greater)		19
+				731-736	Mattock of the Titans		19
+				737-742	Sky-Piercing Bow		19
+				743-746	Splinter Spear (Major)		20
+				747-750	Buzzsaw Axe (Major)		20
+				751-754	Ouroboros Flail (Major)		20
+				755-758	Sky Hammer		20
+				759-762	Viper Rapier		20
+				763-766	Kaldemash's Lament		20
+				767-769	Spiral Athame		22
+980-1000	950-1000	870-1000	820-1000	770-1000	Roll twice again		

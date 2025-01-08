@@ -1,5 +1,6 @@
 import Papa from "papaparse";
 import { addSlotItem, addSlots, rollSlots, stopSlots } from "./slots";
+import { containsQuality, filterTableByCondition, filterTableByLevel, filterTableByQuality } from "./util";
 
 // Ensure PapaParse is globally available or import it dynamically
 if (typeof Papa === "undefined") {
@@ -10,7 +11,7 @@ if (typeof Papa === "undefined") {
 
 export const TableManager = {
 
-  loadTable: async function (csvFileName: string): Promise<Array<{ DiceRange: string; Outcome: string }>> {
+  loadTable: async function (csvFileName: string): Promise<Array<{ [key: string]: any }>> {
     const response = await fetch(
       `modules/loot-slot-machine/tables/${csvFileName}`
     );
@@ -27,7 +28,7 @@ export const TableManager = {
       );
     }
 
-    return parsed.data as Array<{ DiceRange: string; Outcome: string }>;
+    return parsed.data as Array<{}>;
   },
 
 
@@ -38,40 +39,48 @@ export const TableManager = {
     return [min, max];
   },
 
-  rollOnTable: async function (csvFileName: string) {
+  rollOnTable: async function (csvFileName: string, reroll: boolean = false, level: number = 0, conditions: string[] = []) {
     const table = await this.loadTable(csvFileName);
 
-    // Roll a d100
-    const roll = (await new Roll(`1d100`).roll())._total;
+    const quality = containsQuality(table);
 
-    // Find the outcome based on the dice range
+    if (quality !== "%d") {
+      filterTableByQuality(table, quality);
+    }
+
+    if (level > 0) {
+      filterTableByLevel(table, level);
+    }
+
+    if (conditions.length > 0) {
+      filterTableByCondition(table, conditions);
+    }
+
+    const maxRoll = table[table.length - 1][quality].split("-")[1];
+    const roll = (await new Roll(`1d${maxRoll}`).roll())._total;
+    console.log(`Rolled a ${roll} on the ${quality} table`);
+
     const slots = addSlots();
     let i = 0;
     for (const row of table) {
-      slots?.appendChild(addSlotItem(row.Outcome, i++));
+      slots?.appendChild(addSlotItem(row.Item, i++));
     }
     const timeouts = rollSlots(slots);
 
+    if (reroll) table.pop()
+
     for (const row of table) {
-      const [min, max] = this.parseDiceRange(row.DiceRange);
+      if (!row[quality]) continue;
+      const [min, max] = this.parseDiceRange(row[quality]);
       if (roll >= min && roll <= max) {
-        setTimeout(() => stopSlots(slots, row.Outcome, timeouts), 2000);
-        return (row as { DiceRange: string; Outcome: string; LinkToTable: string }).Outcome;
+        setTimeout(() => stopSlots(slots, row.Item, timeouts), 2000);
+        return row.Item;
       }
     }
 
-    throw new Error(`No matching outcome found for roll: ${roll}`);
+    // in case of reroll
+    return (table.pop() as { DiceRange: string; Outcome: string; LinkToTable: string }).Outcome;
+
   },
 
-  // async getAllCSVFiles(directory: string): Promise<string[]> {
-  //   const csvs = await FilePicker.browse('data', `modules/loot-slot-machine/tables/${directory}`).then(response => {
-  //     return response.files;
-  //   }).catch(err => {
-  //     console.error('Error browsing directory:', err);
-  //     return [];
-  //   });
-  //   const quality = (document.getElementById('quality-select') as HTMLSelectElement).value;
-  //   return csvs.filter(file => file.includes(quality)).map(file => file.replace('modules/loot-slot-machine/tables/', ''));
-
-  // }
 };

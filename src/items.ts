@@ -1,4 +1,4 @@
-import { Grimoire, LsmItem, Staff, Potion } from "./declarations";
+import { Grimoire, LsmItem, Staff, Potion, Weapon } from "./declarations";
 
 
 export async function searchEquipment(searchQuery: string): Promise<Item> {
@@ -45,7 +45,7 @@ export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string
   // @ts-ignore
   const item = await Item.create({
     ...template, system: combinedSystemData
-  }, { renderSheet: true, parent: game.actors?.get((document.getElementById('lsm-character-select') as HTMLSelectElement).value) }) as Item;
+  }, { renderSheet: false, parent: game.actors?.get((document.getElementById('lsm-character-select') as HTMLSelectElement).value) }) as Item;
 
   console.log("Item created:", item);
   if (!item) {
@@ -78,6 +78,7 @@ const itemClassMap: { [key: string]: any } = {
   grimoire: Grimoire,
   potions: Potion,
   staff: Staff,
+  weapon: Weapon,
   // Add other item types here
 };
 

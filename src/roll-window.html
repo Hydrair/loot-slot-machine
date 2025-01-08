@@ -1,16 +1,18 @@
 <div class="table-roller">
   <h3>Roll on Table</h3>
-  <p>Choose a quality:</p>
-  <select id="quality-select">
-    <option value="minor">Minor</option>
-    <option value="lesser">Lesser</option>
-    <option value="moderate">Moderate</option>
-    <option value="greater">Greater</option>
-    <option value="major">Major</option>
-  </select>
-  <p>Choose an actor:</p>
-  <select id="lsm-character-select"></select>
+  <div class="lsm-selections">
+    <label for="quality-select">Choose a quality:</label>
+    <select id="quality-select">
+      <option value="Minor">Minor</option>
+      <option value="Lesser">Lesser</option>
+      <option value="Moderate">Moderate</option>
+      <option value="Greater">Greater</option>
+      <option value="Major">Major</option>
+    </select>
+    <label for="lsm-character-select">Choose an actor:</label>
+    <select id="lsm-character-select"></select>
+    <button id="lsm-roll-button">Roll</button>
+  </div>
   <div id="lsm-slot-container"></div>
   <div id="lsm-item-container"></div>
-  <button id="roll-button">Roll</button>
 </div>

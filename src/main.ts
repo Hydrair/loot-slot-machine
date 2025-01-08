@@ -1,9 +1,10 @@
 import { TableManager } from "./table-manager";
 import { createAndDisplayItem, createLsmItem } from "./items";
+import { renderActors } from "./util";
 
-Hooks.once("init", async function () {
+Hooks.once("ready", async function () {
   console.log("Loot Slot Machine | Initialized");
-  // new SlotMachineApp().render(true);
+  new SlotMachineApp().render(true);
 
   // Register chat command
   Hooks.on("chatMessage", (_, message) => {
@@ -14,6 +15,7 @@ Hooks.once("init", async function () {
     return true; // Allow other messages to be posted to chat
   });
 });
+
 
 class SlotMachineApp extends Application {
   static override get defaultOptions() {
@@ -29,15 +31,16 @@ class SlotMachineApp extends Application {
     super.activateListeners(html);
 
     renderActors();
-
+    const rollButton = html.find("#lsm-roll-button");
+    if (!rollButton) return;
     // Attach event listener to the roll button
-    html.find("#roll-button").on("click", async () => {
+    rollButton.on("click", async () => {
       const itemContainer = document.getElementById("lsm-item-container")
       itemContainer ? itemContainer.innerHTML = "" : console.warn("Item container not found.");
       const slotContainer = document.getElementById("lsm-slot-container")
       slotContainer ? slotContainer.innerHTML = "" : console.warn("Slot container not found.");
       try {
-        const outcome = await TableManager.rollOnTable("loot-table.csv");
+        const outcome = (await TableManager.rollOnTable("loot-table.tsv")).toLowerCase();
         if (ui.notifications) {
           ui.notifications.info(`Rolled: ${outcome}`);
           const item = createLsmItem(outcome);
@@ -45,6 +48,7 @@ class SlotMachineApp extends Application {
           if (item) {
             await item.roll();
             createAndDisplayItem(item, "lsm-item-container");
+            rollButton.innerText = "Roll Again";
           } else {
             console.warn("Item is null.");
           }
@@ -60,25 +64,5 @@ class SlotMachineApp extends Application {
         }
       }
     });
-  }
-}
-
-
-
-function renderActors() {
-  // @ts-ignore
-  const actors = game.actors?.filter((actor: Actor) => actor.type === "character");
-  const characterSelect = document.getElementById("lsm-character-select") as HTMLSelectElement;
-  if (!characterSelect) {
-    console.error("Character select element not found.");
-    return;
-  }
-  // @ts-ignore
-  for (const actor of actors) {
-    const option = document.createElement("option");
-    option.value = actor.id;
-    // @ts-ignore
-    option.text = actor.name;
-    characterSelect.appendChild(option);
   }
 }
