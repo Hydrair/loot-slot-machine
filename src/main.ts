@@ -1,6 +1,6 @@
 import { TableManager } from "./table-manager";
-import { createAndDisplayItem, createLsmItem } from "./items";
-import { renderActors } from "./util";
+import { createAndDisplayItem, createLsmItem, searchAllItems } from "./items";
+import { getSpellsByLevel, renderActors } from "./util";
 
 Hooks.once("ready", async function () {
   console.log("Loot Slot Machine | Initialized");
@@ -29,7 +29,8 @@ class SlotMachineApp extends Application {
 
   override async activateListeners(html: any) {
     super.activateListeners(html);
-    // await searchPotions();
+    await getSpellsByLevel(3);
+    await searchPotions();
 
     renderActors();
     const rollButton = html.find("#lsm-roll-button");
@@ -67,19 +68,20 @@ class SlotMachineApp extends Application {
     });
   }
 }
-// async function searchPotions() {
-//   const table = await TableManager.loadTable('potion.tsv');
-//   // const items = ["Healing Potion", "Healing Potion (Moderate)", "Healing Potion (Minor)", "Healing Potion (Major)", "Healing Potion (Lesser)", "Healing Potion (Greater)"];
-//   const items = table.map(row => row.Item);
-//   const notfound = [];
-//   const found = [];
-//   for (const item of items) {
-//     const res = await searchAllItems(item);
-//     if (res) found.push(item);
-//     if (!res) {
-//       notfound.push(item);
-//     }
-//   }
-//   console.log("notfound:", notfound);
-//   console.log("found:", found);
-// }
+
+async function searchPotions() {
+  const table = await TableManager.loadTable('potion.tsv');
+  const items = ["Scroll of Fireball (Rank 3)"];
+  // const items = table.map(row => row.Item);
+  const notfound = [];
+  const found = [];
+  for (const item of items) {
+    const res = await searchAllItems(item);
+    if (res) found.push(item);
+    if (!res) {
+      notfound.push(item);
+    }
+  }
+  console.log("notfound:", notfound);
+  console.log("found:", found);
+}

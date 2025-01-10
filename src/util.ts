@@ -1,3 +1,5 @@
+import { searchItem } from "./items";
+
 export function renderActors() {
   // @ts-ignore
   const actors = game.actors?.filter((actor: Actor) => actor.type === "character");
@@ -133,4 +135,28 @@ export function addElementToEnergyBreath(potionName: string, descriptor: string)
 
   // If the name doesn't match the expected pattern, return it unchanged
   return potionName;
+}
+
+export async function getSpellsByLevel(level: number) {
+  const results: Item[] = [];
+  // @ts-ignore
+  const targetPacks = game.packs
+    .filter((pack: any) =>
+      pack.metadata.label.includes('Spells')
+    );
+
+  for (const pack of targetPacks) {
+    const spells = await pack.getDocuments({ type: 'spell' });
+    // @ts-ignore
+    results.push(spells.filter((spell: any) => spell.system.level.value === level))
+  }
+
+  console.log(`Found ${results.length} matching items in Spells compendiums:`, results);
+  return results.flat();
+}
+
+export function extractScrollRank(scrollName: string): number {
+  const regex = /^(\d+)[a-z]+-rank Scroll$/;
+  const match = scrollName.match(regex);
+  return match ? parseInt(match[1], 10) : 0; // Returns the integer rank or null if no match
 }

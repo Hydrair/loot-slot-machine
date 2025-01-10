@@ -1,7 +1,7 @@
-import { Grimoire, LsmItem, Staff, Potion, Weapon } from "./declarations";
+import { Grimoire, LsmItem, Staff, Potion, Weapon, Worn, Armor, Jewelry, Scroll, Wand } from "./declarations";
 
 
-export async function searchItem(searchQuery: string, itemType: string): Promise<Item> {
+export async function searchItem(searchQuery: string, itemType: string = "Equipment"): Promise<Item> {
   const results: Item[] = [];
   const escapedQuery = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape special characters in the search query
   const regex = new RegExp(`^${escapedQuery}$`, "i"); // Case-insensitive exact match
@@ -34,30 +34,30 @@ export async function searchItem(searchQuery: string, itemType: string): Promise
   return results[0];
 }
 
-// export async function searchAllItems(searchQuery: string) {
+export async function searchAllItems(searchQuery: string) {
 
-//   const results = [];
-//   const escapedQuery = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape special characters in the search query
-//   const regex = new RegExp(escapedQuery, "i"); // Case-insensitive regex for matching names
-//   const potionPacks = game.packs
+  const results = [];
+  const escapedQuery = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape special characters in the search query
+  const regex = new RegExp(escapedQuery, "i"); // Case-insensitive regex for matching names
+  const potionPacks = game.packs
 
-//   for (const pack of potionPacks) {
+  for (const pack of potionPacks) {
 
-//     // Use the index for lightweight searches
-//     const matchingIndexes = pack.index.filter(entry => regex.test(entry.name));
+    // Use the index for lightweight searches
+    const matchingIndexes = pack.index.filter(entry => regex.test(entry.name));
 
-//     // Fetch the full documents for the matching indexes
-//     const matchingDocuments = await Promise.all(
-//       matchingIndexes.map(entry => pack.getDocument(entry._id))
-//     );
-//     if (matchingDocuments.length > 0) {
-//       console.log(`Found ${matchingDocuments.length} matching items in "${pack.metadata.label}" compendium:`, matchingDocuments, pack);
-//     }
-//     results.push(...matchingDocuments);
-//   }
+    // Fetch the full documents for the matching indexes
+    const matchingDocuments = await Promise.all(
+      matchingIndexes.map(entry => pack.getDocument(entry._id))
+    );
+    if (matchingDocuments.length > 0) {
+      console.log(`Found ${matchingDocuments.length} matching items in "${pack.metadata.label}" compendium:`, matchingDocuments, pack);
+    }
+    results.push(...matchingDocuments);
+  }
 
-//   return results.length > 0 ? results : null;
-// }
+  return results.length > 0 ? results : null;
+}
 
 export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string) {
   const template = await searchItem(lsmItem.item, lsmItem.itemType);
@@ -106,6 +106,11 @@ const itemClassMap: { [key: string]: any } = {
   potion: Potion,
   staff: Staff,
   weapon: Weapon,
+  worn: Worn,
+  armor: Armor,
+  jewelry: Jewelry,
+  scroll: Scroll,
+  wand: Wand
   // Add other item types here
 };
 
