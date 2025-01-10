@@ -32,6 +32,19 @@
   transition: transform 0.5s ease-out;
 }
 
+.lsm-slot-pickable {
+  cursor: pointer;
+}
+
+.lsm-slot-pickable:hover {
+  filter: brightness(0.8);
+}
+
+.lsm-slot-locked {
+  cursor: not-allowed;
+  filter: brightness(0.5);
+}
+
 .lsm-item-display {
   display: flex;
   gap: 10px;

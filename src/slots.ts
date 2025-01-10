@@ -1,62 +1,102 @@
-interface SlotItem {
-  id: number;
-  name: string;
-  value: number;
+import { parseDiceRange } from "./util";
+
+
+
+interface SlotTableRow {
+  Item: string;
+  Chance: string;
 }
 
-interface Slot {
-  id: number;
-  items: SlotItem[];
-}
+class Slot {
+  table: SlotTableRow[];
+  roll: number;
+  pickable: boolean;
+  slotItems: HTMLDivElement[] = [];
+  outcome: string = "";
+  slotDiv: HTMLDivElement = document.createElement('div');;
 
-let slots: Slot[] = [];
+  constructor(table: SlotTableRow[], roll: number, pickable: boolean) {
+    this.table = table;
+    this.roll = roll;
+    this.pickable = pickable;
 
-function addSlots(): HTMLDivElement | undefined {
-  const slotContainer = document.getElementById('lsm-slot-container');
-  if (slotContainer) {
-    const slotDiv = document.createElement('div');
-    slotDiv.className = 'lsm-slot';
-    slotContainer.appendChild(slotDiv);
-    return slotDiv;
+    for (const row of table) {
+      this.addSlotItem(row.Item, table.indexOf(row));
+    }
+    this.render(pickable);
   }
-  return;
-}
+
+  render(pickable?: boolean) {
+    const slotContainer = document.getElementById('lsm-slot-container');
+    if (slotContainer) {
+      this.slotDiv.className = 'lsm-slot';
+      slotContainer.appendChild(this.slotDiv);
+      if (pickable) {
+        this.makeSlotPickable(this.slotDiv);
+      }
+      this.slotDiv.append(...this.slotItems);
+    }
+  }
+
+  lockSlot() {
+    this.pickable = false;
+    this.slotDiv.classList.remove('lsm-slot-pickable');
+    this.slotDiv.classList.add('lsm-slot-locked');
+  }
+
+  getOutcome() {
+    if (this.outcome === '') this.rollTable();
+    return this.outcome;
+  }
+
+  rollTable() {
+    for (const row of this.table) {
+      const [min, max] = parseDiceRange(row.Chance);
+      if (this.roll < min) {
+        const prevRow = this.table[this.table.indexOf(row) - 1];
+        if (prevRow && prevRow.Chance) {
+          const [, prevMax] = parseDiceRange(prevRow.Chance);
+          const diffToMin = min - this.roll;
+          const diffToPrevMax = this.roll - prevMax;
+          this.roll = diffToMin < diffToPrevMax ? diffToMin : diffToPrevMax;
+        }
+      }
+      if (this.roll >= min && this.roll <= max) {
+        const timeouts = this.rollSlots();
+        setTimeout(() => this.stopSlots(row.Item, timeouts), 2000);
+        this.outcome = row.Item;
+      }
+    }
+  }
 
 
-function addSlotItem(item: string, number: number): HTMLDivElement {
-  const slot = document.createElement('div');
-  slot.className = 'lsm-slot-item';
-  slot.textContent = item;
-  slot.style.top = `${50 * number}px`;
-  return slot;
-}
 
-function rollSlots(slotDiv: HTMLDivElement | undefined) {
-  const timeouts = [];
-  if (slotDiv) {
-    const spins = Math.floor(Math.random() * 15) + 10
-    const slotItems = slotDiv.getElementsByClassName('lsm-slot-item');
-    for (let i = 0; i < slotItems.length; i++) {
-      const slotItem = slotItems[i] as HTMLElement;
+  addSlotItem(item: string, number: number) {
+    const slot = document.createElement('div');
+    slot.className = 'lsm-slot-item';
+    slot.textContent = item;
+    slot.style.top = `${50 * number}px`;
+    this.slotItems.push(slot);
+  }
 
+  rollSlots() {
+    const timeouts = [];
+    for (let i = 0; i < this.slotItems.length; i++) {
+      const slotItem = this.slotItems[i];
+      const spins = Math.floor(Math.random() * 15) + 10;
       for (let j = 0; j < spins; j++) {
         timeouts.push(setTimeout(() => {
-          const offset = (j * 50) % (slotItems.length * 50);
+          const offset = (j * 50) % (this.slotItems.length * 50);
           slotItem.style.transform = `translateY(-${offset}px)`;
         }, j * 200));
       }
-
-
     }
+    return timeouts;
   }
-  return timeouts;
-}
 
-function stopSlots(slotDiv: HTMLDivElement | undefined, outcome: string, timeouts: NodeJS.Timeout[]) {
-  if (slotDiv) {
-    const slotItems = slotDiv.getElementsByClassName('lsm-slot-item');
-    for (let i = 0; i < slotItems.length; i++) {
-      const slotItem = slotItems[i] as HTMLElement;
+  stopSlots(outcome: string, timeouts: NodeJS.Timeout[]) {
+    for (let i = 0; i < this.slotItems.length; i++) {
+      const slotItem = this.slotItems[i];
       if (slotItem.textContent !== outcome) {
         slotItem.style.display = `none`;
       } else {
@@ -67,6 +107,23 @@ function stopSlots(slotDiv: HTMLDivElement | undefined, outcome: string, timeout
       clearTimeout(timeout);
     }
   }
+
+  makeSlotPickable(slotDiv: HTMLDivElement) {
+    slotDiv.style.cursor = 'pointer';
+    slotDiv.classList.add('lsm-slot-pickable');
+    slotDiv.addEventListener('click', (event) => {
+      const outcome = this.outcome;
+      this.onSlotClick(outcome);
+    });
+  }
+
+  onSlotClick(outcome: string) {
+    // This method will be overridden by SlotManager
+    console.log(outcome);
+
+  }
+
 }
 
-export { slots, addSlots, addSlotItem, rollSlots, stopSlots };
+export { Slot };
+

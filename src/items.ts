@@ -59,7 +59,7 @@ export async function searchAllItems(searchQuery: string) {
   return results.length > 0 ? results : null;
 }
 
-async function getItem(lsmItem: LsmItem) {
+async function getItem(lsmItem: LsmItem, actor: Actor): Promise<Item> {
   const template = await searchItem(lsmItem.item, lsmItem.itemType);
   const itemData = lsmItem.toItemData();
   const combinedSystemData = {
@@ -70,13 +70,18 @@ async function getItem(lsmItem: LsmItem) {
   // @ts-ignore
   return await Item.create({
     ...template, system: combinedSystemData
-  }, { renderSheet: false }) as Item;
+  }, { renderSheet: false, parent: actor }) as Item;
 }
 
 export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string) {
   const actor = game.actors?.get((document.getElementById('lsm-character-select') as HTMLSelectElement).value) as Actor;
-  const item = typeof lsmItem.item === "string" ? await getItem(lsmItem) : lsmItem.item;
-  await actor?.createEmbeddedDocuments("Item", [item]);
+  let item;
+  if (typeof lsmItem.item === "string") {
+    item = await getItem(lsmItem, actor);
+  } else {
+    item = lsmItem.item;
+    await actor?.createEmbeddedDocuments("Item", [item]);
+  }
 
   console.log("Item created:", item);
   if (!item) {
@@ -121,11 +126,11 @@ const itemClassMap: { [key: string]: any } = {
 };
 
 export function createLsmItem(itemType: string): LsmItem | null {
-  const ItemClass = itemClassMap[itemType.toLowerCase()];
+  const ItemClass = itemClassMap[itemType];
   if (!ItemClass) {
     console.error(`Item type "${itemType}" is not recognized.`);
     return null;
   }
-  return new ItemClass();
+  return new ItemClass(itemType);
 }
 

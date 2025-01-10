@@ -1,6 +1,6 @@
 import Papa from "papaparse";
-import { addSlotItem, addSlots, rollSlots, stopSlots } from "./slots";
 import { containsQuality, filterTableByCondition, filterTableByLevel, filterTableByQuality } from "./util";
+import { slotManager } from "./slotmanager";
 
 // Ensure PapaParse is globally available or import it dynamically
 if (typeof Papa === "undefined") {
@@ -32,20 +32,18 @@ export const TableManager = {
   },
 
 
-  parseDiceRange: function (range: string) {
-    const [min, max] = range.split("-").map(Number);
-    if (isNaN(min) || isNaN(max))
-      throw new Error(`Invalid dice range: ${range}`);
-    return [min, max];
-  },
 
-  rollOnTable: async function (csvFileName: string, level: number = 0, conditions?: string[], reroll?: boolean,) {
-    const table = await this.loadTable(csvFileName);
+
+  rollOnTable: async function (csvFileName: string, options: { level?: number, conditions?: string[], skipLast?: boolean, pickable?: boolean } = {}) {
+    const { level = 0, conditions, pickable = false, skipLast = false } = options;
+    let table = await this.loadTable(csvFileName);
 
     const quality = containsQuality(table);
 
-    if (quality !== "d%") {
-      filterTableByQuality(table, quality);
+    if (skipLast) table.pop()
+
+    if (quality !== "Chance") {
+      table = filterTableByQuality(table, quality).filter(row => row !== null);
     }
 
     if (level > 0) {
@@ -56,40 +54,11 @@ export const TableManager = {
       filterTableByCondition(table, conditions);
     }
 
-    const maxRoll = table[table.length - 1][quality].split("-")[1];
+    const maxRoll = table[table.length - 1].Chance.split("-")[1];
     const roll = (await new Roll(`1d${maxRoll}`).roll()).total;
-    console.log(`Rolled a ${roll} on the ${quality} table`);
-
-    const slots = addSlots();
-    let i = 0;
-    for (const row of table) {
-      slots?.appendChild(addSlotItem(row.Item, i++));
-    }
-    const timeouts = rollSlots(slots);
-
-    if (reroll) table.pop()
-
-    for (const row of table) {
-      if (!row[quality]) continue;
-      const [min, max] = this.parseDiceRange(row[quality]);
-      if (roll < min) {
-        const prevRow = table[table.indexOf(row) - 1];
-        if (prevRow && prevRow[quality]) {
-          const [, prevMax] = this.parseDiceRange(prevRow[quality]);
-          const diffToMin = min - roll;
-          const diffToPrevMax = roll - prevMax;
-          return diffToMin < diffToPrevMax ? diffToMin : diffToPrevMax;
-        }
-      }
-      if (roll >= min && roll <= max) {
-        setTimeout(() => stopSlots(slots, row.Item, timeouts), 2000);
-        return row.Item;
-      }
-    }
-
-    // in case of reroll
-    return (table.pop())?.Item;
-
+    // co
+    const slots = slotManager.createSlot(table, roll, pickable);
+    return slots.getOutcome();
   },
 
 };

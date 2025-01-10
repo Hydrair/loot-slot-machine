@@ -41,11 +41,12 @@ export function filterTableByCondition(table: any[], condition: string[]) {
 }
 
 export function filterTableByQuality(table: any[], quality: string) {
-  for (let i = table.length - 1; i >= 0; i--) {
-    if (!table[i][quality]) {
-      table.splice(i, 1); // Remove elements that don't match the condition
-    }
-  }
+  return table.map(entry => {
+    const keyToKeep = entry[quality];
+    return keyToKeep
+      ? { "Chance": keyToKeep, Item: entry.Item }
+      : null; // Filter out entries where the quality key has no value
+  }).filter(Boolean);
 }
 
 export function chooseColumn(table: any[], column: string | number) {
@@ -75,7 +76,7 @@ export function containsQuality(table: any[]) {
     && Object.keys(table[0]).includes('Major')) {
     return (document.getElementById('quality-select') as HTMLSelectElement).value;
   }
-  return 'd%';
+  return 'Chance';
 }
 
 export function splitString(input: string) {
@@ -176,4 +177,11 @@ export function extractScrollRank(scrollName: string): number {
   const regex = /^(\d+)[a-z]+-rank Scroll$/;
   const match = scrollName.match(regex);
   return match ? parseInt(match[1], 10) : 0; // Returns the integer rank or null if no match
+}
+
+export function parseDiceRange(range: string) {
+  const [min, max] = range.split("-").map(Number);
+  if (isNaN(min) || isNaN(max))
+    throw new Error(`Invalid dice range: ${range}`);
+  return [min, max];
 }
