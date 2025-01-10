@@ -1,6 +1,7 @@
 import { searchItem } from "./items";
 import { TableManager } from "./table-manager";
 import { addElementToEnergyBreath, addElementToRetaliation, extractScrollRank, getActorLevel, getDmgType, getSpellsByLevel, getTraits, purifyRunes, splitString } from "./util";
+import { createConsumableFromSpell } from "foundry-pf2e";
 
 enum StrikingRune {
   "Weapon",
@@ -13,7 +14,7 @@ enum StrikingRune {
 export class LsmItem {
   rollableStats: string[];
   name: string;
-  item: string;
+  item: string | any;
   material!: string;
   element!: string;
   rune!: string;
@@ -82,7 +83,7 @@ export class Potion extends LsmItem {
   override async roll() {
     const level = getActorLevel();
 
-    this.item = await TableManager.rollOnTable(`potion.tsv`, false, level);
+    this.item = await TableManager.rollOnTable(`potion.tsv`, level);
 
     if (this.item.includes('Retaliation')) {
       this.element = await TableManager.rollOnTable(`potion-element.tsv`);
@@ -103,7 +104,7 @@ export class Worn extends LsmItem {
 
   override async roll() {
     const level = getActorLevel();
-    this.item = await TableManager.rollOnTable(`worn.tsv`, false, level);
+    this.item = await TableManager.rollOnTable(`worn.tsv`, level);
   }
 }
 
@@ -136,7 +137,7 @@ export class Weapon extends LsmItem {
     if (this.potency === "Precious Material and roll again") {
       this.material = await TableManager.rollOnTable(`${this.name}/${this.name}-material.tsv`, level);
       while (this.potency === "Precious Material and roll again") {
-        this.potency = await TableManager.rollOnTable(`${this.name}/${this.name}-potency.tsv`, true);
+        this.potency = await TableManager.rollOnTable(`${this.name}/${this.name}-potency.tsv`, 0, [], true);
       }
     }
 
@@ -159,7 +160,7 @@ export class Weapon extends LsmItem {
 
     for (let i = 0; i < runechance; i++) {
       // @ts-ignore
-      let rune = await TableManager.rollOnTable(`${this.name}/${this.name}-runes.tsv`, false, level, conditions);
+      let rune = await TableManager.rollOnTable(`${this.name}/${this.name}-runes.tsv`, level, conditions);
       this.runes.push(purifyRunes(rune));
     }
   }
@@ -205,7 +206,7 @@ export class Armor extends LsmItem {
     if (this.potency === "Precious Material and roll again") {
       this.material = await TableManager.rollOnTable(`${this.name}/${this.name}-material.tsv`, level);
       while (this.potency === "Precious Material and roll again") {
-        this.potency = await TableManager.rollOnTable(`${this.name}/${this.name}-potency.tsv`, true);
+        this.potency = await TableManager.rollOnTable(`${this.name}/${this.name}-potency.tsv`, 0, [], true);
       }
     }
 
@@ -226,7 +227,7 @@ export class Armor extends LsmItem {
     const runechance = parseInt((await TableManager.rollOnTable(`${this.name}/${this.name}-runechance.tsv`)).split(' ')[0]);
 
     for (let i = 0; i < runechance; i++) {
-      let rune = await TableManager.rollOnTable(`${this.name}/${this.name}-runes.tsv`, false, level, conditions);
+      let rune = await TableManager.rollOnTable(`${this.name}/${this.name}-runes.tsv`, level, conditions);
       this.runes.push(purifyRunes(rune));
     }
   }
@@ -262,7 +263,7 @@ export class Jewelry extends LsmItem {
 
   override async roll(): Promise<void> {
     const level = getActorLevel();
-    this.item = await TableManager.rollOnTable(`jewelry.tsv`, false, level);
+    this.item = await TableManager.rollOnTable(`jewelry.tsv`, level);
   }
 }
 
@@ -275,12 +276,12 @@ export class Scroll extends LsmItem {
 
   override async roll(): Promise<void> {
     const level = getActorLevel();
-    this.item = await TableManager.rollOnTable(`scrolls.tsv`, false, level);
+    this.item = await TableManager.rollOnTable(`scrolls.tsv`, level);
     const rank = extractScrollRank(this.item);
     const spells = await getSpellsByLevel(rank);
-    const randomSpell = spells[Math.floor(Math.random() * spells.length)];
-    this.item = randomSpell.name;
+    const randomSpell = spells[Math.floor(Math.random() * spells.length)] as SpellPF2e;
 
+    this.item = await createConsumableFromSpell(randomSpell, { type: 'scroll' });
   }
 }
 

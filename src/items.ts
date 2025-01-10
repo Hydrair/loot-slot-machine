@@ -59,7 +59,7 @@ export async function searchAllItems(searchQuery: string) {
   return results.length > 0 ? results : null;
 }
 
-export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string) {
+async function getItem(lsmItem: LsmItem, actor: Actor) {
   const template = await searchItem(lsmItem.item, lsmItem.itemType);
   const itemData = lsmItem.toItemData();
   const combinedSystemData = {
@@ -68,9 +68,15 @@ export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string
   };
 
   // @ts-ignore
-  const item = await Item.create({
+  return await Item.create({
     ...template, system: combinedSystemData
-  }, { renderSheet: false, parent: game.actors?.get((document.getElementById('lsm-character-select') as HTMLSelectElement).value) }) as Item;
+  }, { renderSheet: false, parent: actor }) as Item;
+}
+
+export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string) {
+  const actor = game.actors?.get((document.getElementById('lsm-character-select') as HTMLSelectElement).value) as Actor;
+  const item = typeof lsmItem.item === "string" ? await getItem(lsmItem, actor) : lsmItem.item;
+  await actor?.createEmbeddedDocuments("Item", [item]);
 
   console.log("Item created:", item);
   if (!item) {

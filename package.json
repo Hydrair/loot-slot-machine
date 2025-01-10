@@ -7,6 +7,7 @@
     "papaparse": "^5.4.1"
   },
   "devDependencies": {
+    "foundry-pf2e": "github:reonZ/foundry-pf2e",
     "@league-of-foundry-developers/foundry-vtt-types": "^12.331.3-beta",
     "@types/papaparse": "^5.3.15",
     "rollup-plugin-copy": "^3.5.0",
