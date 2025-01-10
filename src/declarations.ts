@@ -1,6 +1,6 @@
 import { searchItem } from "./items";
 import { TableManager } from "./table-manager";
-import { addElementToEnergyBreath, addElementToRetaliation, extractScrollRank, getActorLevel, getDmgType, getSpellsByLevel, getTraits, purifyRunes, splitString } from "./util";
+import { addElementToEnergyBreath, addElementToRetaliation, extractScrollRank, getActorLevel, getDmgType, getSpellsByLevel, getTraits, purifyRunes, replaceEnchanted, splitString } from "./util";
 import { createConsumableFromSpell } from "foundry-pf2e";
 
 enum StrikingRune {
@@ -287,14 +287,73 @@ export class Scroll extends LsmItem {
 
 export class Wand extends LsmItem {
   constructor() {
-    super('wands', '', ['material', 'item']);
+    super('wand', '', ['material', 'item', 'element']);
     this.material = '';
     this.item = '';
+    this.element = '';
   }
 
   override async roll(): Promise<void> {
     const level = getActorLevel();
-    this.material = await TableManager.rollOnTable(`${this.name}/${this.name}-material.tsv`, level);
+    this.potency = await TableManager.rollOnTable(`${this.name}/${this.name}-potency.tsv`);
+    if (this.potency === "Precious Material and roll again") {
+      this.material = await TableManager.rollOnTable(`${this.name}/${this.name}-material.tsv`, level);
+      while (this.potency === "Precious Material and roll again") {
+        this.potency = await TableManager.rollOnTable(`${this.name}/${this.name}-potency.tsv`, 0, [], true);
+      }
+    }
+
     this.item = await TableManager.rollOnTable(`${this.name}/${this.name}-item.tsv`, level);
+    this.element = (await TableManager.rollOnTable(`${this.name}/${this.name}-element.tsv`, level)).toLowerCase();
+
+    this.item = await this.createWand();
+  }
+
+  async createWand(): Promise<Item> {
+    const template = await searchItem(this.item, 'Equipment') as any;
+    const itemData = this.toItemData();
+    const item = await Item.create({
+      name: this.item,
+      img: template.img,
+      type: 'weapon',
+      system: {
+        category: 'simple',
+        damage: {
+          dice: 1,
+          die: "d6",
+          modifier: 0,
+          damageType: this.element
+        },
+        description: {
+          value: template.system.description.value
+        },
+        range: 30,
+        traits: {
+          rarity: 'uncommon',
+          value: ['magical', `versatile-${this.element}`]
+        },
+        ...itemData
+      }
+    }, { renderSheet: false }) as Item;
+
+    return item;
+  }
+
+  override toItemData(): any {
+    const itemData: any = { runes: {} };
+    if (this.material) {
+      const [material, grade] = this.material.toLowerCase().split(' (');
+      itemData.material = {
+        type: material,
+        grade: grade ? grade.slice(0, -1) : ''
+      };
+    }
+    if (this.potency) {
+      const { potency, striking } = splitString(replaceEnchanted(this.potency));
+      itemData.runes.potency = parseInt(potency, 10);
+      itemData.runes.striking = StrikingRune[striking as keyof typeof StrikingRune];
+    };
+
+    return itemData;
   }
 }

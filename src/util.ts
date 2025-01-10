@@ -89,6 +89,10 @@ export function splitString(input: string) {
   }
 }
 
+export function replaceEnchanted(input: string) {
+  return input.replace(/Enchanted (Staff|Wand)/g, "striking weapon");
+}
+
 export function purifyRunes(rune: string) {
   if (rune.includes("(Greater)")) {
     rune = "Greater " + rune.replace(" (Greater)", "");
