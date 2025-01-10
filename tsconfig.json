@@ -2,7 +2,7 @@
  "compilerOptions": {
    "types": [
      "@league-of-foundry-developers/foundry-vtt-types",
-     "foundry-pf2e",
+     "foundry-pf2e"
      ],
    "target": "ESNext",
    "useDefineForClassFields": true,
@@ -27,6 +27,7 @@
  },
  "include": [
    "src/**/*.ts",
+   "test/**/*.ts"
  ],
   "exclude": [
     "node_modules"
