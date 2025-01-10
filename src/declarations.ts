@@ -40,7 +40,9 @@ export class LsmItem {
   }
 
   toItemData(): any {
-    const itemData: any = {};
+    const itemData: any = {
+      runes: {}
+    };
     if (this.material) {
       const [material, grade] = this.material.toLowerCase().split(' (');
       itemData.material = {
@@ -58,6 +60,11 @@ export class LsmItem {
         potency: parseInt(this.rune, 10)
       };
     }
+    if (this.potency) {
+      const { potency, striking } = splitString(replaceEnchanted(this.potency));
+      itemData.runes.potency = parseInt(potency, 10);
+      itemData.runes.striking = StrikingRune[striking as keyof typeof StrikingRune];
+    };
     return itemData;
   }
 }
@@ -111,10 +118,53 @@ export class Worn extends LsmItem {
 export class Staff extends LsmItem {
 
   constructor() {
-    super('staff', '', ['material', 'item', 'element', 'rune']);
+    super('staff', '', ['material', 'item', 'element']);
     this.material = '';
+    this.item = '';
     this.element = '';
-    this.rune = '';
+  }
+
+  override async roll(): Promise<void> {
+    const level = getActorLevel();
+    this.potency = await TableManager.rollOnTable(`${this.name}/${this.name}-potency.tsv`);
+    if (this.potency === "Precious Material and roll again") {
+      this.material = await TableManager.rollOnTable(`${this.name}/${this.name}-material.tsv`, level);
+      while (this.potency === "Precious Material and roll again") {
+        this.potency = await TableManager.rollOnTable(`${this.name}/${this.name}-potency.tsv`, 0, [], true);
+      }
+    }
+
+    this.item = await TableManager.rollOnTable(`${this.name}/${this.name}-item.tsv`, level);
+    this.element = (await TableManager.rollOnTable(`${this.name}/${this.name}-element.tsv`, level)).toLowerCase();
+
+  }
+
+  override toItemData(): any {
+    const itemData: any = {
+      runes: {}
+    };
+    if (this.material) {
+      const [material, grade] = this.material.toLowerCase().split(' (');
+      itemData.material = {
+        type: material,
+        grade: grade ? grade.slice(0, -1) : ''
+      };
+    }
+    if (this.element) {
+      itemData.range = 30;
+      itemData.damage = {
+        dice: 1,
+        die: "d8",
+        modifier: 0,
+        damageType: this.element
+      }
+    }
+    if (this.potency) {
+      const { potency, striking } = splitString(replaceEnchanted(this.potency));
+      itemData.runes.potency = parseInt(potency, 10);
+      itemData.runes.striking = StrikingRune[striking as keyof typeof StrikingRune];
+    };
+    return itemData;
   }
 
 }

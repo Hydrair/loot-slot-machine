@@ -90,7 +90,8 @@ export function splitString(input: string) {
 }
 
 export function replaceEnchanted(input: string) {
-  return input.replace(/Enchanted (Staff|Wand)/g, "striking weapon");
+  return input.replace(/Enchanted/g, "striking")
+    .replace(/(Staff|Wand)/g, "weapon");
 }
 
 export function purifyRunes(rune: string) {
