@@ -97,13 +97,22 @@ export function replaceEnchanted(input: string) {
     .replace(/(Staff|Wand)/g, "weapon");
 }
 
-export function purifyRunes(rune: string) {
-  if (rune.includes("(Greater)")) {
-    rune = "Greater " + rune.replace(" (Greater)", "");
+export function purifyRunes(_rune: string) {
+  const rune = _rune.replace(/[- ]/g, '');
+  const regex = /(.*)\((\w*)\)/;
+  const match = rune.match(regex);
+
+  if (match) {
+    if (rune.includes('Aim')) {
+      console.log('Aim rune');
+    }
+    const wordInParentheses = match[2];
+    const remainingString = match[1];
+    const camelCasedString = wordInParentheses.toLowerCase() + remainingString.charAt(0).toUpperCase() + remainingString.slice(1);
+    return camelCasedString;
   }
-  return rune.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match, index) =>
-    index === 0 ? match.toLowerCase() : match.toUpperCase()
-  ).replace(/\s+/g, '');
+
+  return rune.charAt(0).toLowerCase() + rune.slice(1);
 }
 
 interface PotionMatch {

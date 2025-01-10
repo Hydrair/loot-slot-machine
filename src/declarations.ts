@@ -2,6 +2,7 @@ import { searchItem } from "./items";
 import { TableManager } from "./table-manager";
 import { addElementToEnergyBreath, addElementToRetaliation, extractScrollRank, getActorLevel, getArmorType, getDmgType, getSpellsByLevel, getTraits, purifyRunes, replaceEnchanted, splitString } from "./util";
 import { createConsumableFromSpell } from "foundry-pf2e";
+import * as LOL from "foundry-pf2e";
 
 enum StrikingRune {
   "Weapon",
@@ -260,6 +261,7 @@ export class Armor extends LsmItem {
 
   override async roll(): Promise<void> {
     const level = getActorLevel();
+    const llll = LOL;
     this.potency = await TableManager.rollOnTable(`${this.name}/${this.name}-potency.tsv`);
     if (this.potency === "Precious Material and roll again") {
       this.material = await TableManager.rollOnTable(`${this.name}/${this.name}-material.tsv`, level);

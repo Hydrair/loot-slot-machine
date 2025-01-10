@@ -26,7 +26,6 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level	Value	Condition
 	91-92	59-61	06-10		Quenching (Greater)		10	1,000 gp	
 	93-94	62-64	11-15		Invisibility (Greater)		10	1,000 gp	light
 	93-94	65-66	16-19		Implacable		11	1,200 gp	medium heavy
-		67-68	20-23		Energy-Absorbing		11	1,200 gp	
 		69-70	24-27		Ready (Greater)		11	1,200 gp	
 		71-72	28-31		Dread (Moderate)		12	1,800 gp	
 		73-74	32-35		Immovable		12	1,800 gp	
@@ -36,12 +35,9 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level	Value	Condition
 		81-82	48-50	01-06	Rock-Braced		13	3,000 gp	medium heavy
 		83-83	51-53	07-12	Stanching (Major)		13	2,500 gp	
 		84-84	54-56	13-18	Energy Adaptive		13	2,600 gp	
-		85-85	57-59	19-24	Spellbreaking		13	3,000 gp	
 		86-86	60-62	25-30	Winged		13	2,500 gp	
 			63-65	31-35	Soaring		14	3,750 gp	
 			66-68	36-40	Quenching (Major)		14	4,500 gp	
-			69-71	41-45	Cavern's Heart		14	4,100 gp	medium heavy
-			72-74	46-48	Energy-Absorbing (Greater)		15	6,000 gp	
 			75-77	49-51	Antimagic		15	6,500 gp	
 			78-78	52-54	Advancing (Greater)		16	8,000 gp	heavy
 			79-79	55-57	Misleading		16	8,000 gp	light
