@@ -1,6 +1,6 @@
 import { searchItem } from "./items";
 import { TableManager } from "./table-manager";
-import { addElementToEnergyBreath, addElementToRetaliation, extractScrollRank, getActorLevel, getDmgType, getSpellsByLevel, getTraits, purifyRunes, replaceEnchanted, splitString } from "./util";
+import { addElementToEnergyBreath, addElementToRetaliation, extractScrollRank, getActorLevel, getArmorType, getDmgType, getSpellsByLevel, getTraits, purifyRunes, replaceEnchanted, splitString } from "./util";
 import { createConsumableFromSpell } from "foundry-pf2e";
 
 enum StrikingRune {
@@ -9,6 +9,14 @@ enum StrikingRune {
   "Greater striking weapon",
   "Major striking weapon",
   "Mythic striking weapon",
+}
+
+enum ResilientRune {
+  "Armor",
+  "Resilient armor",
+  "Greater resilient armor",
+  "Major resilient armor",
+  "Mythic resilient armor",
 }
 
 export class LsmItem {
@@ -61,9 +69,9 @@ export class LsmItem {
       };
     }
     if (this.potency) {
-      const { potency, striking } = splitString(replaceEnchanted(this.potency));
+      const { potency, bonus } = splitString(replaceEnchanted(this.potency));
       itemData.runes.potency = parseInt(potency, 10);
-      itemData.runes.striking = StrikingRune[striking as keyof typeof StrikingRune];
+      itemData.runes.striking = StrikingRune[bonus as keyof typeof StrikingRune];
     };
     return itemData;
   }
@@ -160,9 +168,9 @@ export class Staff extends LsmItem {
       }
     }
     if (this.potency) {
-      const { potency, striking } = splitString(replaceEnchanted(this.potency));
+      const { potency, bonus } = splitString(replaceEnchanted(this.potency));
       itemData.runes.potency = parseInt(potency, 10);
-      itemData.runes.striking = StrikingRune[striking as keyof typeof StrikingRune];
+      itemData.runes.striking = StrikingRune[bonus as keyof typeof StrikingRune];
     };
     return itemData;
   }
@@ -225,9 +233,9 @@ export class Weapon extends LsmItem {
       };
     }
     if (this.potency && this.potency !== "Specific Weapon") {
-      const { potency, striking } = splitString(this.potency);
+      const { potency, bonus } = splitString(this.potency);
       itemData.runes.potency = parseInt(potency, 10);
-      itemData.runes.striking = StrikingRune[striking as keyof typeof StrikingRune];
+      itemData.runes.striking = StrikingRune[bonus as keyof typeof StrikingRune];
     };
     if (this.runes.length > 0) {
       itemData.runes.property = this.runes;
@@ -261,22 +269,22 @@ export class Armor extends LsmItem {
     }
 
     if (this.potency === "Specific Armor") {
-      this.item = await TableManager.rollOnTable(`${this.name}/${this.name}-specific.tsv`, level);
+      this.item = await TableManager.rollOnTable(`${this.name}/armor-specific.tsv`, level);
+    } else if (this.potency === "Specific Shield") {
+      this.item = await TableManager.rollOnTable(`${this.name}/shield-specific.tsv`, level);
     } else {
-      this.type = await TableManager.rollOnTable(`${this.name}/${this.name}-type.tsv`);
-      this.item = await TableManager.rollOnTable(`${this.name}/${this.name}-${this.type.toLowerCase().split(' ')[0]}.tsv`);
+      this.item = await TableManager.rollOnTable(`${this.name}/${this.name}-type.tsv`);
     }
 
     const item = await searchItem(this.item, 'Equipment');
     const conditions = [
-      this.type === "ranged" ? "ranged" : "melee",
-      getDmgType(item),
-      ...getTraits(item)
+      getArmorType(item),
     ]
 
     const runechance = parseInt((await TableManager.rollOnTable(`${this.name}/${this.name}-runechance.tsv`)).split(' ')[0]);
 
     for (let i = 0; i < runechance; i++) {
+
       let rune = await TableManager.rollOnTable(`${this.name}/${this.name}-runes.tsv`, level, conditions);
       this.runes.push(purifyRunes(rune));
     }
@@ -291,10 +299,10 @@ export class Armor extends LsmItem {
         grade: grade ? grade.slice(0, -1) : ''
       };
     }
-    if (this.potency && this.potency !== "Specific Armor") {
-      const { potency, striking } = splitString(this.potency);
+    if (this.potency && this.potency !== "Specific Armor" && this.potency !== "Specific Shield") {
+      const { potency, bonus } = splitString(this.potency);
       itemData.runes.potency = parseInt(potency, 10);
-      itemData.runes.striking = StrikingRune[striking as keyof typeof StrikingRune];
+      itemData.runes.resilient = ResilientRune[bonus as keyof typeof ResilientRune];
     };
     if (this.runes.length > 0) {
       itemData.runes.property = this.runes;
@@ -399,9 +407,9 @@ export class Wand extends LsmItem {
       };
     }
     if (this.potency) {
-      const { potency, striking } = splitString(replaceEnchanted(this.potency));
+      const { potency, bonus } = splitString(replaceEnchanted(this.potency));
       itemData.runes.potency = parseInt(potency, 10);
-      itemData.runes.striking = StrikingRune[striking as keyof typeof StrikingRune];
+      itemData.runes.striking = StrikingRune[bonus as keyof typeof StrikingRune];
     };
 
     return itemData;

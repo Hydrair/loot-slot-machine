@@ -1,5 +1,3 @@
-import { searchItem } from "./items";
-
 export function renderActors() {
   // @ts-ignore
   const actors = game.actors?.filter((actor: Actor) => actor.type === "character");
@@ -64,6 +62,11 @@ export function getTraits(item: Item) {
   return item.system.traits.value;
 }
 
+export function getArmorType(item: Item) {
+  // @ts-ignore
+  return item.system.category;
+}
+
 export function containsQuality(table: any[]) {
   if (Object.keys(table[0]).includes('Minor')
     && Object.keys(table[0]).includes('Lesser')
@@ -82,7 +85,7 @@ export function splitString(input: string) {
   if (match) {
     return {
       potency: match[1], // "+1"
-      striking: match[2],  // "Striking weapon"
+      bonus: match[2],  // "Striking weapon"
     };
   } else {
     throw new Error("Input does not match the expected format");

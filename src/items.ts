@@ -76,7 +76,7 @@ async function getItem(lsmItem: LsmItem) {
 export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string) {
   const actor = game.actors?.get((document.getElementById('lsm-character-select') as HTMLSelectElement).value) as Actor;
   const item = typeof lsmItem.item === "string" ? await getItem(lsmItem) : lsmItem.item;
-  // await actor?.createEmbeddedDocuments("Item", [item]);
+  await actor?.createEmbeddedDocuments("Item", [item]);
 
   console.log("Item created:", item);
   if (!item) {
