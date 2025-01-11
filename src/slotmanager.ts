@@ -19,10 +19,12 @@ class SlotManager {
 
   chooseSlot(): Promise<string> {
     return new Promise((resolve) => {
+      const lockedSlots: Slot[] = []
       const pickableSlots = this.slots.filter(slot => {
         if (slot.pickable) {
           return true;
         }
+        lockedSlots.push(slot);
         slot.lockSlot();
         return false;
       });
@@ -33,6 +35,8 @@ class SlotManager {
       pickableSlots.forEach(slot => {
         slot.onSlotClick = (outcome: string) => {
           resolve(outcome);
+          lockedSlots.forEach(slot => slot.unlockSlot());
+          pickableSlots.forEach(slot => slot.removeSlotClick());
         };
       });
     });

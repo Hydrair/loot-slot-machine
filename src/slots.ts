@@ -44,6 +44,16 @@ class Slot {
     this.slotDiv.classList.add('lsm-slot-locked');
   }
 
+  unlockSlot() {
+    this.slotDiv.classList.remove('lsm-slot-locked');
+    this.slotDiv.classList.remove('lsm-slot-pickable');
+  }
+
+  removeSlotClick() {
+    this.slotDiv.removeEventListener('click', () => { });
+    this.slotDiv.classList.remove('lsm-slot-pickable');
+  }
+
   getOutcome() {
     if (this.outcome === '') this.rollTable();
     return this.outcome;
@@ -109,9 +119,8 @@ class Slot {
   }
 
   makeSlotPickable(slotDiv: HTMLDivElement) {
-    slotDiv.style.cursor = 'pointer';
     slotDiv.classList.add('lsm-slot-pickable');
-    slotDiv.addEventListener('click', (event) => {
+    slotDiv.addEventListener('click', () => {
       const outcome = this.outcome;
       this.onSlotClick(outcome);
     });

@@ -28,7 +28,9 @@ export class LsmItem {
   potency: string = '';
   runes: string[] = [];
   file: string = '';
-  level: number = getActorLevel();;
+  level: number = getActorLevel();
+  conditions: string[] = [];
+  rules: Object[] = [];
 
   [key: string]: any;
 
@@ -66,6 +68,14 @@ export class LsmItem {
       itemData.runes.potency = parseInt(potency, 10);
       if (this.file === 'armor' || this.file === 'shield') {
         itemData.runes.resilient = ResilientRune[bonus as keyof typeof ResilientRune];
+      } else if (this.file === 'grimoire') {
+        itemData.rules = [
+          {
+            "key": "FlatModifier",
+            "selector": "spell-attack",
+            "value": potency,
+            "type": "item"
+          }];
       } else {
         itemData.runes.striking = StrikingRune[bonus as keyof typeof StrikingRune];
       }
@@ -78,14 +88,12 @@ export class LsmItem {
     return itemData;
   }
 
-  async reroll(file: string, level: number) {
-    const items = [];
+  async reroll(file: string, level: number, skipLast = false) {
     for (let i = 0; i < 2; i++) {
-      let newItem = await TableManager.rollOnTable(file, { level, pickable: true });
-      while (newItem === "Roll twice again" && items.length < 3) {
-        newItem = await TableManager.rollOnTable(file, { level });
+      let newItem = await TableManager.rollOnTable(file, { level, pickable: true, skipLast });
+      if (newItem === "Roll twice again") {
+        newItem = await this.reroll(file, level, true);
       }
-      items.push(newItem);
     }
     return await slotManager.chooseSlot();
   }
@@ -109,7 +117,16 @@ export class LsmItem {
 }
 
 export class Grimoire extends LsmItem {
-
+  override async roll() {
+    await this.setKey('potency', this.file + '-potency');
+    if (this.potency === "Precious Material and roll again") {
+      await this.setKey('material', this.file + '-material');
+      while (this.potency === "Precious Material and roll again") {
+        await this.setKey('potency', this.file + '-potency');
+      }
+    }
+    await this.setKey('item', this.file + '-item');
+  }
 }
 
 export class Potion extends LsmItem {
