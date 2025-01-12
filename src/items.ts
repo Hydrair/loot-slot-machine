@@ -74,7 +74,7 @@ async function getItem(lsmItem: LsmItem, actor: Actor): Promise<Item> {
 }
 
 export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string) {
-  const actor = game.actors?.get((document.getElementById('lsm-character-select') as HTMLSelectElement).value) as Actor;
+  const actor = game.actors?.get((document.getElementById('lsm-select-character') as HTMLSelectElement).value) as Actor;
   let item;
   if (typeof lsmItem.item === "string") {
     item = await getItem(lsmItem, actor);

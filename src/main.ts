@@ -1,6 +1,6 @@
 import { TableManager } from "./table-manager";
 import { createAndDisplayItem, createLsmItem } from "./items";
-import { renderActors } from "./util";
+import { renderActors, renderLootOptions } from "./util";
 
 Hooks.once("ready", async function () {
   console.log("Loot Slot Machine | Initialized");
@@ -31,6 +31,8 @@ class SlotMachineApp extends Application {
     super.activateListeners(html);
 
     renderActors();
+    renderLootOptions(await TableManager.loadTable("loot-table.tsv"));
+
     const rollButton = html.find("#lsm-roll-button");
     if (!rollButton) return;
     // Attach event listener to the roll button
@@ -39,8 +41,12 @@ class SlotMachineApp extends Application {
       itemContainer ? itemContainer.innerHTML = "" : console.warn("Item container not found.");
       const slotContainer = document.getElementById("lsm-slot-container")
       slotContainer ? slotContainer.innerHTML = "" : console.warn("Slot container not found.");
+      const lootOptions = (document.getElementById('lsm-select-loot') as HTMLSelectElement).value
+
       try {
-        const outcome = (await TableManager.rollOnTable("loot-table.tsv")).toLowerCase();
+        const outcome = lootOptions === "Random"
+          ? (await TableManager.rollOnTable("loot-table.tsv")).toLowerCase()
+          : lootOptions;
         if (ui.notifications) {
           ui.notifications.info(`Rolled: ${outcome}`);
           const item = createLsmItem(outcome.toLowerCase());

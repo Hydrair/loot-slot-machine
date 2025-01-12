@@ -72,6 +72,14 @@ export class LsmItem {
         itemData.rules = [
           {
             "key": "FlatModifier",
+            "selector": "spell-dc",
+            "value": potency,
+            "type": "item"
+          }];
+      } else if (this.file === 'wand') {
+        itemData.rules = [
+          {
+            "key": "FlatModifier",
             "selector": "spell-attack",
             "value": potency,
             "type": "item"
@@ -88,16 +96,6 @@ export class LsmItem {
     return itemData;
   }
 
-  async reroll(file: string, level: number, skipLast = false) {
-    for (let i = 0; i < 2; i++) {
-      let newItem = await TableManager.rollOnTable(file, { level, pickable: true, skipLast });
-      if (newItem === "Roll twice again") {
-        newItem = await this.reroll(file, level, true);
-      }
-    }
-    return await slotManager.chooseSlot();
-  }
-
   async setKey(key: string, file: string) {
     if (this.potency === "Precious Material and roll again") {
       this[key] = await TableManager.rollOnTable(`${file}.tsv`, {
@@ -110,7 +108,7 @@ export class LsmItem {
         level: this.level,
         conditions: this.conditions,
       });
-      this[key] = result === "Roll twice again" ? await this.reroll(`${file}.tsv`, this.level) : result;
+      this[key] = result;
     }
   }
 
@@ -160,7 +158,7 @@ export class Staff extends LsmItem {
       }
     }
 
-    await this.setKey('item', this.file);
+    await this.setKey('item', this.file + '-item');
     await this.setKey('element', this.file + '-element');
 
     this.element = this.element.toLowerCase();

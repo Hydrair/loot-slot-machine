@@ -13,12 +13,14 @@ class Slot {
   pickable: boolean;
   slotItems: HTMLDivElement[] = [];
   outcome: string = "";
-  slotDiv: HTMLDivElement = document.createElement('div');;
+  slotDiv: HTMLDivElement = document.createElement('div');
 
-  constructor(table: SlotTableRow[], roll: number, pickable: boolean) {
+  constructor(table: SlotTableRow[], roll: number, pickable: boolean, preventReroll: boolean) {
     this.table = table;
     this.roll = roll;
     this.pickable = pickable;
+
+    if (preventReroll) this.preventReroll();
 
     for (const row of table) {
       this.addSlotItem(row.Item, table.indexOf(row));
@@ -56,6 +58,7 @@ class Slot {
 
   getOutcome() {
     if (this.outcome === '') this.rollTable();
+    if (this.outcome === 'Roll twice again') this.pickable = false;
     return this.outcome;
   }
 
@@ -129,9 +132,11 @@ class Slot {
   onSlotClick(outcome: string) {
     // This method will be overridden by SlotManager
     console.log(outcome);
-
   }
 
+  preventReroll() {
+    this.table = this.table.filter(row => row.Chance !== "Roll twice again");
+  }
 }
 
 export { Slot };

@@ -2,6 +2,8 @@ import { Slot } from "./slots";
 
 class SlotManager {
   private slots: Slot[] = [];
+  private bonusRolls = 0;
+
 
   addSlot(slot: Slot): void {
     this.slots.push(slot);
@@ -11,9 +13,18 @@ class SlotManager {
     return this.slots;
   }
 
-  createSlot(table: any, roll: number, pickable: boolean): Slot {
-    const slot = new Slot(table, roll, pickable);
+  async createSlot(table: any, maxRoll: number): Promise<Slot> {
+    const roll = (await new Roll(`1d${maxRoll}`).roll()).total;
+
+    const slot = new Slot(table, roll, this.bonusRolls > 0, this.bonusRolls >= 2);
     this.addSlot(slot);
+    if (slot.getOutcome() === "Roll twice again" && this.bonusRolls < 2) {
+      this.bonusRolls += 1;
+      await this.createSlot(table, roll);
+      await this.createSlot(table, roll);
+    } else if (slot.getOutcome() === "Roll twice again" && this.bonusRolls >= 2) {
+      slot.preventReroll();
+    }
     return slot;
   }
 
@@ -40,6 +51,16 @@ class SlotManager {
         };
       });
     });
+  }
+
+  async getOutcome(slot: Slot): Promise<string> {
+    if (slot.outcome === "Roll twice again") {
+      this.bonusRolls = 0;
+      const outcome = await this.chooseSlot();
+      this.slots = [];
+      return outcome;
+    }
+    return slot.getOutcome();
   }
 }
 

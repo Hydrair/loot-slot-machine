@@ -34,8 +34,8 @@ export const TableManager = {
 
 
 
-  rollOnTable: async function (csvFileName: string, options: { level?: number, conditions?: string[], skipLast?: boolean, pickable?: boolean } = {}) {
-    const { level = 0, conditions, pickable = false, skipLast = false } = options;
+  rollOnTable: async function (csvFileName: string, options: { level?: number, conditions?: string[], skipLast?: boolean } = {}) {
+    const { level = 0, conditions, skipLast = false } = options;
     let table = await this.loadTable(csvFileName);
 
     const quality = containsQuality(table);
@@ -55,10 +55,9 @@ export const TableManager = {
     }
 
     const maxRoll = table[table.length - 1].Chance.split("-")[1];
-    const roll = (await new Roll(`1d${maxRoll}`).roll()).total;
-    // co
-    const slots = slotManager.createSlot(table, roll, pickable);
-    return slots.getOutcome();
+
+    const slots = await slotManager.createSlot(table, maxRoll);
+    return await slotManager.getOutcome(slots);
   },
 
 };

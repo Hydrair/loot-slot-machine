@@ -1,7 +1,7 @@
 export function renderActors() {
   // @ts-ignore
   const actors = game.actors?.filter((actor: Actor) => actor.type === "character");
-  const characterSelect = document.getElementById("lsm-character-select") as HTMLSelectElement;
+  const characterSelect = document.getElementById("lsm-select-character") as HTMLSelectElement;
   if (!characterSelect) {
     console.error("Character select element not found.");
     return;
@@ -16,8 +16,23 @@ export function renderActors() {
   }
 }
 
+export function renderLootOptions(options: any[]) {
+  const lootSelect = document.getElementById("lsm-select-loot") as HTMLSelectElement;
+  if (!lootSelect) {
+    console.error("Character select element not found.");
+    return;
+  }
+
+  for (const option of options) {
+    const element = document.createElement("option");
+    element.value = option.Item;
+    element.text = option.Item;
+    lootSelect.appendChild(element);
+  }
+}
+
 export function getActorLevel() {
-  const characterSelect = document.getElementById("lsm-character-select") as HTMLSelectElement;
+  const characterSelect = document.getElementById("lsm-select-character") as HTMLSelectElement;
   // @ts-ignore
   return game.actors?.get(characterSelect.value).system.details.level.value;
 }
@@ -74,7 +89,7 @@ export function containsQuality(table: any[]) {
     && Object.keys(table[0]).includes('Moderate')
     && Object.keys(table[0]).includes('Greater')
     && Object.keys(table[0]).includes('Major')) {
-    return (document.getElementById('quality-select') as HTMLSelectElement).value;
+    return (document.getElementById('lsm-select-quality') as HTMLSelectElement).value;
   }
   return 'Chance';
 }
