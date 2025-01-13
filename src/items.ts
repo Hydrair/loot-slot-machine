@@ -1,4 +1,4 @@
-import { Grimoire, LsmItem, Staff, Potion, Weapon, Worn, Armor, Jewelry, Scroll, Wand } from "./declarations";
+import { Grimoire, LsmItem, Staff, Potion, Weapon, Worn, Armor, Jewelry, Scroll, Wand, Shield } from "./declarations";
 
 
 export async function searchItem(searchQuery: string, itemType: string = "Equipment"): Promise<Item> {
@@ -119,6 +119,7 @@ const itemClassMap: { [key: string]: any } = {
   weapon: Weapon,
   worn: Worn,
   armor: Armor,
+  shield: Shield,
   jewelry: Jewelry,
   scroll: Scroll,
   wand: Wand
