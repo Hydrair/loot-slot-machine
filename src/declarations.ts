@@ -1,5 +1,4 @@
 import { searchItem } from "./items";
-import { slotManager } from "./slotmanager";
 import { TableManager } from "./table-manager";
 import { addElementToEnergyBreath, addElementToRetaliation, extractScrollRank, getActorLevel, getArmorType, getDmgType, getSpellsByLevel, getTraits, purifyRunes, replaceEnchanted, splitString } from "./util";
 import { createConsumableFromSpell } from "foundry-pf2e";
