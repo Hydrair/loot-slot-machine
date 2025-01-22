@@ -200,3 +200,10 @@ export function parseDiceRange(range: string) {
     throw new Error(`Invalid dice range: ${range}`);
   return [min, max];
 }
+
+export async function logToChat(message: string) {
+  await ChatMessage.create({
+    style: CONST.CHAT_MESSAGE_STYLES.EMOTE,
+    content: message,
+  });
+}

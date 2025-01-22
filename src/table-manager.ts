@@ -1,5 +1,5 @@
 import Papa from "papaparse";
-import { containsQuality, filterTableByCondition, filterTableByLevel, filterTableByQuality } from "./util";
+import { containsQuality, filterTableByCondition, filterTableByLevel, filterTableByQuality, logToChat } from "./util";
 import { slotManager } from "./slotmanager";
 
 // Ensure PapaParse is globally available or import it dynamically
@@ -57,7 +57,11 @@ export const TableManager = {
     const maxRoll = table[table.length - 1].Chance.split("-")[1];
 
     const slots = await slotManager.createSlot(table, maxRoll);
-    return await slotManager.getOutcome(slots);
+    const outcome = await slotManager.getOutcome(slots);
+    await logToChat(`Rolled a ${slots.roll} and got ${slots.outcome}`);
+
+    return outcome
+
   },
 
 };

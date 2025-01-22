@@ -56,7 +56,7 @@ export class LsmItem {
     if (this.material) {
       const [material, grade] = this.material.toLowerCase().split(' (');
       itemData.material = {
-        type: material,
+        type: material.replace(' ', '-'),
         grade: grade ? grade.slice(0, -1) : ''
       };
     }

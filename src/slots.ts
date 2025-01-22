@@ -65,19 +65,27 @@ class Slot {
   rollTable() {
     for (const row of this.table) {
       const [min, max] = parseDiceRange(row.Chance);
+      if (this.roll > max) continue;
       if (this.roll < min) {
         const prevRow = this.table[this.table.indexOf(row) - 1];
         if (prevRow && prevRow.Chance) {
           const [, prevMax] = parseDiceRange(prevRow.Chance);
-          const diffToMin = min - this.roll;
+          const diffToCurrentMin = min - this.roll;
           const diffToPrevMax = this.roll - prevMax;
-          this.roll = diffToMin < diffToPrevMax ? diffToMin : diffToPrevMax;
+          const takeCurrent = diffToCurrentMin < diffToPrevMax
+          const item = takeCurrent ? row.Item : prevRow.Item;
+          this.roll = takeCurrent ? min : prevMax;
+          const timeouts = this.rollSlots();
+          setTimeout(() => this.stopSlots(item, timeouts), 2000);
+          this.outcome = item;
+          return;
         }
       }
       if (this.roll >= min && this.roll <= max) {
         const timeouts = this.rollSlots();
         setTimeout(() => this.stopSlots(row.Item, timeouts), 2000);
         this.outcome = row.Item;
+        return;
       }
     }
   }

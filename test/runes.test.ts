@@ -7,7 +7,7 @@ import { loadTable } from './util';
 test('Check armor runes', async () => {
 
   console.log('Loading armor-runes.tsv...');
-  const runes = await loadTable('armor/armor-runes.tsv');
+  const runes = await loadTable('armor-runes.tsv');
 
   for (const rune of runes) {
     if (rune.includes("Energy-Resistant")) continue;
@@ -24,7 +24,7 @@ test('Check armor runes', async () => {
 test('Check weapon runes', async () => {
 
   console.log('Loading weapon-runes.tsv...');
-  const runes = await loadTable('weapon/weapon-runes.tsv');
+  const runes = await loadTable('weapon-runes.tsv');
 
   for (const rune of runes) {
     if (rune.includes("Roll twice again")) continue;

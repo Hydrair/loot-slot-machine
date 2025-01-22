@@ -1,6 +1,6 @@
 import { TableManager } from "./table-manager";
 import { createAndDisplayItem, createLsmItem } from "./items";
-import { renderActors, renderLootOptions } from "./util";
+import { logToChat, renderActors, renderLootOptions } from "./util";
 
 Hooks.once("ready", async function () {
   console.log("Loot Slot Machine | Initialized");
@@ -47,20 +47,19 @@ class SlotMachineApp extends Application {
         const outcome = lootOptions === "Random"
           ? (await TableManager.rollOnTable("loot-table.tsv")).toLowerCase()
           : lootOptions;
-        if (ui.notifications) {
-          ui.notifications.info(`Rolled: ${outcome}`);
-          const item = createLsmItem(outcome.toLowerCase());
 
-          if (item) {
-            await item.roll();
-            createAndDisplayItem(item, "lsm-item-container");
-            rollButton.innerText = "Roll Again";
-          } else {
-            console.warn("Item is null.");
-          }
+        logToChat(`Rolling for ${outcome}...`);
+
+        const item = createLsmItem(outcome.toLowerCase());
+
+        if (item) {
+          await item.roll();
+          createAndDisplayItem(item, "lsm-item-container");
+          rollButton.innerText = "Roll Again";
         } else {
-          console.warn("Notifications UI is not available.");
+          console.warn("Item is null.");
         }
+
       } catch (err: any) {
         console.error(err);
         if (ui.notifications) {

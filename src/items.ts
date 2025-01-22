@@ -1,4 +1,5 @@
 import { Grimoire, LsmItem, Staff, Potion, Weapon, Worn, Armor, Jewelry, Scroll, Wand, Shield } from "./declarations";
+import { logToChat } from "./util";
 
 
 export async function searchItem(searchQuery: string, itemType: string = "Equipment"): Promise<Item> {
@@ -101,6 +102,8 @@ export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string
     </div>
   `;
 
+  const uuid = await TextEditor.enrichHTML(`Created @UUID[${item.uuid}]`, {})
+  logToChat(uuid);
   // Display in the specified container
   const container = document.querySelector(`#${containerId}`);
   if (container) {
