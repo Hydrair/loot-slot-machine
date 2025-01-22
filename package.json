@@ -11,6 +11,7 @@
     "@league-of-foundry-developers/foundry-vtt-types": "^12.331.3-beta",
     "@types/papaparse": "^5.3.15",
     "chai": "^5.1.2",
+    "dotenv": "^16.4.7",
     "foundry-pf2e": "github:reonZ/foundry-pf2e",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.7.2",
@@ -18,7 +19,7 @@
     "vitest": "^2.1.8"
   },
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "vite build",
     "dev": "vite build --watch",
     "test": "vitest --environment=jsdom"
   },
