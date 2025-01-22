@@ -8,7 +8,7 @@ Hooks.once("ready", async function () {
 
   // Register chat command
   Hooks.on("chatMessage", (_, message: string) => {
-    if (message.trim().toLowerCase() === "slot") {
+    if (message.trim().toLowerCase() === "/slot") {
       new SlotMachineApp().render(true);
       return false; // Prevents the message from being posted to chat
     }
