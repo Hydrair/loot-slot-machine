@@ -16,11 +16,8 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install pnpm
-        run: npm install -g pnpm
-
       - name: Install dependencies
-        run: pnpm i
+        run: yarn
 
       - name: Extract tag version number
         id: get_version
@@ -31,7 +28,7 @@ jobs:
           MODULE_VERSION: ${{steps.get_version.outputs.version-without-v}}
           GH_PROJECT: ${{github.repository}}
           GH_TAG: ${{github.event.release.tag_name}}
-        run: pnpm build
+        run: yarn build
 
       - name: Create zip archive
         working-directory: dist
@@ -43,6 +40,7 @@ jobs:
         with:
           allowUpdates: true # Set this to false if you want to prevent updating existing releases
           name: ${{ github.event.release.name }}
+          draft: ${{ github.event.release.unpublished }}
           prerelease: ${{ github.event.release.prerelease }}
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: "./dist/module.json, ./dist/module.zip"
