@@ -64,7 +64,8 @@ export class LsmItem {
     if (this.potency && !this.potency.includes("Specific")) {
       const { potency, bonus } = splitString(replaceEnchanted(this.potency));
       itemData.runes.potency = parseInt(potency, 10);
-      itemData.runes.striking = StrikingRune[bonus as keyof typeof StrikingRune];
+      // @ts-ignore
+      itemData.runes.striking = StrikingRune[bonus];
     }
 
     if (this.runes && this.runes.length > 0) {
@@ -242,7 +243,7 @@ export class Armor extends LsmItem {
 
   override toItemData() {
     const itemData = super.toItemData();
-    itemData.runes.resilient = ResilientRune[splitString(this.potency).bonus as keyof typeof ResilientRune];
+    if (!this.potency.includes("Specific")) itemData.runes.resilient = ResilientRune[splitString(this.potency).bonus as keyof typeof ResilientRune];
     return itemData;
   }
 }

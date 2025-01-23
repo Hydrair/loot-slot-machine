@@ -1,3 +1,4 @@
+import { searchItem } from "./items";
 import { parseDiceRange } from "./util";
 
 
@@ -37,6 +38,45 @@ class Slot {
         this.makeSlotPickable(this.slotDiv);
       }
       this.slotDiv.append(...this.slotItems);
+    }
+    this.addHoverEvent();
+  }
+
+  addHoverEvent() {
+    this.slotDiv.addEventListener('mouseenter', async (event) => {
+      const outcome = this.getOutcome();
+      const item = await searchItem(outcome, 'Equipment');
+
+      if (item) {
+        // @ts-ignore
+        const description = await TextEditor.enrichHTML(item.system.description.value, {})
+        this.showPopup(event, item, description);
+      }
+    });
+
+    this.slotDiv.addEventListener('mouseleave', () => {
+      this.hidePopup();
+    });
+  }
+
+  async showPopup(event: MouseEvent, item: Item, description?: string) {
+    const popup = document.createElement('div');
+    popup.className = 'lsm-slot-popup';
+    popup.innerHTML = `
+      <h3>${item.name}</h3>
+      <p>${description || 'No description available'}</p>
+    `;
+    document.body.appendChild(popup);
+
+    const { clientX: x, clientY: y } = event;
+    popup.style.left = `${x + 10}px`;
+    popup.style.top = `${y + 10}px`;
+  }
+
+  hidePopup() {
+    const popup = document.querySelector('.lsm-slot-popup');
+    if (popup) {
+      popup.remove();
     }
   }
 
