@@ -35,7 +35,6 @@ function updateModuleManifestPlugin(): Plugin {
   return {
     name: "update-module-manifest",
     async writeBundle(): Promise<void> {
-      console.log("Updating module manifest");
       const moduleVersion = process.env.MODULE_VERSION;
       const githubProject = process.env.GH_PROJECT;
       const githubTag = process.env.GH_TAG;
@@ -47,8 +46,6 @@ function updateModuleManifestPlugin(): Plugin {
         string,
         unknown
       >;
-      console.log(moduleVersion);
-      console.log(manifestJson);
       if (moduleVersion) {
         manifestJson["version"] = moduleVersion;
       }
