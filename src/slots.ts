@@ -27,6 +27,7 @@ class Slot {
       this.addSlotItem(row.Item, table.indexOf(row));
     }
     this.render(pickable);
+    this.slotDiv.classList.add('fade-in');
   }
 
   render(pickable?: boolean) {
@@ -44,7 +45,7 @@ class Slot {
 
   addHoverEvent() {
     this.slotDiv.addEventListener('mouseenter', async (event) => {
-      const outcome = this.getOutcome();
+      const outcome = await this.getOutcome();
       const item = await searchItem(outcome, 'Equipment');
 
       if (item) {
@@ -96,13 +97,14 @@ class Slot {
     this.slotDiv.classList.remove('lsm-slot-pickable');
   }
 
-  getOutcome() {
-    if (this.outcome === '') this.rollTable();
-    if (this.outcome === 'Roll twice again') this.pickable = false;
-    return this.outcome;
+  getOutcome(): Promise<string> {
+    return new Promise((resolve) => {
+      if (this.outcome === '') this.rollTable(resolve);
+      else resolve(this.outcome);
+    });
   }
 
-  rollTable() {
+  rollTable(resolve: (outcome: string) => void) {
     for (const row of this.table) {
       const [min, max] = parseDiceRange(row.Chance);
       if (this.roll > max) continue;
@@ -112,29 +114,33 @@ class Slot {
           const [, prevMax] = parseDiceRange(prevRow.Chance);
           const diffToCurrentMin = min - this.roll;
           const diffToPrevMax = this.roll - prevMax;
-          const takeCurrent = diffToCurrentMin < diffToPrevMax
+          const takeCurrent = diffToCurrentMin < diffToPrevMax;
           const item = takeCurrent ? row.Item : prevRow.Item;
           this.roll = takeCurrent ? min : prevMax;
           const timeouts = this.rollSlots();
-          setTimeout(() => this.stopSlots(item, timeouts), 2000);
-          this.outcome = item;
+          setTimeout(() => {
+            this.stopSlots(item, timeouts);
+            this.outcome = item;
+            resolve(this.outcome);
+          }, 2000);
           return;
         }
       }
       if (this.roll >= min && this.roll <= max) {
         const timeouts = this.rollSlots();
-        setTimeout(() => this.stopSlots(row.Item, timeouts), 2000);
-        this.outcome = row.Item;
+        setTimeout(() => {
+          this.stopSlots(row.Item, timeouts);
+          this.outcome = row.Item;
+          resolve(this.outcome);
+        }, 2000);
         return;
       }
     }
   }
 
-
-
   addSlotItem(item: string, number: number) {
     const slot = document.createElement('div');
-    slot.className = 'lsm-slot-item';
+    slot.className = 'lsm-slot-item fade-in';
     slot.textContent = item;
     slot.style.top = `${50 * number}px`;
     this.slotItems.push(slot);
@@ -159,7 +165,7 @@ class Slot {
     for (let i = 0; i < this.slotItems.length; i++) {
       const slotItem = this.slotItems[i];
       if (slotItem.textContent !== outcome) {
-        slotItem.style.display = `none`;
+        slotItem.style.display = 'none';
       } else {
         slotItem.style.transform = `translateY(-${i * 50}px)`;
       }

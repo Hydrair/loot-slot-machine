@@ -4,6 +4,14 @@
   justify-content: space-evenly;
   align-items: center;
   gap: 10px;
+  width: min-content;
+  align-content: flex-start;
+  margin: 10px;
+}
+
+.lsm-results {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .lsm-slot {
@@ -29,7 +37,6 @@
   align-items: center;
   height: 50px;
   display: flex;
-  transition: transform 0.5s ease-out;
 }
 
 .lsm-slot-pickable {

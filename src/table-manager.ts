@@ -1,5 +1,5 @@
 import Papa from "papaparse";
-import { containsQuality, filterTableByCondition, filterTableByLevel, filterTableByQuality, logToChat } from "./util";
+import { containsQuality, filterTableByCondition, filterTableByLevel, filterTableByQuality } from "./util";
 import { slotManager } from "./slotmanager";
 
 // Ensure PapaParse is globally available or import it dynamically
@@ -31,16 +31,13 @@ export const TableManager = {
     return parsed.data as Array<{}>;
   },
 
-
-
-
   rollOnTable: async function (csvFileName: string, options: { level?: number, conditions?: string[], skipLast?: boolean } = {}) {
     const { level = 0, conditions, skipLast = false } = options;
     let table = await this.loadTable(csvFileName);
 
     const quality = containsQuality(table);
 
-    if (skipLast) table.pop()
+    if (skipLast) table.pop();
 
     if (quality !== "Chance") {
       table = filterTableByQuality(table, quality).filter(row => row !== null);
@@ -56,12 +53,10 @@ export const TableManager = {
 
     const maxRoll = table[table.length - 1].Chance.split("-")[1];
 
-    const slots = await slotManager.createSlot(table, maxRoll);
-    const outcome = await slotManager.getOutcome(slots);
-    await logToChat(`Rolled a ${slots.roll} and got ${slots.outcome}`);
+    const slot = await slotManager.createSlot(table, maxRoll);
+    const outcome = await slot.getOutcome();
 
-    return outcome
-
+    return outcome;
   },
 
 };

@@ -18,11 +18,11 @@ class SlotManager {
 
     const slot = new Slot(table, roll, this.bonusRolls > 0, this.bonusRolls >= 2);
     this.addSlot(slot);
-    if (slot.getOutcome() === "Roll twice again" && this.bonusRolls < 2) {
+    if (await slot.getOutcome() === "Roll twice again" && this.bonusRolls < 2) {
       this.bonusRolls += 1;
       await this.createSlot(table, roll);
       await this.createSlot(table, roll);
-    } else if (slot.getOutcome() === "Roll twice again" && this.bonusRolls >= 2) {
+    } else if (await slot.getOutcome() === "Roll twice again" && this.bonusRolls >= 2) {
       slot.preventReroll();
     }
     return slot;
