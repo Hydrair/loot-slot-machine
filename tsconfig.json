@@ -2,7 +2,8 @@
  "compilerOptions": {
    "types": [
      "@league-of-foundry-developers/foundry-vtt-types",
-     "foundry-pf2e"
+     "foundry-pf2e",
+     "vite/client"
      ],
    "target": "ESNext",
    "useDefineForClassFields": true,

@@ -4,7 +4,9 @@ import { logToChat, renderActors, renderLootOptions } from "./util";
 
 Hooks.once("ready", async function () {
   console.log("Loot Slot Machine | Initialized");
-  new SlotMachineApp().render(true);
+  if (import.meta.env.MODE === "development") {
+    new SlotMachineApp().render(true);
+  }
   // Register chat command
   Hooks.on("chatMessage", (_, message: string) => {
     if (message.trim().toLowerCase() === "/slot") {

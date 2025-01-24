@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "vite build",
-    "dev": "vite build --watch",
+    "dev": "vite build --watch --mode=development",
     "test": "vitest --environment=jsdom"
   },
   "packageManager": "pnpm@9.7.0+sha1.8f12c476122faede7aed9a2126ef551c0dc65d7e"

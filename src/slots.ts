@@ -8,6 +8,8 @@ interface SlotTableRow {
   Chance: string;
 }
 
+const TIMEOUT = import.meta.env.MODE === 'development' ? 0 : Math.floor(Math.random() * 4) + 3;
+
 class Slot {
   table: SlotTableRow[];
   roll: number;
@@ -122,7 +124,7 @@ class Slot {
             this.stopSlots(item, timeouts);
             this.outcome = item;
             resolve(this.outcome);
-          }, 2000);
+          }, TIMEOUT);
           return;
         }
       }
@@ -132,7 +134,7 @@ class Slot {
           this.stopSlots(row.Item, timeouts);
           this.outcome = row.Item;
           resolve(this.outcome);
-        }, 2000);
+        }, TIMEOUT);
         return;
       }
     }
