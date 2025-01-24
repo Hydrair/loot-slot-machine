@@ -4,7 +4,7 @@ Loot Slot Machine is a module for Foundry VTT that allows users to roll on vario
 
 ## Features
 
-- **Interactive Slot Machine Interface**: Roll on loot tables using a visually appealing slot machine interface. (Soon TM)
+- **Interactive Slot Machine Interface**: Roll on loot tables using a visually appealing slot machine interface.
 - **Multiple Loot Qualities**: Choose from different loot qualities such as Minor, Lesser, Moderate, Greater, and Major.
 - **Actor Selection**: Select an actor from your game to roll for loot.
 - **Random or Specific Loot**: Roll for random loot or select specific item types.
@@ -14,13 +14,11 @@ Loot Slot Machine is a module for Foundry VTT that allows users to roll on vario
 
 ## Usage
 
-1. Open the Loot Slot Machine interface by typing `slot` in the chat.
+1. Open the Loot Slot Machine interface by typing `/slot` in the chat.
 2. Select the desired loot quality, actor, and item.
 3. Click the "Roll" button to roll on the loot table.
 4. The rolled item will be displayed in the item container and put into the actors inventory.
 
 ## Roadmap
 
-- **Interactive Slot Machine Interface**: Roll on loot tables using a visually appealing slot machine interface. (Soon TM)
-- **Customizable Tables**: Easily add and manage your own loot tables in TSV format.
 - **Synced Rolling**: Let your players see how you roll or let them roll for themselves.
