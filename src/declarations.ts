@@ -62,6 +62,14 @@ export class LsmItem {
         itemData.rules = [
           {
             "key": "FlatModifier",
+            "selector": "spell-dc",
+            "value": potency,
+            "type": "item"
+          }];
+      } else if (this.file === 'wand' || this.file === 'staff') {
+        itemData.rules = [
+          {
+            "key": "FlatModifier",
             "selector": "spell-attack",
             "value": potency,
             "type": "item"
