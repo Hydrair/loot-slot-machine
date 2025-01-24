@@ -28,19 +28,6 @@
   animation: fadeIn 0.2s;
 }
 
-.lsm-slot-item {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  display: flex;
-  animation: fadeIn 0.2s;
-}
-
 .lsm-slot-pickable {
   cursor: pointer;
 }
@@ -62,6 +49,7 @@
   backdrop-filter: grayscale(1);
   padding: 10px;
   margin: 10px;
+  animation: fadeIn 0.5s;
 }
 
 .lsm-item-img {
@@ -102,11 +90,46 @@
   animation: fadeIn 0.2s;
 }
 
+.lsm-slot-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  transition: opacity 0.5s;
+  opacity: 0;
+  display: flex;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
   }
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    display: flex;
+    opacity: 0; /* Fully transparent at start and end */
+  }
+  50% {
+    display: none;
+    opacity: 1; /* Fully visible at the midpoint */
   }
 }

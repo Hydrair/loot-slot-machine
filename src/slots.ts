@@ -8,7 +8,7 @@ interface SlotTableRow {
   Chance: string;
 }
 
-const TIMEOUT = import.meta.env.MODE === 'development' ? 0 : Math.floor(Math.random() * 4000) + 3000;
+const TIMEOUT = import.meta.env.MODE === 'development' ? 0 : (Math.floor(Math.random() * 4) + 3) * 1000;
 
 class Slot {
   table: SlotTableRow[];
@@ -17,6 +17,7 @@ class Slot {
   slotItems: HTMLDivElement[] = [];
   outcome: string = "";
   slotDiv: HTMLDivElement = document.createElement('div');
+  rolling: boolean = false;
 
   constructor(table: SlotTableRow[], roll: number, pickable: boolean, preventReroll: boolean) {
     this.table = table;
@@ -26,10 +27,9 @@ class Slot {
     if (preventReroll) this.preventReroll();
 
     for (const row of table) {
-      this.addSlotItem(row.Item, table.indexOf(row));
+      this.addSlotItem(row.Item);
     }
     this.render(pickable);
-    this.slotDiv.classList.add('fade-in');
   }
 
   render(pickable?: boolean) {
@@ -119,9 +119,9 @@ class Slot {
           const takeCurrent = diffToCurrentMin < diffToPrevMax;
           const item = takeCurrent ? row.Item : prevRow.Item;
           this.roll = takeCurrent ? min : prevMax;
-          const timeouts = this.rollSlots();
+          this.rollSlots();
           setTimeout(() => {
-            this.stopSlots(item, timeouts);
+            this.rolling = false;
             this.outcome = item;
             resolve(this.outcome);
           }, TIMEOUT);
@@ -129,9 +129,9 @@ class Slot {
         }
       }
       if (this.roll >= min && this.roll <= max) {
-        const timeouts = this.rollSlots();
+        this.rollSlots();
         setTimeout(() => {
-          this.stopSlots(row.Item, timeouts);
+          this.rolling = false;
           this.outcome = row.Item;
           resolve(this.outcome);
         }, TIMEOUT);
@@ -140,40 +140,28 @@ class Slot {
     }
   }
 
-  addSlotItem(item: string, number: number) {
+  addSlotItem(item: string) {
     const slot = document.createElement('div');
-    slot.className = 'lsm-slot-item fade-in';
+    slot.className = 'lsm-slot-item';
     slot.textContent = item;
-    slot.style.top = `${50 * number}px`;
     this.slotItems.push(slot);
   }
 
-  rollSlots() {
-    const timeouts = [];
-    for (let i = 0; i < this.slotItems.length; i++) {
-      const slotItem = this.slotItems[i];
-      const spins = Math.floor(Math.random() * 15) + 10;
-      for (let j = 0; j < spins; j++) {
-        timeouts.push(setTimeout(() => {
-          const offset = (j * 50) % (this.slotItems.length * 50);
-          slotItem.style.transform = `translateY(-${offset}px)`;
-        }, j * 200));
-      }
+  async rollSlots() {
+    this.rolling = true;
+    while (this.rolling) {
+      const slotItem = this.slotItems[Math.floor(Math.random() * this.slotItems.length)];
+      slotItem.style.opacity = '1';
+      await new Promise(resolve => setTimeout(resolve, 250));
+      slotItem.style.opacity = '0';
+      await new Promise(resolve => setTimeout(resolve, 250));
     }
-    return timeouts;
-  }
 
-  stopSlots(outcome: string, timeouts: NodeJS.Timeout[]) {
     for (let i = 0; i < this.slotItems.length; i++) {
       const slotItem = this.slotItems[i];
-      if (slotItem.textContent !== outcome) {
-        slotItem.style.display = 'none';
-      } else {
-        slotItem.style.transform = `translateY(-${i * 50}px)`;
+      if (slotItem.textContent === this.outcome) {
+        slotItem.style.opacity = '1';
       }
-    }
-    for (const timeout of timeouts) {
-      clearTimeout(timeout);
     }
   }
 
