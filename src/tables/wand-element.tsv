@@ -1,11 +1,11 @@
-Chance	Item
-01-10	Acid
-11-20	Cold
-21-30	Electricity
-31-40	Fire
-41-50	Sonic
-51-60	Vitality
-61-70	Void
-71-80	Force
-81-90	Mental
-91-100	Poison
+Chance	Item	Damage	Effect
+01-10	Acid	1d6	Creates an acid puddle of difficult terrain 
+11-20	Cold	1d6	-5ft movement speed
+21-30	Electricity	1d6	Action to sustain
+31-40	Fire	2d4	Shoots two projectiles
+41-50	Sonic	1d6	Inflicts deafened
+51-60	Vitality	1d4	Heals Allies
+61-70	Void	1d6	Ignores cover and shield
+71-80	Force	1d4	Push 5ft
+81-90	Mental	1d4	Shoots psychic energy in a 10ft cone
+91-100	Poison	1d6	1d6 persistent poison damage

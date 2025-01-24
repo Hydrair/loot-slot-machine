@@ -1,3 +1,5 @@
+import { TableManager } from "./table-manager";
+
 export function renderActors() {
   // @ts-ignore
   const actors = game.actors?.filter((actor: Actor) => actor.type === "character");
@@ -119,9 +121,6 @@ export function purifyRunes(_rune: string) {
   const match = rune.match(regex);
 
   if (match) {
-    if (rune.includes('Aim')) {
-      console.log('Aim rune');
-    }
     const wordInParentheses = match[2];
     const remainingString = match[1];
     const camelCasedString = wordInParentheses.toLowerCase() + remainingString.charAt(0).toUpperCase() + remainingString.slice(1);
@@ -206,4 +205,14 @@ export async function logToChat(message: string) {
     style: CONST.CHAT_MESSAGE_STYLES.EMOTE,
     content: message,
   });
+}
+
+export async function getElementDamage(element: string, weapon: string) {
+  const elements = await TableManager.loadTable(`${weapon}-element.tsv`);
+  const elementRow = elements.find(row => row.Item.toLowerCase() === element.toLowerCase());
+  if (elementRow) {
+    const [dice, die] = elementRow.Damage.split('d');
+    return { dice: parseInt(dice, 10), die: `d${die}`, effect: elementRow.Effect };
+  }
+  return { dice: 1, die: 'd6', effect: '' };
 }

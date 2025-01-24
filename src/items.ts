@@ -18,8 +18,6 @@ export async function searchItem(searchQuery: string, itemType: string = "Equipm
     );
 
   for (const pack of targetPacks) {
-    console.log(`Searching in ${pack.metadata.label}...`);
-
     // Use index for lightweight searching
     //@ts-ignore
     const matchingIndexes = pack.index.filter(entry => regex.test(entry.name));
@@ -31,7 +29,6 @@ export async function searchItem(searchQuery: string, itemType: string = "Equipm
     results.push(...matchingDocuments);
   }
 
-  console.log(`Found ${results.length} matching items in "${itemType}" compendiums:`, results);
   return results[0];
 }
 
@@ -51,9 +48,6 @@ export async function searchAllItems(searchQuery: string) {
     const matchingDocuments = await Promise.all(
       matchingIndexes.map(entry => pack.getDocument(entry._id))
     );
-    if (matchingDocuments.length > 0) {
-      console.log(`Found ${matchingDocuments.length} matching items in "${pack.metadata.label}" compendium:`, matchingDocuments, pack);
-    }
     results.push(...matchingDocuments);
   }
 
@@ -84,7 +78,6 @@ export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string
     await actor?.createEmbeddedDocuments("Item", [item]);
   }
 
-  console.log("Item created:", item);
   if (!item) {
     console.error("Failed to create the item.");
     return;

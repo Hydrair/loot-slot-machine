@@ -1,7 +1,7 @@
 import { searchItem } from "./items";
 import { slotManager } from "./slotmanager";
 import { TableManager } from "./table-manager";
-import { addElementToEnergyBreath, addElementToRetaliation, extractScrollRank, getActorLevel, getArmorType, getDmgType, getSpellsByLevel, getTraits, purifyRunes, replaceEnchanted, splitString } from "./util";
+import { addElementToEnergyBreath, addElementToRetaliation, extractScrollRank, getActorLevel, getArmorType, getDmgType, getElementDamage, getSpellsByLevel, getTraits, purifyRunes, replaceEnchanted, splitString } from "./util";
 import { createConsumableFromSpell } from "foundry-pf2e";
 
 enum StrikingRune {
@@ -50,16 +50,6 @@ export class LsmItem {
       itemData.material = {
         type: material,
         grade: grade ? grade.slice(0, -1) : ''
-      };
-    }
-
-    if (this.element && (this.file === 'staff' || this.file === 'wand')) {
-      itemData.range = 30;
-      itemData.damage = {
-        dice: 1,
-        die: this.file === 'staff' ? "d8" : "d6",
-        modifier: 0,
-        damageType: this.element
       };
     }
 
@@ -160,10 +150,43 @@ export class Staff extends LsmItem {
       }
     }
 
-    await this.setKey('item', this.file);
+    await this.setKey('item', this.file + '-item');
     await this.setKey('element', this.file + '-element');
 
     this.element = this.element.toLowerCase();
+
+    this.item = await this.createStaff();
+  }
+
+  async createStaff(): Promise<Item> {
+    const { dice, die, effect } = await getElementDamage(this.element, this.file);
+    const template = await searchItem(this.item, 'Equipment') as any;
+    const itemData = this.toItemData();
+    const item = await Item.create({
+      name: this.item,
+      img: template.img,
+      type: 'weapon',
+      system: {
+        category: 'simple',
+        damage: {
+          dice,
+          die,
+          modifier: 0,
+          damageType: this.element
+        },
+        description: {
+          value: template.system.description.value + `\n\n ${effect}`
+        },
+        range: 30,
+        traits: {
+          rarity: 'uncommon',
+          value: ['magical', `versatile-${this.element}`]
+        },
+        ...itemData
+      }
+    }, { renderSheet: false }) as Item;
+
+    return item;
   }
 
 }
@@ -274,6 +297,7 @@ export class Wand extends LsmItem {
   }
 
   async createWand(): Promise<Item> {
+    const { dice, die, effect } = await getElementDamage(this.element, this.file);
     const template = await searchItem(this.item, 'Equipment') as any;
     const itemData = this.toItemData();
     const item = await Item.create({
@@ -283,13 +307,13 @@ export class Wand extends LsmItem {
       system: {
         category: 'simple',
         damage: {
-          dice: 1,
-          die: "d6",
+          dice,
+          die,
           modifier: 0,
           damageType: this.element
         },
         description: {
-          value: template.system.description.value
+          value: template.system.description.value + `\n\n ${effect}`
         },
         range: 30,
         traits: {
