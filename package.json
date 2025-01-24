@@ -5,6 +5,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
+    "@tsparticles/confetti": "^3.8.0",
     "papaparse": "^5.4.1"
   },
   "devDependencies": {

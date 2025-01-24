@@ -133,3 +133,8 @@
     opacity: 1; /* Fully visible at the midpoint */
   }
 }
+
+#confetti {
+  z-index: 1000;
+  pointer-events: none;
+}

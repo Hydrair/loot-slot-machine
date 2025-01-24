@@ -1,5 +1,6 @@
 import { Grimoire, LsmItem, Staff, Potion, Weapon, Worn, Armor, Shield, Jewelry, Scroll, Wand } from "./declarations";
 import { logToChat } from "./util";
+import { confetti } from "@tsparticles/confetti";
 
 
 export async function searchItem(searchQuery: string, itemType: string = "Equipment"): Promise<Item> {
@@ -94,6 +95,14 @@ export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string
       </div>
     </div>
   `;
+
+  (async () => {
+    await confetti({
+      count: 100,
+      zIndex: 99999,
+      scalar: 2
+    });
+  })();
 
   const uuid = await TextEditor.enrichHTML(`Created @UUID[${item.uuid}]`, {})
   logToChat(uuid);
