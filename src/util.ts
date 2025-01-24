@@ -102,11 +102,11 @@ export function splitString(input: string) {
 
   if (match) {
     return {
-      potency: match[1], // "+1"
+      potency: parseInt(match[1], 10), // "+1"
       bonus: match[2],  // "Striking weapon"
     };
   } else {
-    throw new Error("Input does not match the expected format");
+    return { potency: 0, bonus: '' };
   }
 }
 

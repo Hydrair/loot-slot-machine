@@ -20,6 +20,16 @@ enum ResilientRune {
   "Mythic resilient armor",
 }
 
+enum ReinforcingRune {
+  "Shield",
+  "Reinforcing Rune (Minor)",
+  "Reinforcing Rune (Lesser)",
+  "Reinforcing Rune (Moderate)",
+  "Reinforcing Rune (Greater)",
+  "Reinforcing Rune (Major)",
+  "Reinforcing Rune (Supreme)",
+}
+
 export class LsmItem {
   item: string | any;
   material: string = '';
@@ -52,33 +62,6 @@ export class LsmItem {
         grade: grade ? grade.slice(0, -1) : ''
       };
     }
-
-    if (this.potency && !this.potency.includes("Specific")) {
-      const { potency, bonus } = splitString(replaceEnchanted(this.potency));
-      itemData.runes.potency = parseInt(potency, 10);
-      if (this.file === 'armor' || this.file === 'shield') {
-        itemData.runes.resilient = ResilientRune[bonus as keyof typeof ResilientRune];
-      } else if (this.file === 'grimoire') {
-        itemData.rules = [
-          {
-            "key": "FlatModifier",
-            "selector": "spell-dc",
-            "value": potency,
-            "type": "item"
-          }];
-      } else if (this.file === 'wand' || this.file === 'staff') {
-        itemData.rules = [
-          {
-            "key": "FlatModifier",
-            "selector": "spell-attack",
-            "value": potency,
-            "type": "item"
-          }];
-      } else {
-        itemData.runes.striking = StrikingRune[bonus as keyof typeof StrikingRune];
-      }
-    }
-
     if (this.runes && this.runes.length > 0) {
       itemData.runes.property = this.runes;
     }
@@ -124,6 +107,20 @@ export class Grimoire extends LsmItem {
       }
     }
     await this.setKey('item', this.file + '-item');
+  }
+
+  override toItemData() {
+    const itemData = super.toItemData();
+    const { potency, } = splitString(replaceEnchanted(this.potency));
+    itemData.runes.potency = potency;
+    itemData.rules = [
+      {
+        "key": "FlatModifier",
+        "selector": "spell-dc",
+        "value": potency,
+        "type": "item"
+      }];
+    return itemData;
   }
 }
 
@@ -197,6 +194,22 @@ export class Staff extends LsmItem {
     return item;
   }
 
+  override toItemData() {
+    const itemData = super.toItemData();
+    const { potency, bonus } = splitString(replaceEnchanted(this.potency));
+    itemData.runes.potency = potency;
+    itemData.rules = [
+      {
+        "key": "FlatModifier",
+        "selector": "spell-attack",
+        "value": potency,
+        "type": "item"
+      }];
+    itemData.runes.striking = StrikingRune[bonus as keyof typeof StrikingRune];
+
+    return itemData;
+  }
+
 }
 
 export class Weapon extends LsmItem {
@@ -231,6 +244,15 @@ export class Weapon extends LsmItem {
       this.runes.push(purifyRunes(this.rune));
     }
   }
+
+  override toItemData() {
+    const itemData = super.toItemData();
+    const { potency, bonus } = splitString(this.potency);
+    itemData.runes.potency = potency;
+    itemData.runes.striking = StrikingRune[bonus as keyof typeof StrikingRune];
+
+    return itemData;
+  }
 }
 
 export class Armor extends LsmItem {
@@ -244,9 +266,7 @@ export class Armor extends LsmItem {
     }
 
     if (this.potency === "Specific Armor") {
-      await this.setKey('item', this.file + '-armor-specific');
-    } else if (this.potency === "Specific Shield") {
-      await this.setKey('item', this.file + '-shield-specific');
+      await this.setKey('item', this.file + '-specific');
     } else {
       await this.setKey('item', this.file + '-type');
     }
@@ -266,7 +286,44 @@ export class Armor extends LsmItem {
       this.runes.push(purifyRunes(this.rune));
     }
   }
+
+  override toItemData() {
+    const itemData = super.toItemData();
+    const { potency, bonus } = splitString(this.potency);
+    itemData.runes.potency = potency;
+    itemData.runes.resilient = ResilientRune[bonus as keyof typeof ResilientRune];
+
+    return itemData;
+  }
 }
+
+export class Shield extends LsmItem {
+  override async roll(): Promise<void> {
+    await this.setKey('potency', this.file + '-potency');
+    if (this.potency === "Precious Material and roll again") {
+      await this.setKey('material', this.file + '-material');
+      while (this.potency === "Precious Material and roll again") {
+        await this.setKey('potency', this.file + '-potency');
+      }
+    }
+
+    if (this.potency === "Specific Shield") {
+      await this.setKey('item', this.file + '-specific');
+    } else {
+      await this.setKey('item', this.file + '-type');
+    }
+
+    await this.setKey('rune', this.file + '-runes');
+  }
+
+  override toItemData() {
+    const itemData = super.toItemData();
+    itemData.runes.reinforcing = ReinforcingRune[this.rune as keyof typeof ReinforcingRune];
+
+    return itemData;
+  }
+}
+
 
 export class Jewelry extends LsmItem {
   override async roll(): Promise<void> {
@@ -333,5 +390,21 @@ export class Wand extends LsmItem {
     }, { renderSheet: false }) as Item;
 
     return item;
+  }
+
+  override toItemData() {
+    const itemData = super.toItemData();
+    const { potency, bonus } = splitString(replaceEnchanted(this.potency));
+    itemData.runes.potency = potency;
+    itemData.rules = [
+      {
+        "key": "FlatModifier",
+        "selector": "spell-attack",
+        "value": potency,
+        "type": "item"
+      }];
+    itemData.runes.striking = StrikingRune[bonus as keyof typeof StrikingRune];
+
+    return itemData;
   }
 }

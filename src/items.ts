@@ -1,4 +1,4 @@
-import { Grimoire, LsmItem, Staff, Potion, Weapon, Worn, Armor, Jewelry, Scroll, Wand } from "./declarations";
+import { Grimoire, LsmItem, Staff, Potion, Weapon, Worn, Armor, Shield, Jewelry, Scroll, Wand } from "./declarations";
 import { logToChat } from "./util";
 
 
@@ -115,7 +115,7 @@ const itemClassMap: { [key: string]: any } = {
   weapon: Weapon,
   worn: Worn,
   armor: Armor,
-  // shield: Shield,
+  shield: Shield,
   jewelry: Jewelry,
   scroll: Scroll,
   wand: Wand
