@@ -29,17 +29,14 @@ class Slot {
     for (const row of table) {
       this.addSlotItem(row.Item);
     }
-    this.render(pickable);
+    this.render();
   }
 
-  render(pickable?: boolean) {
+  render() {
     const slotContainer = document.getElementById('lsm-slot-container');
     if (slotContainer) {
       this.slotDiv.className = 'lsm-slot';
       slotContainer.appendChild(this.slotDiv);
-      if (pickable) {
-        this.makeSlotPickable(this.slotDiv);
-      }
       this.slotDiv.append(...this.slotItems);
     }
     this.addHoverEvent();
@@ -165,9 +162,14 @@ class Slot {
     }
   }
 
-  makeSlotPickable(slotDiv: HTMLDivElement) {
-    slotDiv.classList.add('lsm-slot-pickable');
-    slotDiv.addEventListener('click', () => {
+  async makeSlotPickable() {
+    if (await this.getOutcome() === "Roll twice again") {
+      this.lockSlot();
+      return;
+    }
+    this.pickable = true;
+    this.slotDiv.classList.add('lsm-slot-pickable');
+    this.slotDiv.addEventListener('click', () => {
       const outcome = this.outcome;
       this.onSlotClick(outcome);
     });

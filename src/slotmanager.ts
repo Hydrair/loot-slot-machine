@@ -20,11 +20,14 @@ class SlotManager {
     this.addSlot(slot);
     if (await slot.getOutcome() === "Roll twice again" && this.bonusRolls < 2) {
       this.bonusRolls += 1;
-      await this.createSlot(table, roll);
-      await this.createSlot(table, roll);
+      await Promise.all([
+        (await this.createSlot(table, roll)).makeSlotPickable(),
+        (await this.createSlot(table, roll)).makeSlotPickable()
+      ]);
     } else if (await slot.getOutcome() === "Roll twice again" && this.bonusRolls >= 2) {
       slot.preventReroll();
     }
+    this.bonusRolls = 0;
     return slot;
   }
 

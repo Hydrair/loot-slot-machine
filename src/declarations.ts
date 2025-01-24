@@ -69,16 +69,6 @@ export class LsmItem {
     return itemData;
   }
 
-  async reroll(file: string, level: number, skipLast = false) {
-    for (let i = 0; i < 2; i++) {
-      let newItem = await TableManager.rollOnTable(file, { level, skipLast });
-      if (newItem === "Roll twice again") {
-        newItem = await this.reroll(file, level, true);
-      }
-    }
-    return await slotManager.chooseSlot();
-  }
-
   async setKey(key: string, file: string) {
     if (this.potency === "Precious Material and roll again") {
       this[key] = await TableManager.rollOnTable(`${file}.tsv`, {
@@ -91,7 +81,7 @@ export class LsmItem {
         level: this.level,
         conditions: this.conditions,
       });
-      this[key] = result === "Roll twice again" ? await this.reroll(`${file}.tsv`, this.level) : result;
+      this[key] = result === "Roll twice again" ? await slotManager.chooseSlot() : result;
     }
   }
 
