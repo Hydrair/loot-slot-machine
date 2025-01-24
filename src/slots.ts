@@ -8,7 +8,7 @@ interface SlotTableRow {
   Chance: string;
 }
 
-const TIMEOUT = import.meta.env.MODE === 'development' ? 0 : Math.floor(Math.random() * 4) + 3;
+const TIMEOUT = import.meta.env.MODE === 'development' ? 0 : Math.floor(Math.random() * 4000) + 3000;
 
 class Slot {
   table: SlotTableRow[];
@@ -187,7 +187,7 @@ class Slot {
 
   onSlotClick(outcome: string) {
     // This method will be overridden by SlotManager
-    console.log(outcome);
+    if (import.meta.env.MODE === 'development') console.log(outcome);
   }
 
   preventReroll() {
