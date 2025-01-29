@@ -16,7 +16,10 @@ export const SocketManager = {
 };
 
 function render(roller: string, character: string) {
-  new SlotMachineApp(false, roller, character).render(true);
+  const isOpen = document.querySelector(".table-roller.result-window");
+  if (!isOpen) {
+    new SlotMachineApp(false, roller, character).render(true);
+  }
   const itemContainer = document.getElementById("lsm-item-container")
   itemContainer ? itemContainer.innerHTML = "" : console.warn("Item container not found.");
   const slotContainer = document.getElementById("lsm-slot-container")
