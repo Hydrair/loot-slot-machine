@@ -216,3 +216,8 @@ export async function getElementDamage(element: string, weapon: string) {
   }
   return { dice: 1, die: 'd6', effect: '' };
 }
+
+export function getTimeout() {
+  return (Math.floor(Math.random() * 4) + 3) * 1000;
+  return import.meta.env.MODE === 'development' ? 0 : (Math.floor(Math.random() * 4) + 3) * 1000;
+}

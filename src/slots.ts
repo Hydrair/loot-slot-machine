@@ -1,14 +1,10 @@
 import { searchItem } from "./items";
 import { parseDiceRange } from "./util";
 
-
-
 interface SlotTableRow {
   Item: string;
   Chance: string;
 }
-
-const TIMEOUT = import.meta.env.MODE === 'development' ? 0 : (Math.floor(Math.random() * 4) + 3) * 1000;
 
 class Slot {
   table: SlotTableRow[];
@@ -18,11 +14,13 @@ class Slot {
   outcome: string = "";
   slotDiv: HTMLDivElement = document.createElement('div');
   rolling: boolean = false;
+  timeout: number;
 
-  constructor(table: SlotTableRow[], roll: number, pickable: boolean, preventReroll: boolean) {
+  constructor(table: SlotTableRow[], roll: number, pickable: boolean, preventReroll: boolean, timeout: number) {
     this.table = table;
     this.roll = roll;
     this.pickable = pickable;
+    this.timeout = timeout
 
     if (preventReroll) this.preventReroll();
 
@@ -121,7 +119,7 @@ class Slot {
             this.rolling = false;
             this.outcome = item;
             resolve(this.outcome);
-          }, TIMEOUT);
+          }, this.timeout);
           return;
         }
       }
@@ -131,7 +129,7 @@ class Slot {
           this.rolling = false;
           this.outcome = row.Item;
           resolve(this.outcome);
-        }, TIMEOUT);
+        }, this.timeout);
         return;
       }
     }

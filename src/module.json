@@ -18,6 +18,19 @@
       "flags": {}
     }
   ],
+  "socket": true,
+  "relationships": {
+    "requires": [
+      {
+        "id": "socketlib",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/v1.1.0/module.json",
+        "compatibility": {
+          "verified": "1.1.0"
+        }
+      }
+    ]
+  },
   "url": "https://github.com/Hydrair/mwangi-compendium",
   "download": "https://github.com/Hydrair/mwangi-compendium/releases/latest/download/module.zip",
   "manifest": "https://github.com/Hydrair/mwangi-compendium/releases/latest/download/module.json"

@@ -1,6 +1,6 @@
 import { Grimoire, LsmItem, Staff, Potion, Weapon, Worn, Armor, Shield, Jewelry, Scroll, Wand } from "./declarations";
+import { SocketManager } from "./sockets";
 import { logToChat } from "./util";
-import { confetti } from "@tsparticles/confetti";
 
 
 export async function searchItem(searchQuery: string, itemType: string = "Equipment"): Promise<Item> {
@@ -69,7 +69,7 @@ async function getItem(lsmItem: LsmItem, actor: Actor): Promise<Item> {
   }, { renderSheet: false, parent: actor }) as Item;
 }
 
-export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string) {
+export async function createAndDisplayItem(lsmItem: LsmItem) {
   const actor = game.actors?.get((document.getElementById('lsm-select-character') as HTMLSelectElement).value) as Actor;
   let item;
   if (typeof lsmItem.item === "string") {
@@ -96,23 +96,13 @@ export async function createAndDisplayItem(lsmItem: LsmItem, containerId: string
     </div>
   `;
 
-  (async () => {
-    await confetti({
-      count: 100,
-      zIndex: 99999,
-      scalar: 2
-    });
-  })();
+
 
   const uuid = await TextEditor.enrichHTML(`Created @UUID[${item.uuid}]`, {})
   logToChat(uuid);
   // Display in the specified container
-  const container = document.querySelector(`#${containerId}`);
-  if (container) {
-    container.innerHTML = itemDetails;
-  } else {
-    console.error(`Container with ID "${containerId}" not found.`);
-  }
+  // @ts-ignore
+  SocketManager.socket?.executeForEveryone("renderDetails", itemDetails);
 }
 
 

@@ -22,3 +22,4 @@ Loot Slot Machine is a module for Foundry VTT that allows users to roll on vario
 ## Roadmap
 
 - **Synced Rolling**: Let your players see how you roll or let them roll for themselves.
+- wand spell

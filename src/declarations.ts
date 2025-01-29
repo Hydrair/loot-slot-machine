@@ -159,7 +159,7 @@ export class Staff extends LsmItem {
     const itemData = this.toItemData();
     const item = await Item.create({
       name: this.item,
-      img: template.img,
+      img: template.img || 'icons/svg/chest.svg',
       type: 'weapon',
       system: {
         category: 'simple',
@@ -357,7 +357,7 @@ export class Wand extends LsmItem {
     const itemData = this.toItemData();
     const item = await Item.create({
       name: this.item,
-      img: template.img,
+      img: template.img || 'icons/svg/chest.svg',
       type: 'weapon',
       system: {
         category: 'simple',

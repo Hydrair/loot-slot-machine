@@ -1,0 +1,28 @@
+<div class="table-roller">
+  {{#if showSelections}}
+    <h3>Choose your luck</h3>
+    <div class="lsm-selections">
+      <label for="lsm-select-quality">Choose a quality:</label>
+      <select id="lsm-select-quality">
+        <option value="Minor">Minor</option>
+        <option value="Lesser">Lesser</option>
+        <option value="Moderate">Moderate</option>
+        <option value="Greater">Greater</option>
+        <option value="Major">Major</option>
+      </select>
+      <label for="lsm-select-character">Choose an actor:</label>
+      <select id="lsm-select-character"></select>
+      <label for="lsm-select-loot">Choose an item:</label>
+      <select id="lsm-select-loot">
+        <option value="Random">Random</option>
+      </select>
+      <button id="lsm-roll-button">Roll</button>
+    </div>
+  {{else}}
+    <h3>{{roller}} rolled {{#if character}}for {{character}} {{/if}}...</h3>
+  {{/if}}
+  <div class="lsm-results">
+    <div id="lsm-slot-container"></div>
+    <div id="lsm-item-container"></div>
+  </div>
+</div>

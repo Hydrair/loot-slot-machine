@@ -11,6 +11,9 @@ importers:
       '@tsparticles/confetti':
         specifier: ^3.8.0
         version: 3.8.0
+      foundryvtt-socketlib:
+        specifier: github:manuelVo/foundryvtt-socketlib
+        version: https://codeload.github.com/manuelVo/foundryvtt-socketlib/tar.gz/800e7de26340d8eafa13f1a96296b73af3f5c669
       papaparse:
         specifier: ^5.4.1
         version: 5.5.1
@@ -1346,6 +1349,10 @@ packages:
   foundry-pf2e@https://codeload.github.com/reonZ/foundry-pf2e/tar.gz/4abbdade53cfb45991a7197829922370ab443a63:
     resolution: {tarball: https://codeload.github.com/reonZ/foundry-pf2e/tar.gz/4abbdade53cfb45991a7197829922370ab443a63}
     version: 1.0.0
+
+  foundryvtt-socketlib@https://codeload.github.com/manuelVo/foundryvtt-socketlib/tar.gz/800e7de26340d8eafa13f1a96296b73af3f5c669:
+    resolution: {tarball: https://codeload.github.com/manuelVo/foundryvtt-socketlib/tar.gz/800e7de26340d8eafa13f1a96296b73af3f5c669}
+    version: 0.0.0
 
   fs-extra@8.1.0:
     resolution: {integrity: sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==}
@@ -3401,6 +3408,8 @@ snapshots:
       - prop-types
       - supports-color
       - utf-8-validate
+
+  foundryvtt-socketlib@https://codeload.github.com/manuelVo/foundryvtt-socketlib/tar.gz/800e7de26340d8eafa13f1a96296b73af3f5c669: {}
 
   fs-extra@8.1.0:
     dependencies:

@@ -1,9 +1,10 @@
 import { Slot } from "./slots";
+import { SocketManager } from "./sockets";
+import { getTimeout } from "./util";
 
 class SlotManager {
   private slots: Slot[] = [];
   private bonusRolls = 0;
-
 
   addSlot(slot: Slot): void {
     this.slots.push(slot);
@@ -16,7 +17,10 @@ class SlotManager {
   async createSlot(table: any, maxRoll: number): Promise<Slot> {
     const roll = (await new Roll(`1d${maxRoll}`).roll()).total;
 
-    const slot = new Slot(table, roll, this.bonusRolls > 0, this.bonusRolls >= 2);
+    const timeout = getTimeout();
+    const slot = new Slot(table, roll, this.bonusRolls > 0, this.bonusRolls >= 2, timeout);
+    // @ts-ignore
+    SocketManager.socket?.executeForOthers("renderSlots", table, roll, false, this.bonusRolls >= 2, timeout);
     this.addSlot(slot);
     if (await slot.getOutcome() === "Roll twice again" && this.bonusRolls < 2) {
       this.bonusRolls += 1;

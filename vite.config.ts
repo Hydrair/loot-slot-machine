@@ -21,7 +21,7 @@ export default defineConfig({
   plugins: [
     copy({
       targets: [
-        { src: "./src/roll-window.html", dest: "dist" },
+        { src: "./src/roll-window.hbs", dest: "dist" },
         { src: "./src/lsm-style.css", dest: "dist" },
         { src: "./src/tables", dest: "dist" }
       ],
