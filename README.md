@@ -23,5 +23,6 @@ Loot Slot Machine is a module for Foundry VTT that allows users to roll on vario
 4. The rolled item will be displayed in the item container and put into the actors inventory.
 
 
-https://github.com/user-attachments/assets/ef453eed-9b56-4c3a-b0cc-0f36b6968f1c
+
+https://github.com/user-attachments/assets/b2305872-db94-4bb2-965f-817205a2e4dd
 
