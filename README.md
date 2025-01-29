@@ -1,3 +1,5 @@
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B019RIGM)
+
 # Loot Slot Machine
 
 Loot Slot Machine is a module for Foundry VTT that allows users to roll on various loot tables using a slot machine interface. This module provides a fun and interactive way to generate loot for your tabletop RPG sessions.
@@ -11,6 +13,7 @@ Loot Slot Machine is a module for Foundry VTT that allows users to roll on vario
 - **Dynamic Item Creation**: Automatically create and display items based on the roll outcome.
 - **Bonus Rolls**: Handle special cases like "Roll twice again" with bonus rolls.
 - **Notifications**: Receive notifications in the chat for roll outcomes.
+- **Synced Rolling**: Let your players see how you roll or let them roll for themselves.
 
 ## Usage
 
@@ -18,8 +21,3 @@ Loot Slot Machine is a module for Foundry VTT that allows users to roll on vario
 2. Select the desired loot quality, actor, and item.
 3. Click the "Roll" button to roll on the loot table.
 4. The rolled item will be displayed in the item container and put into the actors inventory.
-
-## Roadmap
-
-- **Synced Rolling**: Let your players see how you roll or let them roll for themselves.
-- wand spell
