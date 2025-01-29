@@ -20,6 +20,17 @@
   ],
   "socket": true,
   "relationships": {
+    "systems": [
+      {
+        "id": "pf2e",
+        "type": "system",
+        "manifest": "https://github.com/foundryvtt/pf2e/releases/download/latest/system.json",
+        "compatibility": {
+          "minimum": "6.8.1",
+          "verified": "6.8.1"
+        }
+      }
+    ],
     "requires": [
       {
         "id": "socketlib",
