@@ -75,8 +75,7 @@ export async function createAndDisplayItem(lsmItem: LsmItem) {
   if (typeof lsmItem.item === "string") {
     item = await getItem(lsmItem, actor);
   } else {
-    item = lsmItem.item;
-    await actor?.createEmbeddedDocuments("Item", [item]);
+    item = (await actor?.createEmbeddedDocuments("Item", [lsmItem.item]))[0] as Item;
   }
 
   if (!item) {
@@ -95,7 +94,6 @@ export async function createAndDisplayItem(lsmItem: LsmItem) {
       </div>
     </div>
   `;
-
 
 
   const uuid = await TextEditor.enrichHTML(`Created @UUID[${item.uuid}]`, {})
