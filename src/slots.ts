@@ -15,6 +15,9 @@ class Slot {
   slotDiv: HTMLDivElement = document.createElement('div');
   rolling: boolean = false;
   timeout: number;
+  private static currentPopup: HTMLDivElement | null = null;
+  private popupTimeout: number | null = null;
+  private isHovering: boolean = false;
 
   constructor(table: SlotTableRow[], roll: number, pickable: boolean, preventReroll: boolean, timeout: number) {
     this.table = table;
@@ -42,22 +45,66 @@ class Slot {
 
   addHoverEvent() {
     this.slotDiv.addEventListener('mouseenter', async (event) => {
-      const outcome = await this.getOutcome();
-      const item = await searchItem(outcome, 'Equipment');
+      // Mark that we're hovering
+      this.isHovering = true;
 
-      if (item) {
-        // @ts-ignore
-        const description = await TextEditor.enrichHTML(item.system.description.value, {})
-        this.showPopup(event, item, description);
+      // Clear any existing timeout
+      if (this.popupTimeout) {
+        clearTimeout(this.popupTimeout);
+        this.popupTimeout = null;
       }
+
+      // Only show popup after a short delay to ensure user is actually hovering
+      this.popupTimeout = window.setTimeout(async () => {
+        // Check if we're still hovering
+        if (!this.isHovering || !this.slotDiv.matches(':hover')) {
+          return;
+        }
+
+        const outcome = await this.getOutcome();
+
+        // Check again after async operation
+        if (!this.isHovering || !this.slotDiv.matches(':hover')) {
+          return;
+        }
+
+        const item = await searchItem(outcome, 'Equipment');
+
+        // Final check before showing popup
+        if (item && this.isHovering && this.slotDiv.matches(':hover')) {
+          // @ts-ignore
+          const description = await TextEditor.enrichHTML(item.system.description.value, {})
+
+          // Last check before actually showing
+          if (this.isHovering && this.slotDiv.matches(':hover')) {
+            this.showPopup(event, item, description);
+          }
+        }
+      }, 300); // 300ms delay before showing popup
     });
 
     this.slotDiv.addEventListener('mouseleave', () => {
+      // Mark that we're no longer hovering
+      this.isHovering = false;
+
+      // Clear timeout if user leaves before popup appears
+      if (this.popupTimeout) {
+        clearTimeout(this.popupTimeout);
+        this.popupTimeout = null;
+      }
       this.hidePopup();
     });
   }
 
   async showPopup(event: MouseEvent, item: Item, description?: string) {
+    // Remove any existing popup first
+    Slot.hideAllPopups();
+
+    // Only show popup if still hovering over this slot
+    if (!this.slotDiv.matches(':hover')) {
+      return;
+    }
+
     const popup = document.createElement('div');
     popup.className = 'lsm-slot-popup';
     popup.innerHTML = `
@@ -69,13 +116,34 @@ class Slot {
     const { clientX: x, clientY: y } = event;
     popup.style.left = `${x + 10}px`;
     popup.style.top = `${y + 10}px`;
+
+    // Store reference to current popup
+    Slot.currentPopup = popup;
+
+    // Hide popup when mouse leaves the popup itself
+    popup.addEventListener('mouseleave', () => {
+      this.hidePopup();
+    });
+
+    // Keep popup visible when hovering over it
+    popup.addEventListener('mouseenter', () => {
+      // Popup stays visible
+    });
   }
 
   hidePopup() {
-    const popup = document.querySelector('.lsm-slot-popup');
-    if (popup) {
-      popup.remove();
+    // Only hide popup if it's the one associated with this slot
+    if (Slot.currentPopup && Slot.currentPopup.parentNode) {
+      Slot.currentPopup.remove();
+      Slot.currentPopup = null;
     }
+  }
+
+  static hideAllPopups() {
+    // Remove all popups from DOM (safety measure)
+    const allPopups = document.querySelectorAll('.lsm-slot-popup');
+    allPopups.forEach(popup => popup.remove());
+    Slot.currentPopup = null;
   }
 
   lockSlot() {
