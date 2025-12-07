@@ -3,7 +3,7 @@
   "title": "Loot slot machine",
   "compatibility": {
     "minimum": "12",
-    "verified": "12"
+    "verified": "13"
   },
   "esmodules": [
     "main.js"
@@ -42,7 +42,7 @@
       }
     ]
   },
-  "url": "https://github.com/Hydrair/mwangi-compendium",
-  "download": "https://github.com/Hydrair/mwangi-compendium/releases/latest/download/module.zip",
-  "manifest": "https://github.com/Hydrair/mwangi-compendium/releases/latest/download/module.json"
+  "url": "https://github.com/Hydrair/loot-slot-machine",
+  "download": "https://github.com/Hydrair/loot-slot-machine/releases/latest/download/module.zip",
+  "manifest": "https://github.com/Hydrair/loot-slot-machine/releases/latest/download/module.json"
 }
