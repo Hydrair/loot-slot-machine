@@ -2,7 +2,11 @@ import { searchItem } from "./items";
 import { slotManager } from "./slotmanager";
 import { TableManager } from "./table-manager";
 import { addElementToEnergyBreath, addElementToRetaliation, extractScrollRank, getActorLevel, getArmorType, getDmgType, getElementDamage, getSpellsByLevel, getTraits, purifyRunes, replaceEnchanted, splitString } from "./util";
-import { createConsumableFromSpell } from "foundry-pf2e";
+
+declare global {
+  type SpellPF2e = Item & { type: 'spell' };
+  function createConsumableFromSpell(spell: SpellPF2e, options: { type: 'scroll' | 'wand' | 'potion' }): Promise<Item>;
+}
 
 enum StrikingRune {
   "Weapon",
@@ -160,6 +164,7 @@ export class Staff extends LsmItem {
     const item = await Item.create({
       name: this.item,
       img: template.img || 'icons/svg/chest.svg',
+      // @ts-ignore - 'weapon' is a valid item type in FoundryVTT
       type: 'weapon',
       system: {
         category: 'simple',
@@ -358,6 +363,7 @@ export class Wand extends LsmItem {
     const item = await Item.create({
       name: this.item,
       img: template.img || 'icons/svg/chest.svg',
+      // @ts-ignore - 'weapon' is a valid item type in FoundryVTT
       type: 'weapon',
       system: {
         category: 'simple',

@@ -81,13 +81,24 @@
 
 .lsm-slot-popup {
   position: absolute;
-  background: white;
-  border: 1px solid #ccc;
+  background: #2b2b2b;
+  color: #e0e0e0;
+  border: 1px solid #555;
   padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   z-index: 1000;
   width: 400px;
   animation: fadeIn 0.2s;
+}
+
+.lsm-slot-popup h3 {
+  color: #ffffff;
+  margin: 0 0 8px 0;
+}
+
+.lsm-slot-popup p {
+  color: #d0d0d0;
+  margin: 0;
 }
 
 .lsm-slot-item {
