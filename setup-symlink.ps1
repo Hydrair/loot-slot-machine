@@ -1,6 +1,6 @@
 # Script zum Erstellen eines Junction Points vom dist Ordner zum FoundryVTT Module Verzeichnis
 
-$foundryModulesPath = "C:\Users\Mikey\AppData\Local\FoundryVTT\Data\modules"
+$foundryModulesPath = Join-Path $env:LOCALAPPDATA "FoundryVTT\Data\modules"
 $moduleName = "loot-slot-machine"
 $distPath = Join-Path $PSScriptRoot "dist"
 $symlinkPath = Join-Path $foundryModulesPath $moduleName
