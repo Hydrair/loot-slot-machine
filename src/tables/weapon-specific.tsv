@@ -31,7 +31,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 572-589	316-331				Reaper's Lancet		5
 590-605	332-345				Chatterer of Follies		6
 606-621	346-359				Lady's Knife		6
-622-637	360-373				Windlass Bolas		6
+622-637	360-373				Windlass Bola		6
 638-653	374-387				Acrobat's Staff		6
 654-669	388-401				Bloodletting Kukri		6
 670-685	402-415				Dragonscale Staff		6
@@ -78,7 +78,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 	852-859	425-435			Gloom Blade		9
 	860-867	436-446			Obsidian Edge (Greater)		9
 	868-875	447-457			Sonic Tuning Mace		9
-	876-883	458-468			Vashu's Ninth Knife		9
+	876-883	458-468			Vashu's Ninth Life		9
 	884-891	469-479			Nexian Sealing Blade		9
 	892-899	480-490			Skeletal Claw		9
 	900-907	491-501			Whip of Compliance		9
@@ -88,7 +88,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 	926-931	532-541	43-56		South Wind's Scorch Song		10
 	932-937	542-551	57-70		Grounding Spike		10
 	938-943	552-561	71-84		Polarizing Mace		10
-	944-949	562-571	85-98		Whip-Tounge Sling		10
+	944-949	562-571	85-98		Whip-Tongue Sling		10
 		572-579	99-110		Lumber Lord's Axe		11
 		580-587	111-122		Nightmare Cudgel		11
 		588-595	123-134		Rat-Catcher Trident		11
@@ -121,7 +121,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 		788-793	439-449		Scarlet Queen		12
 		794-799	450-460		Storm Herald		12
 		800-805	461-471		Shuln Fang Katar		12
-		806-809	472-481	01-15	Splinter Spear		13
+		806-809	472-481	01-15	Splintering Spear		13
 		810-813	482-491	16-30	Dwarven Thrower		13
 		814-817	492-501	31-45	Anchor Spear		13
 		818-821	502-511	46-60	Ankylostar		13
@@ -147,7 +147,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 			688-695	332-344	Blessed Reformer		14
 			696-703	345-357	Brilliant Rapier		14
 			704-711	358-370	Deflecting Branch		14
-			712-719	371-383	Holy Avenger		14
+			712-719	371-383	Chalice of Justice		14
 			720-727	384-396	Singing Shortbow		14
 			728-735	397-409	Skyrider Sword		14
 			736-743	410-422	Stargazer		14
@@ -171,7 +171,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 				613-621	Luck Blade		17
 				622-630	Ouroboros Flail (Greater)		17
 				631-639	Spellcutter		17
-				640-648	Splinter Spear (Greater)		17
+				640-648	Splintering Spear (Greater)		17
 				649-655	Blade of Four Energies (Greater)		18
 				656-662	Scalding Gauntlets (True)		18
 				663-669	Storm Flash (Greater)		18
@@ -186,7 +186,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 				725-730	Skyrider Sword (Greater)		19
 				731-736	Mattock of the Titans		19
 				737-742	Sky-Piercing Bow		19
-				743-746	Splinter Spear (Major)		20
+				743-746	Splintering Spear (Major)		20
 				747-750	Buzzsaw Axe (Major)		20
 				751-754	Ouroboros Flail (Major)		20
 				755-758	Sky Hammer		20

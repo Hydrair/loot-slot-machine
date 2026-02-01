@@ -1,12 +1,7 @@
 import { searchItem } from "./items";
 import { slotManager } from "./slotmanager";
 import { TableManager } from "./table-manager";
-import { addElementToEnergyBreath, addElementToRetaliation, extractScrollRank, getActorLevel, getArmorType, getDmgType, getElementDamage, getSpellsByLevel, getTraits, purifyRunes, replaceEnchanted, splitString } from "./util";
-
-declare global {
-  type SpellPF2e = Item & { type: 'spell' };
-  function createConsumableFromSpell(spell: SpellPF2e, options: { type: 'scroll' | 'wand' | 'potion' }): Promise<Item>;
-}
+import { addElementToEnergyBreath, addElementToRetaliation, createScrollFromSpell, extractScrollRank, getActorLevel, getArmorType, getDmgType, getElementDamage, getSpellsByLevel, getTraits, purifyRunes, replaceEnchanted, splitString } from "./util";
 
 enum StrikingRune {
   "Weapon",
@@ -62,7 +57,7 @@ export class LsmItem {
     if (this.material) {
       const [material, grade] = this.material.toLowerCase().split(' (');
       itemData.material = {
-        type: material,
+        type: material.replace(/ /g, '-'),
         grade: grade ? grade.slice(0, -1) : ''
       };
     }
@@ -136,6 +131,11 @@ export class Potion extends LsmItem {
 export class Worn extends LsmItem {
   override async roll() {
     await this.setKey('item', this.file);
+    if (this.item === 'Instinct Crown') {
+      const variants = ['Animal', 'Dragon', 'Fury', 'Giant', 'Spirit', 'Superstition'];
+      const variant = variants[Math.floor(Math.random() * variants.length)];
+      this.item = `Instinct Crown (${variant})`;
+    }
   }
 }
 
@@ -160,10 +160,13 @@ export class Staff extends LsmItem {
   async createStaff(): Promise<Item> {
     const { dice, die, effect } = await getElementDamage(this.element, this.file);
     const template = await searchItem(this.item, 'Equipment') as any;
+    if (!template) {
+      console.warn(`LSM: Staff "${this.item}" not found in compendium`);
+    }
     const itemData = this.toItemData();
     const item = await Item.create({
       name: this.item,
-      img: template.img || 'icons/svg/chest.svg',
+      img: template?.img || 'icons/svg/chest.svg',
       // @ts-ignore - 'weapon' is a valid item type in FoundryVTT
       type: 'weapon',
       system: {
@@ -175,7 +178,7 @@ export class Staff extends LsmItem {
           damageType: this.element
         },
         description: {
-          value: template.system.description.value + `\n\n ${effect}`
+          value: (template?.system?.description?.value || '') + `\n\n ${effect}`
         },
         range: 30,
         traits: {
@@ -227,11 +230,17 @@ export class Weapon extends LsmItem {
     await this.setKey('runechance', this.file + '-runechance');
     this.runechance = parseInt(this.runechance.split(' ')[0]);
 
+    // PF2E rule: max property runes = potency bonus
+    const potencyNumber = parseInt(this.potency.match(/\+(\d)/)?.[1] || '0');
+    this.runechance = Math.min(this.runechance, potencyNumber);
+
     const item = await searchItem(this.item, 'Equipment');
+    if (!item) {
+      console.warn(`LSM: Weapon "${this.item}" not found in compendium`);
+    }
     this.conditions = [
       this.type === "ranged" ? "ranged" : "melee",
-      getDmgType(item),
-      ...getTraits(item)
+      ...(item ? [getDmgType(item), ...getTraits(item)] : [])
     ]
 
     for (let i = 0; i < this.runechance; i++) {
@@ -267,13 +276,19 @@ export class Armor extends LsmItem {
     }
 
     const item = await searchItem(this.item, 'Equipment');
-
+    if (!item) {
+      console.warn(`LSM: Armor "${this.item}" not found in compendium`);
+    }
 
     await this.setKey('runechance', this.file + '-runechance');
     this.runechance = parseInt(this.runechance.split(' ')[0]);
 
+    // PF2E rule: max property runes = potency bonus
+    const potencyNumber = parseInt(this.potency.match(/\+(\d)/)?.[1] || '0');
+    this.runechance = Math.min(this.runechance, potencyNumber);
+
     this.conditions = [
-      getArmorType(item),
+      ...(item ? [getArmorType(item)] : [])
     ]
 
     for (let i = 0; i < this.runechance; i++) {
@@ -331,10 +346,21 @@ export class Scroll extends LsmItem {
   override async roll(): Promise<void> {
     await this.setKey('item', this.file);
     const rank = extractScrollRank(this.item);
-    const spells = await getSpellsByLevel(rank);
-    const randomSpell = spells[Math.floor(Math.random() * spells.length)] as SpellPF2e;
+    const traditions = ['arcane', 'divine', 'occult', 'primal'];
+    const tradition = traditions[Math.floor(Math.random() * traditions.length)];
+    let spells = await getSpellsByLevel(rank, tradition);
+    if (spells.length === 0) {
+      spells = await getSpellsByLevel(rank);
+    }
+    const randomSpell = spells[Math.floor(Math.random() * spells.length)];
 
-    this.item = await createConsumableFromSpell(randomSpell, { type: 'scroll' });
+    const scrollSource = await createScrollFromSpell(randomSpell, rank);
+    if (scrollSource) {
+      this.item = scrollSource; // object → createAndDisplayItem uses createEmbeddedDocuments path
+    } else {
+      // Fallback: just set the name so searchItem can try to find a generic scroll
+      this.item = `Scroll of ${randomSpell.name} (Rank ${rank})`;
+    }
   }
 }
 
@@ -359,10 +385,13 @@ export class Wand extends LsmItem {
   async createWand(): Promise<Item> {
     const { dice, die, effect } = await getElementDamage(this.element, this.file);
     const template = await searchItem(this.item, 'Equipment') as any;
+    if (!template) {
+      console.warn(`LSM: Wand "${this.item}" not found in compendium`);
+    }
     const itemData = this.toItemData();
     const item = await Item.create({
       name: this.item,
-      img: template.img || 'icons/svg/chest.svg',
+      img: template?.img || 'icons/svg/chest.svg',
       // @ts-ignore - 'weapon' is a valid item type in FoundryVTT
       type: 'weapon',
       system: {
@@ -374,7 +403,7 @@ export class Wand extends LsmItem {
           damageType: this.element
         },
         description: {
-          value: template.system.description.value + `\n\n ${effect}`
+          value: (template?.system?.description?.value || '') + `\n\n ${effect}`
         },
         range: 30,
         traits: {

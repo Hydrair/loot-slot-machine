@@ -1,5 +1,5 @@
 import Papa from "papaparse";
-import { containsQuality, filterTableByCondition, filterTableByLevel, filterTableByQuality } from "./util";
+import { containsQuality, filterTableByCondition, filterTableByQuality } from "./util";
 import { slotManager } from "./slotmanager";
 
 // Ensure PapaParse is globally available or import it dynamically
@@ -43,9 +43,9 @@ export const TableManager = {
       table = filterTableByQuality(table, quality).filter(row => row !== null);
     }
 
-    if (level > 0) {
-      filterTableByLevel(table, level);
-    }
+    // Level filtering removed: the tier columns already define what's available.
+    // filterTableByLevel was incorrectly using character level as a hard cap,
+    // which removed items the spreadsheet intentionally includes as rare finds.
 
     if (conditions && conditions.length > 0) {
       filterTableByCondition(table, conditions);

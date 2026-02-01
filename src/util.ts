@@ -169,7 +169,7 @@ export function addElementToEnergyBreath(potionName: string, descriptor: string)
   return potionName;
 }
 
-export async function getSpellsByLevel(level: number) {
+export async function getSpellsByLevel(level: number, tradition?: string) {
   const results: Item[] = [];
   // @ts-ignore
   const targetPacks = game.packs
@@ -180,10 +180,14 @@ export async function getSpellsByLevel(level: number) {
   for (const pack of targetPacks) {
     const spells = await pack.getDocuments({ type: 'spell' });
     // @ts-ignore
-    results.push(spells.filter((spell: any) => spell.system.level.value === level))
+    let filtered = spells.filter((spell: any) => spell.system.level.value === level);
+    if (tradition) {
+      filtered = filtered.filter((spell: any) => spell.system.traits.traditions?.includes(tradition));
+    }
+    results.push(filtered);
   }
 
-  console.log(`Found ${results.length} matching items in Spells compendiums:`, results);
+  console.log(`Found ${results.flat().length} matching spells${tradition ? ` (${tradition})` : ''} at rank ${level}`);
   return results.flat();
 }
 
@@ -191,6 +195,56 @@ export function extractScrollRank(scrollName: string): number {
   const regex = /^(\d+)[a-z]+-rank Scroll$/;
   const match = scrollName.match(regex);
   return match ? parseInt(match[1], 10) : 0; // Returns the integer rank or null if no match
+}
+
+export async function createScrollFromSpell(spell: any, rank: number): Promise<any> {
+  // @ts-ignore - CONFIG.PF2E.spellcastingItems is set up by the PF2E system
+  const scrollData = CONFIG.PF2E.spellcastingItems?.scroll;
+  const uuid = scrollData?.compendiumUuids?.[rank];
+
+  if (!uuid) {
+    console.warn(`LSM: No scroll template UUID for rank ${rank}`);
+    return null;
+  }
+
+  // @ts-ignore - fromUuid is a Foundry global
+  const template = await fromUuid(uuid);
+  if (!template) {
+    console.warn(`LSM: Failed to load scroll template from ${uuid}`);
+    return null;
+  }
+
+  const source = template.toObject();
+  source._id = null;
+
+  // Set name: "Scroll of {Spell Name} (Rank {N})"
+  if (scrollData.nameTemplate) {
+    // @ts-ignore
+    source.name = game.i18n.format(scrollData.nameTemplate, { name: spell.name, level: rank });
+  } else {
+    source.name = `Scroll of ${spell.name} (Rank ${rank})`;
+  }
+
+  // Merge spell traits into scroll traits
+  const spellTraits = spell.system?.traits?.value ?? [];
+  const scrollTraits = source.system.traits.value ?? [];
+  source.system.traits.value = [...new Set([...scrollTraits, ...spellTraits])].sort();
+  source.system.traits.rarity = spell.system?.traits?.rarity ?? 'common';
+
+  // Embed the spell into the scroll
+  // @ts-ignore
+  const spellSource = spell.toObject();
+  // @ts-ignore
+  spellSource._id = foundry.utils.randomID();
+  spellSource.system.location = { value: null, heightenedLevel: rank };
+  source.system.spell = spellSource;
+
+  // Add spell description reference
+  const spellRef = spell.sourceId ? `@UUID[${spell.sourceId}]{${spell.name}}` : spell.system?.description?.value ?? '';
+  const existingDesc = source.system.description.value ?? '';
+  source.system.description.value = `<p>${spellRef}</p><hr>${existingDesc}`;
+
+  return source;
 }
 
 export function parseDiceRange(range: string) {

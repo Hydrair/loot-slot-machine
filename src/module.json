@@ -1,6 +1,7 @@
 {
   "id": "loot-slot-machine",
   "title": "Loot slot machine",
+  "version": "1.3.0",
   "compatibility": {
     "minimum": "12",
     "verified": "13"

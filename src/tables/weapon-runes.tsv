@@ -12,7 +12,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level	Value	Condition
 54-57	16-18				Cunning		5	140 gp	slashing piercing 
 58-61	19-21				Hooked		5	140 gp	melee 
 62-65	22-24				Pacifying		5	150 gp	
-66-69	25-27				Disrupting		5	150 gp	
+66-69	25-27				Vitalizing		5	150 gp
 70-73	28-30				Fearsome		5	160 gp	
 74-76	31-33				Demolishing		6	225 gp	
 77-79	34-36				Hauling		6	225 gp	
@@ -50,13 +50,13 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level	Value	Condition
 		75-76	29-32		Unholy		11	1,400 gp	
 		77-78	33-35		Brilliant		12	2,000 gp	
 		79-80	36-38		Fearsome (Greater)		12	2,000 gp	
-		81-81	39-41	01-04	Dancing		13	2,700 gp	melee 
-		82-82	42-44	05-08	Spell Storing		13	2,700 gp	melee 
+		81-81	39-41	01-04	Animated		13	2,700 gp	melee
+		82-82	42-44	05-08	Spell Reservoir		13	2,700 gp	melee
 		83-83	45-47	09-12	Bloodbane (Greater)		13	2,800 gp	clan dagger
 		84-84	48-50	13-16	Extending (Greater)		13	3,000 gp	melee 
 		85-85	51-53	17-20	Keen		13	3,000 gp	piercing slashing melee 
 		86-86	54-56	21-24	Shockwave		13	3,000 gp	bludgeoning melee 
-			57-58	25-27	Disrupting (Greater)		14	4,300 gp	
+			57-58	25-27	Vitalizing (Greater)		14	4,300 gp
 			59-60	28-30	Astral (Greater)		15	6,000 gp	
 			61-62	31-33	Fanged (Major)		15	6,000 gp	melee 
 			63-64	34-36	Giant-Killing (Greater)		15	6,000 gp	
@@ -70,7 +70,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level	Value	Condition
 			78-78	58-60	Ancestral Echoing		15	9,500 gp	
 			79-79	61-62	Bloodthirsty		16	8,500 gp	slashing piercing melee 
 			80-80	63-64	Ashen (Greater)		16	9,000 gp	
-			81-81	65-66	Speed		16	10,000 gp	
+			81-81	65-66	Quickstrike		16	10,000 gp	
 				67-68	Impactful (Greater)		17	15,000 gp	
 				69-70	Vorpal		17	15,000 gp	slashing melee 
 				71-72	Anchoring (Greater)		18	22,000 gp	

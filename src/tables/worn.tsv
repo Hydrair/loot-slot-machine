@@ -66,8 +66,8 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 632-639	111-120				Mask of Mercy		4
 640-647	121-130				Rhinoceros Mask		4
 648-655	131-140				Shapespeak Mask		4
-656-663	141-150				Hag Eye (Frightful)		4
-664-671	151-160				Hag Eye (Oracular)		4
+656-663	141-150				Frightful Hag Eye		4
+664-671	151-160				Oracular Hag Eye		4
 672-679	161-170				Hunter's Arrowhead		4
 680-687	171-180				Hunter's Brooch		4
 688-695	181-190				Shining Wayfinder		4
@@ -115,13 +115,13 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 918-921	495-500				Everair Mask (Moderate)		6
 922-925	501-506				Goz Mask (Greater)		6
 926-929	507-512				Herd Mask		6
-930-933	513-518				Hag Eye (Stoney)		6
+930-933	513-518				Stony Hag Eye		6
 934-937	519-524				Primeval Mistletoe		6
 938-941	525-530				Secret-Keeper's Mask (Father Skinsaw)		6
 942-945	531-536	01-09			Everyneed Pack (Greater)		7
 946-947	537-542	10-18			Fearless Sash		7
 948-949	543-548	19-27			Unmemorable Mantle		7
-950-951	549-554	28-36			Energy Robe (Fire)		7
+950-951	549-554	28-36			Energy Robe of Fire		7
 952-953	555-560	37-45			Red-Rib Gill Mask (Moderate)		7
 954-955	561-566	46-54			Masquerade Scarf (Greater)		7
 956-957	567-572	55-63			Mirror of Sleeping Vigil		7
@@ -146,7 +146,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 	675-679	212-218			Crown of the Fire Eater		8
 	680-684	219-225			Extra Lung		8
 	685-689	226-232			Mantle of the Tikbalang		8
-	690-694	233-239			Energy Robe (Cold)		8
+	690-694	233-239			Energy Robe of Cold		8
 	695-699	240-246			Stalk Goggles (Major)		8
 	700-704	247-253			Lover's Gloves		8
 	705-709	254-260			Mask of the Cursed Eye		8
@@ -155,23 +155,23 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 	720-724	275-281			Sunflower Censer		8
 	725-729	282-288			Fleshgem (Earthspeaker)		8
 	730-734	289-295			Empathic Cords		8
-	735-739	296-302			Hag Eye (Smokey)		8
+	735-739	296-302			Smoky Hag Eye		8
 	740-744	303-309			Swarmeater's Clasp		8
 	745-749	310-316			Umbral Wings		8
-	750-753	317-322			Kinbur's Sandals of Bounding		9
+	750-753	317-322			Kinburi's Sandals of Bounding		9
 	754-757	323-328			Knapsack of Halflingkind		9
 	758-761	329-334			Smogger		9
 	762-765	335-340			Stole of Civility		9
 	766-769	341-346			Unmemorable Mantle (Greater)		9
-	770-773	347-352			Energy Robe (Acid)		9
+	770-773	347-352			Energy Robe of Acid		9
 	774-777	353-358			Eyes of the Cat		9
 	778-781	359-364			Tracker's Goggles (Greater)		9
 	782-785	365-370			Thunderblast Slippers		9
 	786-789	371-376			Sleeves of Storage (Greater)		9
 	790-793	377-382			Healer's Gloves (Greater)		9
-	794-797	383-388			Helm of Underwater Action		9
+	794-797	383-388			Submersible Helmet		9
 	798-801	389-394			Mage's Hat (Greater)		9
-	802-805	395-400			Mask of the Banshee		9
+	802-805	395-400			Guise of the Smirking Devil		9
 	806-809	401-406			Persona Mask (Greater)		9
 	810-813	407-412			Tlil Mask (Greater)		9
 	814-817	413-418			Elemental Wayfinder (Air)		9
@@ -198,7 +198,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 	898-901	539-544			Diviner's Nose Chain		9
 	902-903	545-549	01-10		Winged Sandals		10
 	904-905	550-554	11-20		Jaathoom's Scarf		10
-	906-907	555-559	21-30		Energy Robe (Electricity)		10
+	906-907	555-559	21-30		Energy Robe of Electricity		10
 	908-909	560-564	31-40		Orm Choker		10
 	910-911	565-569	41-50		Handwraps of Mighty Blows (+2 striking)		10
 	912-913	570-574	51-60		Instinct Crown		10
@@ -231,7 +231,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 		696-699	313-321		Armory Bracelet (Greater)		11
 		700-703	322-330		Bravery Baldric (Flight)		11
 		704-707	331-339		Bravery Baldric (Restoration, Greater)		11
-		708-711	340-348		Bravery Baldric (Stoneskin)		11
+		708-711	340-348		Bravery Baldric (Stone)		11
 		712-715	349-357		Brooch of Inspiration (Greater)		11
 		716-719	358-366		Dragon Rune Bracelet		11
 		720-723	367-375		Blazons of Shared Power (Greater)		11
@@ -245,7 +245,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 		752-755	439-447		Envisioning Mask		11
 		756-759	448-456		Mask of Uncanny Breath		11
 		760-763	457-465		Hexing Jar		11
-		764-767	466-474		Ki-Channeling Beads		11
+		764-767	466-474		Mala Beads of Foresight		11
 		768-771	475-483		Skyfang Crystal		11
 		772-775	484-492		Spectacles of Understanding (Greater)		11
 		776-779	493-501		Warden's Signet		11
@@ -253,7 +253,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 		783-785	510-517		Spectacles of Inquiry		12
 		786-788	518-525		Grub Gloves (Moderate)		12
 		789-791	526-533		Handwraps of Mighty Blows (+2 greater striking)		12
-		792-794	534-541		Telekinetic Converter		12
+		792-794	534-541		Telekinetic Converters		12
 		795-797	542-549		Hat of Many Minds		12
 		798-800	550-557		Goz Mask (Major)		12
 		801-803	558-565		Hummingbird Wayfinder		12
@@ -265,7 +265,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 		819-821	606-613		Curtain Call Cloak		12
 		822-824	614-621		Bloodline Robe		12
 		825-827	622-629		Cloister Robe (Moderate)		12
-		828-830	630-637		Cordelia's Construct Key (Greater)		12
+		828-830	630-637		Cordelia's Greater Construct Key		12
 		831-833	638-645		Crown of the Fire Eater (Greater)		12
 		834-836	646-652	01-14	Clarity Goggles (Moderate)		13
 		837-839	653-659	15-28	Broken Tusk Pendant (Greater)		13
@@ -274,7 +274,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 		846-848	674-680	57-70	Knapsack of Halflingkind (Greater)		13
 		849-851	681-687	71-84	Eye of Fortune		13
 		852-854	688-694	85-98	Zuhra's Gloves		13
-		855-857	695-701	99-112	Helm of Underwater Action (Greater)		13
+		855-857	695-701	99-112	Submersible Helmet (Greater)		13
 		858-860	702-708	113-126	Hellfire Boots		13
 		861-863	709-715	127-140	Homeward Wayfinder		13
 		864-866	716-722	141-154	Retrieval Belt (Major)		13
@@ -348,11 +348,11 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level
 				697-701	Berserker's Cloak (Greater)		19
 				702-706	Clarity Goggles (Greater)		19
 				707-711	Cloister Robe (Major)		19
-				712-716	Mantle of the Amazing Health		19
+				712-716	Mantle of Amazing Health		19
 				717-721	Shadowmist Cape		19
 				722-726	Robe of the Archmagi (Greater)		19
-				727-731	Handwraps of Mighty Blows (+3 Majorstriking)		19
-				732-736	Mask of the Banshee (Greater)		19
+				727-731	Handwraps of Mighty Blows (+3 Major striking)		19
+				732-736	Guise of the Smirking Devil (Greater)		19
 				737-741	Third Eye		19
 				742-745	Laurel of the Empath		20
 				746-749	Silhouette Cloak		20

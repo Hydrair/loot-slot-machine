@@ -16,8 +16,8 @@ Minor	Lesser	Moderate	Greater	Major	Item			Level
 465-494	211-231				Staff of Healing			4
 495-524	232-252				Trickster's Mandolin			4
 525-554	253-273				Atmospheric Staff (Lesser)			4
-555-584	274-294				Spore Shepherd's Staff			4
-585-614	295-315				Spore Shepherd's Staff (Major)			4
+555-584	274-294				Spore Shephard's Staff			4
+585-614	295-315				Spore Shephard's Staff (Major)			4
 615-630	316-329				Librarian Staff			6
 631-646	330-343				Lyrakien Staff			6
 647-662	344-357				Verdant Staff			6
@@ -58,7 +58,7 @@ Minor	Lesser	Moderate	Greater	Major	Item			Level
 	759-767	308-323			Seer's Flute (Greater)			8
 	768-776	324-339			Trickster's Mandolin (Greater)			8
 	777-785	340-355			Staff of Healing (Greater)			8
-	786-794	356-371			Spore Shepherd's Staff (Greater)			8
+	786-794	356-371			Spore Shephard's Staff (Greater)			8
 	795-803	372-387			Atmospheric Staff			8
 	804-812	388-403			Composer Staff (Greater)			8
 	813-821	404-419			Boreal Staff			8
@@ -138,7 +138,7 @@ Minor	Lesser	Moderate	Greater	Major	Item			Level
 			796-799	544-560	Staff of Healing (True)			16
 			800-803	561-577	Staff of the Black Desert (Greater)			16
 			804-807	578-594	Fiddle of the Maestro			16
-			808-811	595-611	Greater Staff of Arcane Might			16
+			808-811	595-611	Staff of Arcane Might (Greater)			16
 			812-815	612-628	Staff of Impossible Visions (Major)			16
 			816-819	629-645	Staff of the Desert Winds (Major)			16
 				646-655	Hell Staff			17
@@ -155,6 +155,6 @@ Minor	Lesser	Moderate	Greater	Major	Item			Level
 				740-745	Staff of Impossible Visions (True)			20
 				746-751	Staff of the Desert Winds (True)			20
 				752-757	Whispering Staff			20
-				758-763	MajorStaff of Arcane Might			20
+				758-763	Staff of Arcane Might (Major)			20
 				764-769	Staff of the Magi			20
 980-1000	950-1000	870-1000	820-1000	770-1000	Roll twice again			

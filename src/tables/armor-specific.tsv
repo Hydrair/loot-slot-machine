@@ -2,14 +2,14 @@ Minor	Lesser	Moderate	Greater	Major	Item			Level
 01-10	01-06				Ghoul Hide			6
 11-20	07-12				Trollhound Vest			6
 21-30	13-18				Devil's Bargain			6
-31-40	19-24				Plate of Yled (Graveknight Plate)			6
+31-40	19-24				Plate of Yled			6
 41-50	25-30				Sarkorian God-Caller Garb			6
 51-58	31-35				Hodag Leather			7
 59-66	36-40				Wolfjaw Armor			7
 67-74	41-45				Arachnid Harness			7
 75-82	46-50				Blade Byrnie			7
 83-90	51-55				Moonlit Chain			7
-91-92	56-58	01-04			Plate of Yled (Greater Graveknight Plate)			8
+91-92	56-58	01-04			Plate of Yled (Greater)			8
 93-94	59-61	05-08			Rusting Carapace			8
 95-96	62-64	09-12			Wasp Guard			8
 97-98	65-67	13-16			Containment Contraption			8
@@ -20,17 +20,17 @@ Minor	Lesser	Moderate	Greater	Major	Item			Level
 	76-77	29-31			Dragon Turtle Plate			9
 	78-79	32-34			Leopard's Armor			9
 	80-81	35-37			Library Robes			9
-	82-83	38-40			Rhino Hide			9
+	82-83	38-40			Onslaught Hide			9
 	84-85	41-43			Spangled Rider's Suit			9
 	86-87	44-45	01-03		Numerian Steel Breastplate			10
 	88-88	46-47	04-06		Electric Eelskin			10
-	89-89	48-49	07-09		Remorhaz Armor			10
+	89-89	48-49	07-09		Smoldering Armor			10
 	90-90	50-51	10-12		Mamlambo Scale			10
-	91-91	52-53	13-15		Breastplate of Command			10
+	91-91	52-53	13-15		Warleader's Bulwark			10
 	92-92	54-55	16-18		Scarab Cuirass			10
 	93-93	56-57	19-21		Tales in Timber			10
 	94-94	58-59	22-24		Tideplate			10
-		60-61	25-27		Plate of Yled (MajorGraveknight Plate)			11
+		60-61	25-27		Plate of Yled (Major)			11
 		62-63	28-29		Bastion of the Inheritor			12
 		64-65	30-31		Mantis Plate			12
 		66-67	32-33		Wisp Chain (Greater)			12
@@ -39,8 +39,7 @@ Minor	Lesser	Moderate	Greater	Major	Item			Level
 		72-73	38-39		Library Robes (Greater)			12
 		74-74	40-41		Lion's Armor			12
 		75-75	42-43		Reef Heart			12
-		76-76	44-45	01-03	Celestial Armor			13
-		77-77	46-47	04-06	Demon Armor			13
+		76-77	44-47	01-06	Unholy Plate			13
 		78-78	48-49	07-09	Forgotten Shell			13
 		79-79	50-51	10-12	Harmonic Hauberk			13
 		80-80	52-53	13-15	Mail of Luck			13
@@ -50,7 +49,7 @@ Minor	Lesser	Moderate	Greater	Major	Item			Level
 		84-84	60-61	25-27	Blade Byrnie (Greater)			13
 		85-85	62-63	28-30	Energizing Lattice			13
 		86-86	64-65	31-33	Psychic Brigandine			13
-			66-67	34-36	Plate of Yled (True Graveknight Plate)			14
+			66-67	34-36	Plate of Yled (True)			14
 			68-69	37-39	Highhelm Stronghold Plate			14
 			70-71	40-42	Life-Saver Mail			14
 			72-73	43-45	Glorious Plate			14
@@ -65,7 +64,7 @@ Minor	Lesser	Moderate	Greater	Major	Item			Level
 				62-62	Impenetrable Scale			17
 				63-63	Jerkin of Liberation			17
 				64-64	Prismatic Plate			17
-				65-65	Breastplate of Command (Greater)			18
+				65-65	Warleader's Bulwark (Greater)			18
 				66-66	Tales in Timber (Major)			18
 				67-67	Linnorm's Sankeit			18
 				68-68	Lion's Armor (Greater)			19
