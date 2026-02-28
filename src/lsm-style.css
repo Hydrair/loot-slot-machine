@@ -149,3 +149,129 @@
   z-index: 1000;
   pointer-events: none;
 }
+
+/* ─── Need/Greed Chat Card ─── */
+
+.lsm-need-greed {
+  border: 2px solid #7b2d8b;
+  border-radius: 5px;
+  padding: 10px;
+  background: rgba(30, 30, 30, 0.85);
+  color: #e0e0e0;
+}
+
+.lsm-ng-item-card {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #444;
+}
+
+.lsm-ng-item-card img {
+  width: 48px;
+  height: 48px;
+  border: 1px solid #555;
+  border-radius: 3px;
+}
+
+.lsm-ng-item-info h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.1em;
+}
+
+.lsm-ng-votes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lsm-ng-vote-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.lsm-ng-player-name {
+  flex: 1;
+  font-weight: bold;
+}
+
+.lsm-ng-btn {
+  border: none;
+  padding: 4px 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.85em;
+  transition: filter 0.15s;
+}
+
+.lsm-ng-btn:hover {
+  filter: brightness(1.2);
+}
+
+.lsm-ng-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.lsm-ng-need {
+  background: #2d7b2d;
+  color: #fff;
+}
+
+.lsm-ng-greed {
+  background: #b8860b;
+  color: #fff;
+}
+
+.lsm-ng-roll {
+  background: #2d4f7b;
+  color: #fff;
+}
+
+.lsm-ng-vote-result {
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.lsm-ng-vote-result.need {
+  color: #4caf50;
+}
+
+.lsm-ng-vote-result.greed {
+  color: #daa520;
+}
+
+.lsm-ng-vote-summary {
+  font-size: 0.85em;
+  padding: 6px 0;
+  border-bottom: 1px solid #444;
+  margin-bottom: 8px;
+}
+
+.lsm-ng-roll-section h4 {
+  margin: 4px 0 8px;
+  color: #ccc;
+}
+
+.lsm-ng-roll-result {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #7bbcff;
+}
+
+.lsm-ng-winner {
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #ffd700;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #444;
+}

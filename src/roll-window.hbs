@@ -10,8 +10,6 @@
         <option value="Greater">Greater</option>
         <option value="Major">Major</option>
       </select>
-      <label for="lsm-select-character">Choose an actor:</label>
-      <select id="lsm-select-character"></select>
       <label for="lsm-select-loot">Choose an item:</label>
       <select id="lsm-select-loot">
         <option value="Random">Random</option>
@@ -19,7 +17,7 @@
       <button id="lsm-roll-button">Roll</button>
     </div>
   {{else}}
-    <h3>{{roller}} rolled {{#if character}}for {{character}} {{/if}}...</h3>
+    <h3>{{roller}} rolled...</h3>
   {{/if}}
   <div class="lsm-results">
     <div id="lsm-slot-container"></div>

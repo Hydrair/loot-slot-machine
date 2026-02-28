@@ -1,7 +1,7 @@
 import { searchItem } from "./items";
 import { slotManager } from "./slotmanager";
 import { TableManager } from "./table-manager";
-import { addElementToEnergyBreath, addElementToRetaliation, createScrollFromSpell, extractScrollRank, getActorLevel, getArmorType, getDmgType, getElementDamage, getSpellsByLevel, getTraits, purifyRunes, replaceEnchanted, splitString } from "./util";
+import { addElementToEnergyBreath, addElementToRetaliation, createScrollFromSpell, extractScrollRank, getArmorType, getDmgType, getElementDamage, getSpellsByLevel, getTraits, purifyRunes, replaceEnchanted, splitString } from "./util";
 
 enum StrikingRune {
   "Weapon",
@@ -37,14 +37,15 @@ export class LsmItem {
   potency: string = '';
   runes: string[] = [];
   file: string = '';
-  level: number = getActorLevel();
+  level: number = 0;
   conditions: string[] = [];
   rules: Object[] = [];
 
   [key: string]: any;
 
-  constructor(file: string) {
+  constructor(file: string, level: number = 0) {
     this.file = `${file}`;
+    this.level = level;
   }
 
   async roll() {
@@ -154,20 +155,19 @@ export class Staff extends LsmItem {
 
     this.element = this.element.toLowerCase();
 
-    this.item = await this.createStaff();
+    this.item = await this.createStaffSource();
   }
 
-  async createStaff(): Promise<Item> {
+  async createStaffSource(): Promise<any> {
     const { dice, die, effect } = await getElementDamage(this.element, this.file);
     const template = await searchItem(this.item, 'Equipment') as any;
     if (!template) {
       console.warn(`LSM: Staff "${this.item}" not found in compendium`);
     }
     const itemData = this.toItemData();
-    const item = await Item.create({
+    return {
       name: this.item,
       img: template?.img || 'icons/svg/chest.svg',
-      // @ts-ignore - 'weapon' is a valid item type in FoundryVTT
       type: 'weapon',
       system: {
         category: 'simple',
@@ -187,9 +187,7 @@ export class Staff extends LsmItem {
         },
         ...itemData
       }
-    }, { renderSheet: false }) as Item;
-
-    return item;
+    };
   }
 
   override toItemData() {
@@ -337,7 +335,6 @@ export class Shield extends LsmItem {
 
 export class Jewelry extends LsmItem {
   override async roll(): Promise<void> {
-    this.level = getActorLevel();
     await this.setKey('item', this.file);
   }
 }
@@ -379,20 +376,19 @@ export class Wand extends LsmItem {
     await this.setKey('element', this.file + '-element');
 
     this.element = this.element.toLowerCase();
-    this.item = await this.createWand();
+    this.item = await this.createWandSource();
   }
 
-  async createWand(): Promise<Item> {
+  async createWandSource(): Promise<any> {
     const { dice, die, effect } = await getElementDamage(this.element, this.file);
     const template = await searchItem(this.item, 'Equipment') as any;
     if (!template) {
       console.warn(`LSM: Wand "${this.item}" not found in compendium`);
     }
     const itemData = this.toItemData();
-    const item = await Item.create({
+    return {
       name: this.item,
       img: template?.img || 'icons/svg/chest.svg',
-      // @ts-ignore - 'weapon' is a valid item type in FoundryVTT
       type: 'weapon',
       system: {
         category: 'simple',
@@ -412,9 +408,7 @@ export class Wand extends LsmItem {
         },
         ...itemData
       }
-    }, { renderSheet: false }) as Item;
-
-    return item;
+    };
   }
 
   override toItemData() {

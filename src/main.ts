@@ -1,7 +1,8 @@
 import { TableManager } from "./table-manager";
 import { createAndDisplayItem, createLsmItem } from "./items";
-import { logToChat, renderActors, renderLootOptions } from "./util";
+import { getMaxPlayerLevel, logToChat, renderLootOptions } from "./util";
 import { SocketManager } from "./sockets";
+import { attachNeedGreedListeners } from "./need-greed";
 
 Hooks.once("ready", async function () {
   console.log("Loot Slot Machine | Initialized");
@@ -12,9 +13,17 @@ Hooks.once("ready", async function () {
   Hooks.on("chatMessage", (_, message: string) => {
     if (message.trim().toLowerCase() === "/slot") {
       new SlotMachineApp(true).render(true);
-      return false; // Prevents the message from being posted to chat
+      return false;
     }
-    return true; // Allow other messages to be posted to chat
+    return true;
+  });
+
+  // Attach Need/Greed button handlers to chat messages
+  // @ts-ignore
+  Hooks.on("renderChatMessage", (message: ChatMessage, html: any) => {
+    // html can be jQuery or HTMLElement depending on Foundry version
+    const el = html instanceof HTMLElement ? html : html[0];
+    if (el) attachNeedGreedListeners(message, el);
   });
 });
 
@@ -26,13 +35,11 @@ Hooks.once("socketlib.ready", () => {
 export class SlotMachineApp extends Application {
   private showSelections: boolean;
   private roller: string;
-  private character: string;
 
-  constructor(showSelections: boolean = false, roller: string = "", character: string = "") {
+  constructor(showSelections: boolean = false, roller: string = "") {
     super();
     this.showSelections = showSelections;
     this.roller = roller;
-    this.character = character;
   }
 
   static override get defaultOptions() {
@@ -48,7 +55,6 @@ export class SlotMachineApp extends Application {
     return {
       showSelections: this.showSelections,
       roller: this.roller,
-      character: this.character,
     };
   }
 
@@ -56,7 +62,6 @@ export class SlotMachineApp extends Application {
     super.activateListeners(html);
 
     if (this.showSelections) {
-      renderActors();
       renderLootOptions(await TableManager.loadTable("loot-table.tsv"));
     }
 
@@ -64,15 +69,14 @@ export class SlotMachineApp extends Application {
     if (!rollButton) return;
     // Attach event listener to the roll button
     rollButton.on("click", async () => {
-      const actorSelect = document.getElementById('lsm-select-character') as HTMLSelectElement;
-      const actor = actorSelect.options[actorSelect.selectedIndex].text;
       // @ts-ignore
-      SocketManager.socket?.executeForOthers("render", game.user.name, actor);
+      SocketManager.socket?.executeForOthers("render", game.user.name);
       const itemContainer = document.getElementById("lsm-item-container")
       itemContainer ? itemContainer.innerHTML = "" : console.warn("Item container not found.");
       const slotContainer = document.getElementById("lsm-slot-container")
       slotContainer ? slotContainer.innerHTML = "" : console.warn("Slot container not found.");
       const lootOptions = (document.getElementById('lsm-select-loot') as HTMLSelectElement).value
+      const level = getMaxPlayerLevel();
 
       try {
         const outcome = lootOptions === "Random"
@@ -81,7 +85,7 @@ export class SlotMachineApp extends Application {
 
         logToChat(`Rolling for ${outcome}...`);
 
-        const item = createLsmItem(outcome.toLowerCase());
+        const item = createLsmItem(outcome.toLowerCase(), level);
 
         if (item) {
           await item.roll();

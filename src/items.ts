@@ -1,5 +1,6 @@
 import { Grimoire, LsmItem, Staff, Potion, Weapon, Worn, Armor, Shield, Jewelry, Scroll, Wand } from "./declarations";
 import { SocketManager } from "./sockets";
+import { postNeedGreedMessage } from "./need-greed";
 import { logToChat } from "./util";
 
 
@@ -55,52 +56,103 @@ export async function searchAllItems(searchQuery: string) {
   return results.length > 0 ? results : null;
 }
 
-async function getItem(lsmItem: LsmItem, actor: Actor): Promise<Item> {
-  const template = await searchItem(lsmItem.item, lsmItem.itemType);
-  const itemData = lsmItem.toItemData();
-  const combinedSystemData = {
-    ...template.system,
-    ...itemData
-  };
+export async function createItemOnActor(lsmItem: LsmItem, actor: Actor): Promise<Item> {
+  if (typeof lsmItem.item === "string") {
+    const template = await searchItem(lsmItem.item, lsmItem.itemType);
+    const itemData = lsmItem.toItemData();
+    const combinedSystemData = {
+      ...template.system,
+      ...itemData
+    };
+    // @ts-ignore
+    return await Item.create({
+      ...template, system: combinedSystemData
+    }, { renderSheet: false, parent: actor }) as Item;
+  } else {
+    return (await actor.createEmbeddedDocuments("Item", [lsmItem.item]))[0] as Item;
+  }
+}
 
-  // @ts-ignore
-  return await Item.create({
-    ...template, system: combinedSystemData
-  }, { renderSheet: false, parent: actor }) as Item;
+export async function createItemFromSerialized(
+  serializedItem: SerializedLsmItem,
+  templateData: any,
+  actor: Actor
+): Promise<Item> {
+  if (serializedItem.isSourceObject && templateData) {
+    // Staff/Wand/Scroll path: templateData IS the full source object
+    return (await actor.createEmbeddedDocuments("Item", [templateData]))[0] as Item;
+  } else if (templateData) {
+    // Normal path: merge template with item data
+    const combinedSystemData = {
+      ...templateData.system,
+      ...serializedItem.itemData
+    };
+    // @ts-ignore
+    return await Item.create({
+      ...templateData, system: combinedSystemData
+    }, { renderSheet: false, parent: actor }) as Item;
+  }
+  throw new Error("Cannot create item: no template data available");
+}
+
+export interface SerializedLsmItem {
+  itemType: string;
+  itemData: any;
+  isSourceObject: boolean;
+}
+
+export function serializeLsmItem(lsmItem: LsmItem): SerializedLsmItem {
+  const isSourceObject = typeof lsmItem.item !== "string";
+  return {
+    itemType: lsmItem.file,
+    itemData: isSourceObject ? null : lsmItem.toItemData(),
+    isSourceObject,
+  };
 }
 
 export async function createAndDisplayItem(lsmItem: LsmItem) {
-  const actor = game.actors?.get((document.getElementById('lsm-select-character') as HTMLSelectElement).value) as Actor;
-  let item;
+  let itemName: string;
+  let itemImg: string;
+  let description: string;
+  let templateData: any = null;
+
   if (typeof lsmItem.item === "string") {
-    item = await getItem(lsmItem, actor);
+    const template = await searchItem(lsmItem.item, lsmItem.itemType);
+    itemName = template?.name ?? lsmItem.item;
+    itemImg = template?.img ?? "icons/svg/chest.svg";
+    // @ts-ignore
+    description = await TextEditor.enrichHTML(template?.system?.description?.value ?? "", {});
+    templateData = template?.toObject?.() ?? null;
+    // Merge the lsmItem data into the template for later creation
+    if (templateData) {
+      templateData.system = { ...templateData.system, ...lsmItem.toItemData() };
+    }
   } else {
-    item = (await actor?.createEmbeddedDocuments("Item", [lsmItem.item]))[0] as Item;
+    // Staff/Wand/Scroll — item is already a source object
+    itemName = lsmItem.item.name ?? "Unknown Item";
+    itemImg = lsmItem.item.img ?? "icons/svg/chest.svg";
+    // @ts-ignore
+    description = await TextEditor.enrichHTML(lsmItem.item.system?.description?.value ?? "", {});
+    templateData = lsmItem.item;
   }
 
-  if (!item) {
-    console.error("Failed to create the item.");
-    return;
-  }
-
-  // @ts-ignore
-  const description = await TextEditor.enrichHTML(item.system.description.value, {})
+  // Display in the slot machine window
   const itemDetails = `
     <div class="lsm-item-display">
-      <img class="lsm-item-img" src="${item.img}" alt="${item.name}" />
+      <img class="lsm-item-img" src="${itemImg}" alt="${itemName}" />
       <div class="lsm-item-properties">
-        <h2>${item.name}</h2>
+        <h2>${itemName}</h2>
         <p>${description || "No description available."}</p>
       </div>
     </div>
   `;
 
-
-  const uuid = await TextEditor.enrichHTML(`Created @UUID[${item.uuid}]`, {})
-  logToChat(uuid);
-  // Display in the specified container
   // @ts-ignore
   SocketManager.socket?.executeForEveryone("renderDetails", itemDetails);
+
+  // Post Need/Greed chat message for distribution
+  const serialized = serializeLsmItem(lsmItem);
+  await postNeedGreedMessage(serialized, templateData, itemName, itemImg, description);
 }
 
 
@@ -119,12 +171,12 @@ const itemClassMap: { [key: string]: any } = {
   // Add other item types here
 };
 
-export function createLsmItem(itemType: string): LsmItem | null {
+export function createLsmItem(itemType: string, level: number = 0): LsmItem | null {
   const ItemClass = itemClassMap[itemType];
   if (!ItemClass) {
     console.error(`Item type "${itemType}" is not recognized.`);
     return null;
   }
-  return new ItemClass(itemType);
+  return new ItemClass(itemType, level);
 }
 

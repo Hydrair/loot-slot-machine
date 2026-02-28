@@ -2,6 +2,7 @@
 import { SlotMachineApp } from "./main";
 import { Slot } from "./slots";
 import { confetti } from "@tsparticles/confetti";
+import { handleVoteOnGM, handleRollOnGM } from "./need-greed";
 
 export const SocketManager = {
   socket: null,
@@ -12,13 +13,15 @@ export const SocketManager = {
     this.socket.register("render", render);
     this.socket.register("renderSlots", renderSlots);
     this.socket.register("renderDetails", renderDetails);
+    this.socket.register("needGreedVote", handleVoteOnGM);
+    this.socket.register("needGreedRoll", handleRollOnGM);
   },
 };
 
-function render(roller: string, character: string) {
+function render(roller: string) {
   const isOpen = document.querySelector(".table-roller.result-window");
   if (!isOpen) {
-    new SlotMachineApp(false, roller, character).render(true);
+    new SlotMachineApp(false, roller).render(true);
   }
   const itemContainer = document.getElementById("lsm-item-container")
   itemContainer ? itemContainer.innerHTML = "" : console.warn("Item container not found.");

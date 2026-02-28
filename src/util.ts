@@ -1,23 +1,5 @@
 import { TableManager } from "./table-manager";
 
-export function renderActors() {
-  // @ts-ignore
-  const actors = game.actors?.filter((actor: Actor) => actor.type === "character");
-  const characterSelect = document.getElementById("lsm-select-character") as HTMLSelectElement;
-  if (!characterSelect) {
-    console.error("Character select element not found.");
-    return;
-  }
-  // @ts-ignore
-  for (const actor of actors) {
-    const option = document.createElement("option");
-    option.value = actor.id;
-    // @ts-ignore
-    option.text = actor.name;
-    characterSelect.appendChild(option);
-  }
-}
-
 export function renderLootOptions(options: any[]) {
   const lootSelect = document.getElementById("lsm-select-loot") as HTMLSelectElement;
   if (!lootSelect) {
@@ -33,10 +15,12 @@ export function renderLootOptions(options: any[]) {
   }
 }
 
-export function getActorLevel() {
-  const characterSelect = document.getElementById("lsm-select-character") as HTMLSelectElement;
+export function getMaxPlayerLevel(): number {
   // @ts-ignore
-  return game.actors?.get(characterSelect.value).system.details.level.value;
+  const players = game.users?.filter((u: any) => !u.isGM && u.active && u.character);
+  if (!players || players.length === 0) return 0;
+  // @ts-ignore
+  return Math.max(...players.map((u: any) => u.character.system?.details?.level?.value ?? 0));
 }
 
 export function filterTableByLevel(table: any[], maxLevel: number) {
