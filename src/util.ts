@@ -1,13 +1,49 @@
 import { TableManager } from "./table-manager";
 
-export function renderLootOptions(options: any[]) {
+export interface LootPreset {
+  label: string;
+  items: string[] | null; // null = all items
+}
+
+export const LOOT_PRESETS: LootPreset[] = [
+  { label: "All Items", items: null },
+  { label: "Wizard's Stash", items: ["Potion", "Jewelry", "Worn", "Scroll", "Staff", "Wand", "Grimoire"] },
+  { label: "Armory", items: ["Armor", "Shield", "Weapon"] },
+];
+
+export function renderPresetOptions() {
+  const presetSelect = document.getElementById("lsm-select-preset") as HTMLSelectElement;
+  if (!presetSelect) return;
+
+  for (let i = 0; i < LOOT_PRESETS.length; i++) {
+    const el = document.createElement("option");
+    el.value = String(i);
+    el.text = LOOT_PRESETS[i].label;
+    presetSelect.appendChild(el);
+  }
+}
+
+export function getSelectedPreset(): LootPreset {
+  const presetSelect = document.getElementById("lsm-select-preset") as HTMLSelectElement;
+  const idx = presetSelect ? parseInt(presetSelect.value) : 0;
+  return LOOT_PRESETS[idx] ?? LOOT_PRESETS[0];
+}
+
+export function renderLootOptions(options: any[], allowedItems?: string[] | null) {
   const lootSelect = document.getElementById("lsm-select-loot") as HTMLSelectElement;
   if (!lootSelect) {
-    console.error("Character select element not found.");
+    console.error("Loot select element not found.");
     return;
   }
 
+  // Keep "Random" as first option, clear the rest
+  while (lootSelect.options.length > 1) {
+    lootSelect.remove(1);
+  }
+  lootSelect.value = "Random";
+
   for (const option of options) {
+    if (allowedItems && !allowedItems.includes(option.Item)) continue;
     const element = document.createElement("option");
     element.value = option.Item;
     element.text = option.Item;

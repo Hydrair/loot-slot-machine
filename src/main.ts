@@ -1,6 +1,6 @@
 import { TableManager } from "./table-manager";
 import { createAndDisplayItem, createLsmItem } from "./items";
-import { getMaxPlayerLevel, logToChat, renderLootOptions } from "./util";
+import { getMaxPlayerLevel, getSelectedPreset, logToChat, renderLootOptions, renderPresetOptions } from "./util";
 import { SocketManager } from "./sockets";
 import { attachNeedGreedListeners } from "./need-greed";
 
@@ -62,7 +62,16 @@ export class SlotMachineApp extends Application {
     super.activateListeners(html);
 
     if (this.showSelections) {
-      renderLootOptions(await TableManager.loadTable("loot-table.tsv"));
+      const lootTable = await TableManager.loadTable("loot-table.tsv");
+      renderPresetOptions();
+      renderLootOptions(lootTable);
+
+      // When preset changes, update the item dropdown
+      const presetSelect = html.find("#lsm-select-preset");
+      presetSelect.on("change", () => {
+        const preset = getSelectedPreset();
+        renderLootOptions(lootTable, preset.items);
+      });
     }
 
     const rollButton = html.find("#lsm-roll-button");
@@ -77,10 +86,11 @@ export class SlotMachineApp extends Application {
       slotContainer ? slotContainer.innerHTML = "" : console.warn("Slot container not found.");
       const lootOptions = (document.getElementById('lsm-select-loot') as HTMLSelectElement).value
       const level = getMaxPlayerLevel();
+      const preset = getSelectedPreset();
 
       try {
         const outcome = lootOptions === "Random"
-          ? (await TableManager.rollOnTable("loot-table.tsv")).toLowerCase()
+          ? (await TableManager.rollOnTable("loot-table.tsv", { allowedItems: preset.items ?? undefined })).toLowerCase()
           : lootOptions;
 
         logToChat(`Rolling for ${outcome}...`);

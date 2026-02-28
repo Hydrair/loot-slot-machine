@@ -32,8 +32,8 @@ export const TableManager = {
     return parsed.data as Array<{}>;
   },
 
-  rollOnTable: async function (csvFileName: string, options: { level?: number, conditions?: string[], skipLast?: boolean } = {}) {
-    const { level = 0, conditions, skipLast = false } = options;
+  rollOnTable: async function (csvFileName: string, options: { level?: number, conditions?: string[], skipLast?: boolean, allowedItems?: string[] } = {}) {
+    const { level = 0, conditions, skipLast = false, allowedItems } = options;
     let table = await this.loadTable(csvFileName);
 
     const quality = containsQuality(table);
@@ -42,6 +42,20 @@ export const TableManager = {
 
     if (quality !== "Chance") {
       table = filterTableByQuality(table, quality).filter(row => row !== null);
+    }
+
+    // Filter by allowed items (preset system) and recalculate chance ranges
+    if (allowedItems && allowedItems.length > 0) {
+      table = table.filter(row => allowedItems.includes(row.Item));
+      let current = 1;
+      table = table.map(row => {
+        const [min, max] = row.Chance.split("-").map(Number);
+        const weight = max - min + 1;
+        const newMin = current;
+        const newMax = current + weight - 1;
+        current = newMax + 1;
+        return { ...row, Chance: `${String(newMin).padStart(2, '0')}-${String(newMax).padStart(2, '0')}` };
+      });
     }
 
     // Level filtering removed: the tier columns already define what's available.
