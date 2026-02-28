@@ -22,9 +22,10 @@ export const TableManager = {
     // Parse the CSV data using PapaParse
     const parsed = Papa.parse(csvData, { header: true, skipEmptyLines: true });
 
-    if (parsed.errors.length > 0) {
+    const fatalErrors = parsed.errors.filter((e) => e.type !== "FieldMismatch");
+    if (fatalErrors.length > 0) {
       throw new Error(
-        `Error parsing CSV: ${parsed.errors.map((e) => e.message).join(", ")}`
+        `Error parsing CSV: ${fatalErrors.map((e) => e.message).join(", ")}`
       );
     }
 

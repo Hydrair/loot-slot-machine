@@ -257,6 +257,13 @@ export async function handleRollOnGM(
   );
 
   if (allRolled) {
+    // First: update message to show ALL rolls (including the last one)
+    const rollContent = renderNeedGreedContent(state);
+    await message.update({
+      content: rollContent,
+      [`flags.${FLAG_SCOPE}.${FLAG_KEY}`]: state,
+    });
+
     // Find highest roll
     const maxRoll = Math.max(...state.rollingUserIds.map((uid) => state.rolls[uid]));
     const winners = state.rollingUserIds.filter(
@@ -337,13 +344,13 @@ async function resolveDistribution(
 
   const winner = game.users.get(state.winnerId);
   const actor = winner?.character;
+  const winnerName = actor?.name ?? winner?.name ?? "Unknown";
 
   if (!actor) {
     logToChat(`Winner has no assigned character. Item not distributed.`);
+    // Mark original message as complete in flags only (keep roll display)
     state.phase = "complete";
-    const content = renderNeedGreedContent(state);
     await message.update({
-      content,
       [`flags.${FLAG_SCOPE}.${FLAG_KEY}`]: state,
     });
     return;
@@ -359,10 +366,26 @@ async function resolveDistribution(
     state.createdItemUuid = item.uuid;
     state.phase = "complete";
 
-    const content = renderNeedGreedContent(state);
+    // Mark original message as complete in flags only (keep roll display intact)
     await message.update({
-      content,
       [`flags.${FLAG_SCOPE}.${FLAG_KEY}`]: state,
+    });
+
+    // Post winner as a separate chat message
+    const winnerContent = `
+      <div class="lsm-need-greed">
+        <div class="lsm-ng-item-card">
+          <img src="${state.itemImg}" alt="${state.itemName}" />
+          <div class="lsm-ng-item-info">
+            <h3>${state.itemName}</h3>
+          </div>
+        </div>
+        <div class="lsm-ng-winner">${winnerName} wins ${state.itemName}!</div>
+      </div>`;
+
+    await ChatMessage.create({
+      content: winnerContent,
+      speaker: { alias: "Loot Slot Machine" },
     });
 
     const uuid = await TextEditor.enrichHTML(

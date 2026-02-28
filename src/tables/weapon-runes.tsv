@@ -12,7 +12,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level	Value	Condition
 54-57	16-18				Cunning		5	140 gp	slashing piercing 
 58-61	19-21				Hooked		5	140 gp	melee 
 62-65	22-24				Pacifying		5	150 gp	
-66-69	25-27				Vitalizing		5	150 gp
+66-69	25-27				Vitalizing		5	150 gp	
 70-73	28-30				Fearsome		5	160 gp	
 74-76	31-33				Demolishing		6	225 gp	
 77-79	34-36				Hauling		6	225 gp	
@@ -56,7 +56,7 @@ Minor	Lesser	Moderate	Greater	Major	Item		Level	Value	Condition
 		84-84	48-50	13-16	Extending (Greater)		13	3,000 gp	melee 
 		85-85	51-53	17-20	Keen		13	3,000 gp	piercing slashing melee 
 		86-86	54-56	21-24	Shockwave		13	3,000 gp	bludgeoning melee 
-			57-58	25-27	Vitalizing (Greater)		14	4,300 gp
+			57-58	25-27	Vitalizing (Greater)		14	4,300 gp	
 			59-60	28-30	Astral (Greater)		15	6,000 gp	
 			61-62	31-33	Fanged (Major)		15	6,000 gp	melee 
 			63-64	34-36	Giant-Killing (Greater)		15	6,000 gp	
